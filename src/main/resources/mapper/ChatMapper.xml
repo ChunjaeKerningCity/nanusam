@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="net.fullstack.springmvc.mapper.net.fullstack7.nanusam.mapper.ChatMapper">
+<mapper namespace="net.fullstack7.nanusam.mapper.ChatMapper">
     <insert id="regist" parameterType="net.fullstack7.nanusam.domain.ChatVO">
         INSERT INTO tbl_chat(goodsIdx, sender, receiver, content)
         VALUES(#{goodsIdx},#{sender},#{receiver},#{content})
@@ -9,6 +9,6 @@
     <select id="getList" resultType="net.fullstack7.nanusam.domain.ChatVO">
         SELECT idx, goodsIdx, sender, receiver, senderDel, receiverDel, content, regDate, readCheck
         FROM tbl_chat
-        WHERE senderId = #{memberId} OR receiverId = #{memberId}
+        WHERE sender = #{memberId} OR receiver = #{memberId}
     </select>
 </mapper>
