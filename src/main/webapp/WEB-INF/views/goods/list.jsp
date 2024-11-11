@@ -14,6 +14,5 @@
 <body>
 <h1>goods list</h1>
 
-<%--테스트--%>
 </body>
 </html>

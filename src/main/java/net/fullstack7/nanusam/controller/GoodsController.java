@@ -2,10 +2,15 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.dto.GoodsDTO;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
+
 @Controller
 @RequiredArgsConstructor
 @Log4j2
@@ -20,7 +25,8 @@ public class GoodsController {
         return "goods/regist";
     }
     @PostMapping("/regist.do")
-    public String registPost(){
+    public String registPost(@Valid GoodsDTO goodsDTO, BindingResult bindingResult){
+
         return "goods/list";
     }
     @GetMapping("/view.do")
