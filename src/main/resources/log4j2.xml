@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration status="INFO">
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout charset="UTF-8" pattern="%d{hh:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+    </Appenders>
+    <loggers>
+        <logger name="net.fullstack7" level="INFO" additivity="false">
+            <Appender-ref ref="CONSOLE"/>
+        </logger>
+        <root level="INFO" additivity="false">
+            <Appender-ref ref="CONSOLE"/>
+        </root>
+    </loggers>
+</configuration>
