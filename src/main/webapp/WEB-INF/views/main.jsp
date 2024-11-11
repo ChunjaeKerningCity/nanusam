@@ -12,7 +12,7 @@
     <title>메인페이지</title>
 </head>
 <body>
-  <h1> 메인페이지</h1>
+  <h1>올라감?</h1>
 <ul>
     <li><a href="/bbs/list.do">게시판리스트</a></li>
     <li><a href="/bbs/view.do">게시판조회</a></li>
