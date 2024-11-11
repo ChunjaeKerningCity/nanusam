@@ -12,6 +12,6 @@
     <title>bbs list</title>
 </head>
 <body>
-<h1>bbs listw/h1>
+<h1>bbs list hihi</h1>
 </body>
 </html>
