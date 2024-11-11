@@ -49,7 +49,7 @@
             </tr>
         </c:forEach>
         <tr>
-            <td colspan="7" class="text-center">등록된 게시물이 존재하지 않습니다.</td>
+            <td colspan="7" class="text-center">등록된 게시물이 존재하지 않습니다.gg</td>
         </tr>
         </tbody>
     </table>
