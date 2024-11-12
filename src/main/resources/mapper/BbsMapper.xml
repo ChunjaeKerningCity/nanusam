@@ -22,12 +22,12 @@
         SELECT idx, memberId, title, content, category, displayDate, regDate, modifyDate, readCnt
         FROM tbl_bbs
         ORDER BY idx DESC
-        LIMIT #{page_skip_count}, ${page_size}
+        LIMIT #{page_skip_count}, #{page_size}
     </select>
 
-    <select id="getCount" resultType="int">
-        select count(idx) from tbl_bbs
-    </select>
+<!--    <select id="getCount" resultType="int">-->
+<!--        select count(idx) from tbl_bbs-->
+<!--    </select>-->
 
     <select id="view" resultType="net.fullstack7.nanusam.domain.BbsVO">
         SELECT idx, memberId, title, content, category, displayDate, regDate, modifyDate, readCnt
