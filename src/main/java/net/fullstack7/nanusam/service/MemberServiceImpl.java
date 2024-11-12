@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService{
+
     private final MemberMapper memberXmlmapper;
     private final ModelMapper modelmapper;
 
+    //로그인
     @Override
     public boolean login(String memberId, String pwd) {
         MemberVO memberVO = memberXmlmapper.login(memberId);
@@ -24,6 +26,7 @@ public class MemberServiceImpl implements MemberService{
         return memberVO.getPwd().equals(pwd);
     }
 
+    //회원정보확인
     @Override
     public MemberDTO viewMember(String memberId) {
         MemberVO memberVO = memberXmlmapper.viewMember(memberId);
@@ -33,6 +36,21 @@ public class MemberServiceImpl implements MemberService{
         return null;
     }
 
+    //아이디 중복확인
+    @Override
+    public boolean memberIdCheck(String memberId) {
+        String result = memberXmlmapper.memberIdCheck(memberId);
+        return result == null;
+    }
+
+    //회원가입
+    @Override
+    public int registMember(MemberDTO memberDTO) {
+        MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
+        return memberXmlmapper.registMember(memberVO);
+    }
+
+    // 마이페이지 진입전 비밀번호확인
     @Override
     public boolean pwdCheck(String memberId) {
         MemberVO memberVO = memberXmlmapper.viewMember(memberId);
@@ -41,26 +59,19 @@ public class MemberServiceImpl implements MemberService{
         }
         return false;
     }
-
-    @Override
-    public int registMember(MemberDTO memberDTO) {
-        MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
-        return memberXmlmapper.registMember(memberVO);
-    }
-
+    
+    //회원정보수정
     @Override
     public int modifyMember(MemberDTO memberDTO) {
         MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
         return memberXmlmapper.modifyMember(memberVO);
     }
 
+    //회원삭제(본인탈퇴)
     @Override
     public int deleteMember(String memberId) {
         return memberXmlmapper.deleteMember(memberId);
     }
 
-    @Override
-    public boolean memberIdCheck(String memberId) {
-        return memberXmlmapper.memberIdCheck(memberId) > 0;
-    }
+
 }
