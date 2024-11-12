@@ -1,0 +1,63 @@
+.mapText {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  text-align: left;
+  width: 50%;
+}
+
+.heading {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.subHeading {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.infoContainer {
+  margin-top: 20px;
+}
+
+.officeTitle {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.addressSection,
+.contactSection {
+  margin-bottom: 20px;
+}
+
+.addressLabel,
+.label {
+  font-weight: bold;
+}
+
+.address {
+  margin-top: 5px;
+  color: #555;
+}
+
+.contactItem {
+  margin: 5px 0;
+}
+
+.mapButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.mapButton {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  padding: 8px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.mapButton:hover {
+  background-color: #e0e0e0;
+}
