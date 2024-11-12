@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Log4j2
 @ToString
@@ -28,4 +29,6 @@ public class GoodsDTO {
     private String modifyDate;
     private String readCnt;
     private String category;
+
+    private List<FileDTO> images;
 }

@@ -9,7 +9,7 @@ public class FileVO {
     private int idx;
     private String fileName;
     private String filePath;
-    private int fileSize;
+    private long fileSize;
     private String fileExt;
     private String bbsCode;
     private int refIdx;

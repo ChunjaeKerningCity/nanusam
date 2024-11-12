@@ -30,7 +30,7 @@ import java.util.UUID;
 @RequestMapping("/goods")
 public class GoodsController {
     private final GoodsService goodsService;
-    private final String uploadDir = "D:\\java7\\nanusam\\src\\main\\webapp\\resources\\image";
+    private final String uploadDir = "E:\\nanusam\\src\\main\\webapp\\resources\\image";
 
     @GetMapping("/list.do")
     public String list(Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -89,7 +89,8 @@ public class GoodsController {
     }
 
     @GetMapping("/view.do")
-    public String viewGet() {
+    public String viewGet(@RequestParam(required = true) int idx, Model model) {
+        model.addAttribute("item", goodsService.view(idx));
         return "goods/view";
     }
 
@@ -131,6 +132,7 @@ public class GoodsController {
                 dto.setFileName(newName);
                 dto.setFileExt(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
                 dto.setFileContentType(file.getContentType());
+                dto.setFileSize(file.getSize());
 //                dto.setFileData(mainImage.getBytes());
                 dto.setBbsCode("상품");
                 goodsService.fileupload(dto);

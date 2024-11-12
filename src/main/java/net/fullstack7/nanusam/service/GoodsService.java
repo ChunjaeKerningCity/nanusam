@@ -11,4 +11,5 @@ public interface GoodsService {
     int totalCount();
     void regist(GoodsDTO goodsDTO);
     void fileupload(FileDTO file);
+    GoodsDTO view(int idx);
 }

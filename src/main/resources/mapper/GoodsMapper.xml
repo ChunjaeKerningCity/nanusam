@@ -22,6 +22,11 @@
         </choose>
         limit #{page_skip_count}, #{page_size}
     </select>
+    <select id="view" resultType="net.fullstack7.nanusam.domain.GoodsVO">
+        select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category
+        from tbl_goods
+        where idx = #{idx}
+    </select>
     <select id="totalCount">
         select count(idx) as total_count
         from tbl_goods

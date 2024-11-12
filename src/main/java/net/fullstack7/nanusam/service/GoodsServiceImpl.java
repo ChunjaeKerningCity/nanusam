@@ -53,4 +53,11 @@ public class GoodsServiceImpl implements GoodsService {
     public void fileupload(FileDTO fileDTO) {
         fileMapper.regist(modelMapper.map(fileDTO, FileVO.class));
     }
+
+    @Override
+    public GoodsDTO view(int idx) {
+        GoodsDTO dto = modelMapper.map(goodsMapper.view(idx), GoodsDTO.class);
+        dto.setImages(fileMapper.listByBbsCodeAndRefIdx("상품", idx).stream().map(vo->modelMapper.map(vo, FileDTO.class)).collect(Collectors.toList()));
+        return dto;
+    }
 }

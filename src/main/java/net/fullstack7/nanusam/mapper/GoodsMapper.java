@@ -12,4 +12,5 @@ public interface GoodsMapper {
     int totalCount(PageRequestDTO requestDTO);
     void regist(GoodsVO goodsVO);
     void deleteByIdx(int idx);
+    GoodsVO view(int idx);
 }
