@@ -19,10 +19,10 @@ public class ServiceTests {
         log.info("chatRegistTest");
         chatService.regist(
                 ChatDTO.builder()
-                        .sender("testSender1")
-                        .receiver("testReceiver1")
+                        .sender("user1")
+                        .receiver("user2")
                         .content("testContent")
-                        .goodsIdx(1)
+                        .goodsIdx(2)
                         .build()
         );
     }
@@ -30,5 +30,11 @@ public class ServiceTests {
     public void chatListTest(){
         log.info("chatListTest");
         log.info(chatService.getList("testSender1"));
+    }
+
+    @Test
+    public void chatViewTest(){
+        log.info("chatViewTest");
+        log.info(chatService.view(1, "testSender1", "testReceiver1"));
     }
 }

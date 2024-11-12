@@ -26,7 +26,11 @@
     <li><a href="/goods/view.do">상품조회</a></li>
     <li><a href="/goods/modify.do">상품수정</a></li>
     <li><a href="/goods/delete.do">상품삭제</a></li>
-
+    <li><a href="/chat/list.do">채팅방입장</a></li>
+    <form action="/login.do">
+        <input type="text" name="memberId">
+        <input type="submit">
+    </form>
 
 </ul>
 </body>

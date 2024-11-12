@@ -2,13 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.ChatMapper">
-    <insert id="regist" parameterType="net.fullstack7.nanusam.domain.ChatVO">
-        INSERT INTO tbl_chat(goodsIdx, sender, receiver, content)
-        VALUES(#{goodsIdx},#{sender},#{receiver},#{content})
+    <insert id="groupRegist" parameterType="net.fullstack7.nanusam.domain.ChatGroupVO">
+        INSERT INTO tbl_chat_group(seller,customer,goodsIdx)
+        VALUES (#{seller},#{customer},#{goodsIdx})
     </insert>
-    <select id="getList" resultType="net.fullstack7.nanusam.domain.ChatVO">
-        SELECT idx, goodsIdx, sender, receiver, senderDel, receiverDel, content, regDate, readCheck
-        FROM tbl_chat
-        WHERE sender = #{memberId} OR receiver = #{memberId}
+    <insert id="messageRegist" parameterType="net.fullstack7.nanusam.domain.ChatMessageVO">
+        INSERT INTO tbl_chat_message(groupIdx, senderId, content)
+        VALUES (#{groupIdx},#{senderId},#{content})
+    </insert>
+    <select id="groupList" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
+        SELECT idx, seller, customer, goodsIdx, sellerDel, customerDel, regDate
+        FROM tbl_chat_group
+        WHERE seller=#{memberId} OR customer=#{memberId}
+    </select>
+    <select id="messageList" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
+        SELECT idx, groupIdx, senderId, content, regDate, sellerDel, customerDel
+        FROM tbl_chat_message
+        WHERE groupIdx = #{groupIdx}
+    </select>
+    <select id="getLastMessage" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
+        SELECT idx, groupIdx, senderId, content, regDate, sellerDel, customerDel
+        FROM tbl_chat_message
+        WHERE groupIdx=#{groupIdx}
+        ORDER BY regDate DESC
+        LIMIT 1
+    </select>
+    <select id="getGroupIdx">
+        SELECT IFNULL(groupIdx,-1)
+        FROM tbl_chat_group
+        WHERE goodsIdx = #{goodsIdx} AND customer = #{customer}
     </select>
 </mapper>
