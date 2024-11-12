@@ -29,9 +29,13 @@ public class PageRequestDTO {
     @Builder.Default
     @Positive
     @Min(value=1)
-    private int page_block_size=5;
+    private int page_block_size=10;
+    private String searchKeyword;
+    private String searchCategory;
+    private String orderBy;
+    private String orderDir;
 
     public int getPage_skip_count() {
-        return (this.page_no -1) * this.page_size;
+        return (this.page_no - 1) * this.page_size;
     }
 }

@@ -24,10 +24,13 @@ public class PageResponseDTO<E> {
 
     List<E> dtoList;
 
-    public PageResponseDTO(){}
+    private String searchKeyword;
+    private String searchCategory;
+
+    public PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
-    public PageResponseDTO(PageRequestDTO reqDTO, int total_count, List<E> dtoList){
+    public PageResponseDTO(PageRequestDTO reqDTO, int total_count, List<E> dtoList) {
         this.total_count = total_count;
         this.page_no = reqDTO.getPage_no();
         this.page_size = reqDTO.getPage_size();
@@ -37,9 +40,12 @@ public class PageResponseDTO<E> {
 
         this.setPage_block_start();
         this.setPage_block_end();
-        this.prev_page_flag = (this.page_block_size > 1);
+        this.prev_page_flag = (this.page_block_start > 1);
         this.next_page_flag = (this.total_page > this.page_block_end);
         this.dtoList = dtoList;
+
+        this.searchCategory = reqDTO.getSearchCategory();
+        this.searchKeyword = reqDTO.getSearchKeyword();
     }
 
     public int getTotal_page() {
@@ -51,10 +57,10 @@ public class PageResponseDTO<E> {
     }
 
     public void setPage_block_start() {
-        if(this.page_no % this.page_block_size == 0){
-            this.page_block_start = this.page_no - (this.page_block_size - 1);
-        } else{
-            this.page_block_start = ((int)Math.floor(this.page_no/(double)this.page_block_size)*this.page_block_size)+1;
+        if ( this.page_no % this.page_block_size == 0) {
+            this.page_block_start = this.page_no - (this.page_block_size -1);
+        } else {
+            this.page_block_start =  ((int)Math.floor(this.page_no/(double)this.page_block_size)*this.page_block_size) + 1;
         }
     }
 
