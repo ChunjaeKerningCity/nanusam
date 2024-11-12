@@ -52,10 +52,10 @@ public class MemberServiceImpl implements MemberService{
 
     // 마이페이지 진입전 비밀번호확인
     @Override
-    public boolean pwdCheck(String memberId) {
+    public boolean pwdCheck(String memberId,String pwd) {
         MemberVO memberVO = memberXmlmapper.viewMember(memberId);
         if (memberVO != null) {
-            return memberVO.getPwd().equals(memberId);
+            return memberVO.getPwd().equals(pwd);
         }
         return false;
     }

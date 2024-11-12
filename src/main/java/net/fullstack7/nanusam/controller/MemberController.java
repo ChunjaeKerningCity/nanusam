@@ -73,12 +73,6 @@ public class MemberController {
         }
     }
 
-    @PostMapping
-    @ResponseBody
-  
-
-
-
     @GetMapping("/regist.do")
     public String registGet(HttpSession session, Model model) {
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
@@ -88,9 +82,26 @@ public class MemberController {
         }
         return "login/regist";
     }
+
+    // 아이디 중복체크
+    @PostMapping("/memberIdCheck.do")
+    @ResponseBody
+    public String checkMemberId(@RequestParam String memberId) {
+        boolean available = memberService.memberIdCheck(memberId);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("available", available);
+        return jsonResponse.toString();
+    }
+
     @PostMapping("/regist.do")
-    public String registPost(){
-        return "member/list";
+    public String registPost(@ModelAttribute MemberDTO memberDTO, Model model) {
+        int result = memberService.registMember(memberDTO);
+        if (result > 0) {
+            return "redirect:/member/list.do";
+        } else {
+            model.addAttribute("errors", "회원가입에 실패했습니다.");
+            return "login/regist";
+        }
     }
     @GetMapping("/view.do")
     public String viewGet(){
