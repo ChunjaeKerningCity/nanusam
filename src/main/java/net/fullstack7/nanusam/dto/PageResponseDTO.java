@@ -17,7 +17,6 @@ public class PageResponseDTO<E> {
     private int page_block_size;
     private int page_block_start;
     private int page_block_end;
-
     private int first_page;
     private int last_page;
     private boolean prev_page_flag;
@@ -69,6 +68,4 @@ public class PageResponseDTO<E> {
         this.page_block_end = (int)Math.ceil(this.page_no/(double)this.page_block_size)*this.page_block_size;
         this.page_block_end = (this.page_block_end > this.total_page ? this.total_page : this.page_block_end);
     }
-
-
 }
