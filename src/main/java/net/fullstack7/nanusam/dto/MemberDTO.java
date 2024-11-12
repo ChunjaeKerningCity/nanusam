@@ -22,8 +22,7 @@ public class MemberDTO {
     @Size(min = 5, max = 20)
     private String memberId;
     @NotBlank
-    @Min(value = 8)
-    @Max(value = 16)
+    @Size(min = 8, max = 16)
     private String pwd;
     @NotBlank
     @Size(min = 2, max = 10)
@@ -32,7 +31,7 @@ public class MemberDTO {
     @Size(min = 2, max = 10)
     private String email;
     @NotBlank
-    @Min(value = 11)
+    @Size(min = 10, max = 11)
     private String phone;
     @NotBlank
     private String birthday;            // YYYY-MM-DD
@@ -40,7 +39,7 @@ public class MemberDTO {
     private String addr1;
     @NotBlank
     private String addr2;
-    @Min(value = 6)
+    @Size(min = 5, max = 6)
     private String zipCode;             // 우편번호
     private String memType;             // 회원유형 t,a
     private LocalDateTime regDate;

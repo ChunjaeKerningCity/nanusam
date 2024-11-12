@@ -6,30 +6,50 @@
         INSERT INTO tbl_chat_group(seller,customer,goodsIdx)
         VALUES (#{seller},#{customer},#{goodsIdx})
     </insert>
-    <insert id="messageRegist" parameterType="net.fullstack7.nanusam.domain.ChatMessageVO">
+    <insert id="messageRegist" useGeneratedKeys="true" keyProperty="id" parameterType="net.fullstack7.nanusam.domain.ChatMessageVO">
         INSERT INTO tbl_chat_message(groupIdx, senderId, content)
         VALUES (#{groupIdx},#{senderId},#{content})
     </insert>
     <select id="groupList" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
-        SELECT idx, seller, customer, goodsIdx, sellerDel, customerDel, regDate
+        SELECT idx, seller, customer, goodsIdx, delChk, regDate
         FROM tbl_chat_group
         WHERE seller=#{memberId} OR customer=#{memberId}
     </select>
     <select id="messageList" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
-        SELECT idx, groupIdx, senderId, content, regDate, sellerDel, customerDel
+        SELECT idx, groupIdx, senderId, content, regDate, delChk
         FROM tbl_chat_message
         WHERE groupIdx = #{groupIdx}
     </select>
     <select id="getLastMessage" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
-        SELECT idx, groupIdx, senderId, content, regDate, sellerDel, customerDel
+        SELECT idx, groupIdx, senderId, content, regDate, delChk
         FROM tbl_chat_message
         WHERE groupIdx=#{groupIdx}
         ORDER BY regDate DESC
         LIMIT 1
     </select>
-    <select id="getGroupIdx">
-        SELECT IFNULL(groupIdx,-1)
+    <select id="getGroupIdx" resultType="Integer">
+        SELECT IFNULL(idx,-1)
         FROM tbl_chat_group
         WHERE goodsIdx = #{goodsIdx} AND customer = #{customer}
+    </select>
+    <select id="getGroup" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
+        SELECT idx, seller, customer, goodsIdx, delChk, regDate
+        FROM tbl_chat_group
+        WHERE idx=#{groupIdx}
+    </select>
+    <update id="deleteGroup">
+        UPDATE tbl_chat_group
+        SET delChk='Y'
+        WHERE idx=#{idx}
+    </update>
+    <update id="readMessages">
+        UPDATE tbl_chat_message
+        SET readChk='Y'
+        WHERE groupIdx=#{groupIdx} AND senderId != #{memberId}
+    </update>
+    <select id="getMessage" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
+        SELECT idx, groupIdx, senderId, content, regDate, delChk
+        FROM tbl_chat_message
+        WHERE idx=#{idx}
     </select>
 </mapper>
