@@ -39,13 +39,13 @@ public class ChatController {
     }
     @GetMapping("/fromGoods.do")
     public String chatViewFirst(@RequestParam int goodsIdx, HttpSession session, Model model) {
-        if(session == null || session.getAttribute("memberId") == null) {
+        if (session == null || session.getAttribute("memberId") == null) {
             return "redirect:/main.do";
         }
         String customer = (String) session.getAttribute("memberId");
-        int result = chatService.getGroupIdx(goodsIdx,customer);
-        if(result>0){
-            return "forward:/chat/view.do?groupIdx="+result;
+        int result = chatService.getGroupIdx(goodsIdx, customer);
+        if (result > 0) {
+            return "forward:/chat/view.do?groupIdx=" + result;
         }
         return null;
     }

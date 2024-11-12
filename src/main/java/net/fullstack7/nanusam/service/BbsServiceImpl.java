@@ -46,6 +46,10 @@ public class BbsServiceImpl implements BbsService {
     public PageResponseDTO<BbsDTO> listByPage(PageRequestDTO pageRequestDTO){
         log.info("===================================");
         log.info("BbsServiceImpl >> listByPage() START");
+        log.info("page_no = " + pageRequestDTO.getPage_no());
+        log.info("page_size = " + pageRequestDTO.getPage_size());
+        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
+        log.info("page_block = " + pageRequestDTO.getPage_block_size());
 
         List<BbsVO> voList = bbsMapper.listByPage(pageRequestDTO);
         List<BbsDTO> dtoList = voList.stream()
