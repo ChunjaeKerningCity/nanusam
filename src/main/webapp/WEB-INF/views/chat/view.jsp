@@ -28,10 +28,13 @@
     <c:forEach items="${chatMessageList}" var="chat">
       <c:choose>
         <c:when test="${chat.senderId ne loginId}">
-          <div>${chat.senderId} : ${chat.content} ${chat.regDate}</div>
+          <div>${chat.senderId} : ${chat.content}</div>
+          <div>${chat.regDate}</div>
         </c:when>
         <c:otherwise>
-          <div class="myMsg">${chat.content} ${chat.regDate}</div>
+          <div class="myMsg">${chat.content}</div>
+          <div class="myMsg">${chat.regDate}</div>
+          <div class="myMsg">${chat.readChk eq 'N' ? '읽지않음' : '읽음'}</div>
         </c:otherwise>
       </c:choose>
     </c:forEach>
@@ -51,7 +54,7 @@
     }
 
     function sendMessage(){
-      chatWindow.innerHTML += "<div class='myMsg'>" + chatMessage.value + "</div>";
+      //chatWindow.innerHTML += "<div class='myMsg'>" + chatMessage.value + "</div>";
       webSocket.send(chatId + "||" + chatMessage.value);
       chatMessage.value="";
       chatWindow.scrollTop = chatWindow.scrollHeight;
@@ -83,10 +86,21 @@
       let message = event.data.split("\\|\\|");
       let sender = message[0];
       let content = message[1];
-      if(content !== ""){
-          chatWindow.innerHTML += "<div>"+sender+" : "+content+"</div>";
+      let regDate = message[2];
+      let readChk = message[3];
+      console.log("sender : content : regDate : readChk >>" + sender +" : "+ content +" : "+regDate+" : "+readChk );
+      if(sender !== "${sessionScope.memberId}") {
+        if (content !== "") {
+          chatWindow.innerHTML += "<div>" + sender + " : " + content + "/" + regDate + "</div>";
+        }
+        chatWindow.scrollTop = chatWindow.scrollHeight;
+      }else{
+        if (content !== "") {
+          chatWindow.innerHTML += "<div class='myMsg'>" + sender + " : " + content + "</div>"
+                  +"<div class='myMsg'>"+regDate+"</div>"
+          +"<div class='myMsg'>"+(readChk==='N'?'읽지않음':'읽음')+"</div>";
+        }
       }
-      chatWindow.scrollTop = chatWindow.scrollHeight;
     }
   </script>
   </body>

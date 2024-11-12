@@ -29,7 +29,14 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int messageRegist(ChatMessageDTO dto) {
-        return chatMapper.messageRegist(modelMapper.map(dto, ChatMessageVO.class));
+        // DTO를 VO로 변환
+        ChatMessageVO vo = modelMapper.map(dto, ChatMessageVO.class);
+
+        // Mapper 호출
+        chatMapper.messageRegist(vo);
+
+        // 자동 생성된 idx를 VO에서 반환
+        return vo.getIdx();
     }
 
     @Override

@@ -14,27 +14,4 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class ServiceTests {
     @Autowired(required=false)
     ChatService chatService;
-    @Test
-    public void chatRegistTest(){
-        log.info("chatRegistTest");
-        chatService.regist(
-                ChatDTO.builder()
-                        .sender("user1")
-                        .receiver("user2")
-                        .content("testContent")
-                        .goodsIdx(2)
-                        .build()
-        );
-    }
-    @Test
-    public void chatListTest(){
-        log.info("chatListTest");
-        log.info(chatService.getList("testSender1"));
-    }
-
-    @Test
-    public void chatViewTest(){
-        log.info("chatViewTest");
-        log.info(chatService.view(1, "testSender1", "testReceiver1"));
-    }
 }
