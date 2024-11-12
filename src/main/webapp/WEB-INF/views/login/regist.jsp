@@ -1,64 +1,53 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: full5-3
-  Date: 2024-11-11
-  Time: 오후 2:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
+
 <html>
 <head>
     <title>member regist</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <title>회원가입</title>
 </head>
+
 <body>
-<h2>아이디 중복 확인</h2>
-<form>
-    <label for="memberId">아이디:</label>
-    <input type="text" id="memberId" name="memberId">
-    <button type="button" onclick="checkId()">확인</button>
+<h2>회원가입</h2>
+<form method="POST" id="registForm">
+    <label>아이디: </label>
+    <input type="text" id="memberId" name="memberId" required>
+    <button type="button" onclick="checkId()">아이디 중복확인</button>
+    <span id="idCheckResult"></span>
+    <br><br>
+    <label>비밀번호: </label>
+    <input type="password" name="pwd" required>
+    <br><br>
+    <button type="submit">회원가입</button>
 </form>
-<p id="result"></p>
 
-<script type="text/javascript">
+<script>
     function checkId() {
-        const memberId = document.querySelector("#memberId").value;
-        const result = document.querySelector("#result");
-
-        if (memberId === "") {
-            result.textContent = "아이디를 입력해주세요.";
+        const memberId = $("#memberId").val();
+        if (!memberId) {
+            alert("아이디를 입력하세요.");
             return;
         }
-
-        const param = { uid: memberId };
-
-        fetch('/member/existUid.do', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify(param),
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                if (json.status) {
-                    result.textContent = "사용할 수 있는 아이디입니다.";
-                    result.style.color = "green";
+        $.ajax({
+            url: "/member/memberIdCheck.do",
+            type: "POST",
+            data: { memberId: memberId },
+            success: function(response) {
+                if (response.available) {
+                    $("#idCheckResult").text("사용 가능한 아이디입니다.").css("color", "green");
                 } else {
-                    result.textContent = "이미 존재하는 아이디입니다.";
-                    result.style.color = "red";
+                    $("#idCheckResult").text("이미 사용 중인 아이디입니다.").css("color", "red");
                 }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                result.textContent = "서버 오류가 발생했습니다.";
-                result.style.color = "red";
-            });
+            },
+            error: function() {
+                $("#idCheckResult").text("중복 확인에 실패했습니다.").css("color", "red");
+            }
+        });
     }
 </script>
-
 
 </body>
 </html>
