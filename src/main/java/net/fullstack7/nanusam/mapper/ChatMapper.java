@@ -15,7 +15,9 @@ public interface ChatMapper {
     public List<ChatGroupVO> groupList(@Param("memberId")String memberId);
     public List<ChatMessageVO> messageList(@Param("groupIdx")int groupIdx);
     public ChatMessageVO getLastMessage(@Param("groupIdx")int groupIdx);
-    public int getGroupIdx(@Param("goodsIdx") int goodsIdx, @Param("customer") String customer);
-
-
+    public Integer getGroupIdx(@Param("goodsIdx") int goodsIdx, @Param("customer") String customer);
+    public ChatGroupVO getGroup(@Param("groupIdx")int groupIdx);
+    public int deleteGroup(@Param("idx") int idx);
+    public int readMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
+    public ChatMessageVO getMessage(@Param("idx")int idx);
 }

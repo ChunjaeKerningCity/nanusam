@@ -15,5 +15,9 @@ public interface ChatService {
     public List<ChatGroupDTO> groupList(String memberId);
     public List<ChatMessageDTO> messageList(int groupIdx);
     public ChatMessageDTO getLastMessage(int groupIdx);
-    public int getGroupIdx(int goodsIdx, String customer);
+    public Integer getGroupIdx(int goodsIdx, String customer);
+    public ChatGroupDTO getGroup(int groupIdx);
+    public int deleteGroup(int groupIdx);
+    public int readMessages(int groupIdx, String memberId);
+    public ChatMessageDTO getMessage(int idx);
 }
