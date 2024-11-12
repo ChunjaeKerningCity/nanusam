@@ -26,7 +26,7 @@
       디지털로9길 23 11층 (가산동) | 대표번호 : 1661-0901
     </p>
     <p style="color: rgb(153, 153, 153)">
-      Copyright © TeacherOfDivision Corp. All Rights Reserved
+      <a href="/admin/index.do" style="color: rgb(153, 153, 153); text-decoration: none">Copyright</a> © TeacherOfDivision Corp. All Rights Reserved
     </p>
   </div>
   <img src="/resources/public/footerRight.png" alt="가맹문의" />
