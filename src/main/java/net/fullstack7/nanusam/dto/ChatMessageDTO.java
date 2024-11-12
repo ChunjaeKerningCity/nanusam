@@ -16,6 +16,5 @@ public class ChatMessageDTO {
     private String senderId;
     private String content;
     private LocalDateTime regDate;
-    private String sellerDel;
-    private String customerDel;
+    private String delChk;
 }

@@ -21,16 +21,17 @@
     </style>
   </head>
   <body>
-  대화명 : <input type="text" id="chatId" value="${ sender }" readonly />
+  <c:set var="loginId" value="${sessionScope.memberId}"/>
+  <input type="text" id="chatId" value="${sender}" readonly />
   <button id="closeBtn" onclick="disconnect();">채팅 종료</button>
   <div id="chatWindow">
-    <c:forEach items="${chatViewList}" var="chat">
+    <c:forEach items="${chatMessageList}" var="chat">
       <c:choose>
-        <c:when test="${chat.sender eq sender}">
-          <div>${chat.sender} : ${chat.content}</div>
+        <c:when test="${chat.senderId ne loginId}">
+          <div>${chat.senderId} : ${chat.content} ${chat.regDate}</div>
         </c:when>
         <c:otherwise>
-          <div class="myMsg">${chat.content}</div>
+          <div class="myMsg">${chat.content} ${chat.regDate}</div>
         </c:otherwise>
       </c:choose>
     </c:forEach>
@@ -40,7 +41,7 @@
     <button id="sendBtn" onclick="sendMessage();">전송</button>
   </div>
   <script>
-    let webSocket = new WebSocket("/chat/${goodsIdx}");
+    let webSocket = new WebSocket("/chat/${groupIdx}");
     let chatWindow, chatMessage, chatId;
 
     window.onload = function(){
@@ -71,7 +72,7 @@
     };
 
     webSocket.onclose = function(event){
-      chatWindow.innerHTML += "웹소켄 서버가 종료되었습니다</br>"
+      chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다</br>"
     };
 
     webSocket.onerror = function(event){
@@ -79,7 +80,7 @@
     }
 
     webSocket.onmessage = function(event){
-      let message = event.data.split("||");
+      let message = event.data.split("\\|\\|");
       let sender = message[0];
       let content = message[1];
       if(content !== ""){
