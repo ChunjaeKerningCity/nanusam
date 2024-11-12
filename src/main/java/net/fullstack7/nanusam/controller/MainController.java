@@ -12,11 +12,14 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequiredArgsConstructor
 @Log4j2
-
 public class MainController {
-
     @RequestMapping("/")
     public String main(HttpSession session) {
         return "main";
+    }
+
+    @GetMapping("/main/directions")
+    public String www(){
+        return "navigation/directions";
     }
 }

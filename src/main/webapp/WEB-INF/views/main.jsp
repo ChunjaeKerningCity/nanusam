@@ -41,13 +41,12 @@
                     <div class="center">
                         <div class="sliderTextArea">
                             <h1 class="sliderH1">
-                                교육의 가치를 더하는<br />
-                                중고거래
+                                세상 모든 물건에 가치를<br />
+                                소비를 지속가능하게
                             </h1>
                             <div class="sliderP">
-                                선생님들이 교육 현장에서 필요한 물품을 신뢰할 수 있는
-                                이웃들과
-                                <br />따뜻하게 거래하세요.
+                                To make consumption sustainable by giving a second life to everything;
+                                <br />waste nothing for planet & for your lifestyle
                             </div>
                         </div>
                         <img src="/resources/public/slider2.png" alt="" />
