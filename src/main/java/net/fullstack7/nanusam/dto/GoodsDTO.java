@@ -3,8 +3,7 @@ package net.fullstack7.nanusam.dto;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 
 @Log4j2
 @ToString
@@ -13,12 +12,15 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 @Builder
 public class GoodsDTO {
-    @Positive
     private int idx;
+    @NotNull
+    @NotBlank
     private String name;
     private String memberId;
     @PositiveOrZero
+    @Min(value=0)
     private int price;
+    @NotNull
     private String quality;
     @Builder.Default
     private String status = "N";

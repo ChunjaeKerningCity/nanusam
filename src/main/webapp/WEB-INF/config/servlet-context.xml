@@ -20,4 +20,12 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <context:component-scan base-package="net.fullstack7.nanusam.controller"/>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <property name="maxUploadSize" value="10480000" />
+    </bean>
+    <bean id="uploadPath" class="java.lang.String">
+        <constructor-arg value="D:\\java7\\upload" />
+    </bean>
 </beans>
