@@ -14,8 +14,8 @@
   <button type="submit">로그인</button>
 </form>
 <br>
-<c:if test="${not empty error}">
-  <p style="color:red;">${error}</p>
+<c:if test="${not empty errors}">
+  <p style="color:red;">${errors}</p>
 </c:if>
 </body>
 </html>

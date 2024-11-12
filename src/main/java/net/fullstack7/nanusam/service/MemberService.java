@@ -10,5 +10,5 @@ public interface MemberService {
     public int registMember(MemberDTO memberDTO);
     public int modifyMember(MemberDTO memberDTO);
     public int deleteMember(String memberId);
-
+    public boolean memberIdCheck(String memberId);
 }

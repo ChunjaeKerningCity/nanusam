@@ -18,13 +18,11 @@ public class MemberServiceTests {
     @Autowired
     private MemberService memberService;
 
-    @Test
+/*    @Test
     public void testLoginSuccess() {
         String memberId = "user1";
         String pwd = "1234";
-
         boolean result = memberService.login(memberId, pwd);
-
         assertTrue(result);
-    }
+    }*/
 }

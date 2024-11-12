@@ -12,5 +12,5 @@ public interface MemberMapper {
     String pwdCheck(String memberId);
     int modifyMember(MemberVO memberVO);
     int deleteMember(String memberId);
-    MemberVO memberIdCheck(String memberId);
+    int memberIdCheck(String memberId);
 }

@@ -58,4 +58,9 @@ public class MemberServiceImpl implements MemberService{
     public int deleteMember(String memberId) {
         return memberXmlmapper.deleteMember(memberId);
     }
+
+    @Override
+    public boolean memberIdCheck(String memberId) {
+        return memberXmlmapper.memberIdCheck(memberId) > 0;
+    }
 }

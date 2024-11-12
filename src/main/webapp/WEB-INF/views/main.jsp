@@ -19,7 +19,7 @@
     <li><a href="/bbs/modify.do">게시판수정</a></li>
     <li><a href="/bbs/delete.do">게시판삭제</a></li>
     <li><a href="/member/login.do">로그인</a></li>
-    <li><a href="/member/registCheck.do">로그인</a></li>
+    <li><a href="/member/registCheck.do">회원가입</a></li>
     <li><a href="/member/list.do">회원리스트</a></li>
     <li><a href="/member/view.do">회원조회</a></li>
     <li><a href="/member/modify.do">회원수정</a></li>

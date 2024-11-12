@@ -5,10 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -47,6 +44,26 @@ public class MemberController {
         return "login/registCheck";
     }
 
+    @PostMapping("/registCheck.do")
+    public String registCheck(@RequestParam(value = "termsAgreement", defaultValue = "false") boolean termsAgreement, Model model) {
+        if (termsAgreement) {
+            return "login/regist";
+        } else {
+            model.addAttribute("errors", "약관동의 후 회원가입이 가능합니다");
+            return "login/registCheck";
+        }
+    }
+
+    @GetMapping("/memberIdCheck.do")
+    @ResponseBody
+    public String memberIdCheck(@RequestParam("memberId") String memberId) {
+        boolean isDuplicate = memberService.memberIdCheck(memberId);
+        if (isDuplicate) {
+            return "아이디가 중복되었습니다.";
+        } else {
+            return "사용 가능한 아이디입니다.";
+        }
+    }
 
     @GetMapping("/regist.do")
     public String registGet(){
