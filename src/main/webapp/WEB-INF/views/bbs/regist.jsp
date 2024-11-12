@@ -33,6 +33,13 @@
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
         </div>
     </form>
+
+    <div class="form-group row justify-content-center mt-3">--%>
+        <div class="col">
+            <button type="button" class="btnRegist" onclick="javascript:location.href='/bbs/view.do?idx=${dto.idx}'">등록</button>
+            <button type="button" class="btnDelete" onclick="javascript:location.href='/bbs/list.do'">취소</button>
+        </div>
+    </div>
 </main>
 
 <footer class="footerContainer">
