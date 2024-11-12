@@ -35,4 +35,5 @@
     <context:component-scan base-package="net.fullstack7.nanusam.config"/>
     <context:component-scan base-package="net.fullstack7.nanusam.controller"/>
     <context:component-scan base-package="net.fullstack7.nanusam.service"/>
+    <context:component-scan base-package="net.fullstack7.nanusam.websocket"/>
 </beans>

@@ -2,6 +2,7 @@ package net.fullstack7.nanusam.domain;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,7 +17,7 @@ public class BbsVO {
     private String content;
     private String category;
     private String displayDate;
-    private LocalDateTime regDate;
+    private LocalDate regDate;
     private LocalDateTime modifyDate;
     private int readCnt;
 }

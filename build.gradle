@@ -23,7 +23,8 @@ tasks.withType(JavaCompile) {
 
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
-
+    compileOnly('javax.json:javax.json-api:1.1.4')
+    compileOnly('javax.websocket:javax.websocket-api:1.1')
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
@@ -75,6 +76,10 @@ dependencies {
     implementation group: 'org.mybatis', name: 'mybatis-spring', version: '2.1.2'
     // https://mvnrepository.com/artifact/org.hibernate.validator/hibernate-validator
     implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.5.Final'
+
+    // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.5'
+
 }
 
 test {
