@@ -47,5 +47,6 @@ public class ChatController {
         if(result>0){
             return "forward:/chat/view.do?groupIdx="+result;
         }
+        return null;
     }
 }
