@@ -22,7 +22,7 @@ public class PageResponseDTO<E> {
     private boolean prev_page_flag;
     private boolean next_page_flag;
 
-    List<E> dtoList;
+    private List<E> dtoList;
 
     public PageResponseDTO(){}
 
@@ -39,6 +39,7 @@ public class PageResponseDTO<E> {
         this.setPage_block_end();
         this.prev_page_flag = (this.page_block_size > 1);
         this.next_page_flag = (this.total_page > this.page_block_end);
+        this.total_count = total_count;
         this.dtoList = dtoList;
     }
 

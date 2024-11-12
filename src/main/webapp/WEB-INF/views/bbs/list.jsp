@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -100,14 +101,18 @@
             </tr>
             </thead>
             <tbody>
+            <c:if test="${not empty bbsList && not empty bbsList.dtoList}">
             <c:forEach items="${bbsList.dtoList}" var="list" varStatus="loop">
                 <tr>
                     <td><a href="/bbs/view.do?idx=${list.idx}">${list.title}</a></td>
                     <td>${list.readCnt}</td>
                     <td>${list.regDate}</td>
+<%--                    <td><fmt:parseDate value="${list.regDate}" var="dateValue" pattern="yyyy-MM-dd"/></td>--%>
+<%--                   <fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/></td>--%>
                 </tr>
             </c:forEach>
-            <c:if test="${bbsList == null}">
+            </c:if>
+            <c:if test="${empty bbsList.dtoList}">
                 <tr>
                     <td colspan="7" class="text-center">등록된 게시물이 존재하지 않습니다.</td>
                 </tr>
