@@ -2,5 +2,48 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.GoodsMapper">
+    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.GoodsVO">
+        select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category
+        from tbl_goods
+        where idx > 0
+        <if test='searchKeyword != null and searchKeyword != ""'>
+        and name like concat('%', #{searchKeyword}, '%')
+        </if>
+        <if test='searchCategory != null and searchCategory != ""'>
+            and category = #{searchCategory}
+        </if>
+        <choose>
+            <when test='orderBy != null and orderBy != ""'>
+                order by ${orderBy} ${orderByDir}
+            </when>
+            <otherwise>
+                order by regDate desc
+            </otherwise>
+        </choose>
+        limit #{page_skip_count}, #{page_size}
+    </select>
+    <select id="totalCount">
+        select count(idx) as total_count
+        from tbl_goods
+        where idx > 0
+        <if test='searchKeyword != null and searchKeyword != ""'>
+            and name like concat('%', #{searchKeyword}, '%')
+        </if>
+        <if test='searchCategory != null and searchCategory != ""'>
+            and category = #{searchCategory}
+        </if>
+    </select>
 
+    <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
+        insert into tbl_goods (name, memberId, price, quality, status, category)
+        values (#{name},#{memberId},#{price},#{quality},#{status},#{category})
+    </insert>
+
+<!--    <update id="modify">-->
+<!--        update tbl_goods set -->
+<!--    </update>-->
+
+    <delete id="deleteByIdx">
+        delete from tbl_goods where idx=#{idx}
+    </delete>
 </mapper>
