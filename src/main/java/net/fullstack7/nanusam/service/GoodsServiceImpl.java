@@ -2,12 +2,14 @@ package net.fullstack7.nanusam.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,5 +35,18 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public int totalCount() {
         return 0;
+    }
+
+    @Override
+    public void regist(GoodsDTO goodsDTO) {
+        GoodsVO goodsVO = modelMapper.map(goodsDTO, GoodsVO.class);
+        goodsMapper.regist(goodsVO);
+        log.info("idx="+goodsVO.getIdx());
+        goodsDTO.setIdx(goodsVO.getIdx());
+    }
+
+    @Override
+    public void fileupload(MultipartFile file) {
+
     }
 }

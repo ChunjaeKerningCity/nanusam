@@ -16,7 +16,7 @@
 <body>
 <h1>goods regist</h1>
 
-<form action="/goods/regist.do" method="post" enctype="multipart/form-data" name="frmGoodsRegist" id="frmGoodsRegist">
+<form action="/goods/regist.do" method="post" name="frmGoodsRegist" id="frmGoodsRegist">
     <div class="row">
         <div class="col">
             <label for="category" class="form-label">카테고리</label>
@@ -57,8 +57,14 @@
     <div class="row">
         <div class="col">
             <div class="mb-3">
-                <label for="goodsImage" class="form-label">상품 사진</label>
-                <input class="form-control" type="file" id="goodsImage" name="goodsImage" multiple>
+                <label for="mainImage" class="form-label">상품 대표 사진</label>
+                <input class="form-control" type="file" id="mainImage" name="mainImage">
+            </div>
+        </div>
+        <div class="col">
+            <div class="mb-3">
+                <label for="detailImages" class="form-label">상세 사진</label>
+                <input class="form-control" type="file" id="detailImages" name="detailImages" multiple>
             </div>
         </div>
     </div>

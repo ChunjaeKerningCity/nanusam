@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.annotation.MultipartConfig;
 import javax.validation.Valid;
 
 @Controller
@@ -40,9 +42,13 @@ public class GoodsController {
     }
 
     @PostMapping("/regist.do")
-    public String registPost(@Valid GoodsDTO goodsDTO, BindingResult bindingResult) {
-
-        return "goods/list";
+    public String registPost(@Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        log.info(goodsDTO.getName());
+        log.info(goodsDTO.getPrice());
+        goodsDTO.setMemberId("user1");
+        goodsService.regist(goodsDTO);
+        log.info(goodsDTO.getIdx());
+        return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
     }
 
     @GetMapping("/view.do")

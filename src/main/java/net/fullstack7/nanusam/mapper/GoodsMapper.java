@@ -10,4 +10,6 @@ import java.util.List;
 public interface GoodsMapper {
     List<GoodsVO> listByPage(PageRequestDTO requestDTO);
     int totalCount(PageRequestDTO requestDTO);
+    void regist(GoodsVO goodsVO);
+    void deleteByIdx(int idx);
 }

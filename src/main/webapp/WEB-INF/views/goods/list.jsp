@@ -17,8 +17,10 @@
 <h1>goods list</h1>
 ${errors}
 <div class="container text-center">
+<%--    상품등록버튼--%>
+
 <%--    검색폼--%>
-    <div class="row">
+    <div class="row justify-content-md-center">
         <form action="/goods/list.do" method="get" name="frmSearch" id="frmSearch">
             <div class="row">
                 <div class="col">
@@ -37,7 +39,15 @@ ${errors}
                     </div>
                 </div>
                 <div class="col">
-                    <input type="submit" class="btn btn-primary" id="btnSubmit" value="검색" />
+
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            <input type="submit" class="btn btn-secondary" id="btnSubmit" value="검색" />
+                        </div>
+                        <div class="btn-group me-2" role="group" aria-label="Second group">
+                            <button type="button" class="btn btn-primary" onclick="location.href='/goods/regist.do';return false;">상품 등록</button>
+                        </div>
+
+
                 </div>
             </div>
         </form>

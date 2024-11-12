@@ -33,4 +33,17 @@
             and category = #{searchCategory}
         </if>
     </select>
+
+    <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
+        insert into tbl_goods (name, memberId, price, quality, status, category)
+        values (#{name},#{memberId},#{price},#{quality},#{status},#{category})
+    </insert>
+
+<!--    <update id="modify">-->
+<!--        update tbl_goods set -->
+<!--    </update>-->
+
+    <delete id="deleteByIdx">
+        delete from tbl_goods where idx=#{idx}
+    </delete>
 </mapper>
