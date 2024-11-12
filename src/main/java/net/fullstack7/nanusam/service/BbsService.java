@@ -13,7 +13,7 @@ public interface BbsService {
     public List<BbsDTO> list();
     public PageResponseDTO<BbsDTO> listByPage(PageRequestDTO requestDTO);
 
-    public BbsDTO view(int idx);
+    BbsDTO view(int idx);
     void regist(BbsDTO dto);
     void modify(BbsDTO dto);
 

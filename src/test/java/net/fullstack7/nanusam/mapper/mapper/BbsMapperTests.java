@@ -2,6 +2,7 @@ package net.fullstack7.nanusam.mapper.mapper;
 
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.BbsVO;
+import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.mapper.BbsMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Log4j2
 @ExtendWith(SpringExtension.class)
@@ -35,5 +37,23 @@ public class BbsMapperTests {
                 .build();
 
         bbsMapper.regist(bbsVO);
+    }
+
+    @Test
+    public void testView(){
+        BbsVO bbsVO = bbsMapper.view(1);
+        log.info(bbsVO);
+    }
+
+    @Test
+    public void testListByPage(){
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page_no(1)
+                .page_size(10)
+                .build();
+
+        List<BbsVO> voList = bbsMapper.listByPage(pageRequestDTO);
+
+        voList.forEach(bbsVO -> log.info(bbsVO));
     }
 }

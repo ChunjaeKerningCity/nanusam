@@ -13,6 +13,7 @@ public interface BbsMapper {
     int totalCount();
     List<BbsVO> list();
     List<BbsVO> listByPage(PageRequestDTO pageRequestDTO);
+    int getCount(PageRequestDTO pageRequestDTO);
     BbsVO view(int idx);
     void regist(BbsVO vo);
     void modify(BbsVO vo);

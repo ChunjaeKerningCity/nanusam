@@ -68,18 +68,44 @@ public class BbsServiceImpl implements BbsService {
 
     @Override
     public BbsDTO view(int idx){
-        return null;
+        log.info("=================================================");
+        log.info("BbsServiceImpl >> view() START");
+
+        BbsVO vo = bbsMapper.view(idx);
+        BbsDTO dto = modelMapper.map(vo, BbsDTO.class);
+
+        log.info("idx=" +idx);
+        log.info("vo=" +vo);
+        log.info("dto=" +dto);
+        log.info("BbsServiceImpl >> view() END");
+        log.info("=================================================");
+        return dto;
     }
 
     @Override
-    public void regist(BbsDTO dto){}
+    public void regist(BbsDTO dto){
+        BbsVO vo = modelMapper.map(dto, BbsVO.class);
+        bbsMapper.regist(vo);
+
+        log.info("===================================");
+        log.info("BbsServiceImpl >> regist() START");
+        log.info("vo = " + vo);
+        log.info("BbsServiceImpl >> regist() END");
+        log.info("===================================");
+    }
 
     @Override
-    public void modify(BbsDTO dto){}
+    public void modify(BbsDTO dto){
+        BbsVO vo = modelMapper.map(dto, BbsVO.class);
+        bbsMapper.modify(vo);
+    }
 
     @Override
-    public void delete(int idx){}
+    public void delete(int idx){
+        bbsMapper.delete(idx);
+    }
 
     @Override
-    public void addReadCnt(int idx){}
+    public void addReadCnt(int idx){
+    }
 }
