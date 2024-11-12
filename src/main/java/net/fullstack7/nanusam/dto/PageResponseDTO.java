@@ -25,6 +25,9 @@ public class PageResponseDTO<E> {
 
     List<E> dtoList;
 
+    private String searchKeyword;
+    private String searchCategory;
+
     public PageResponseDTO() {}
 
     @Builder(builderMethodName = "withAll")
@@ -41,6 +44,9 @@ public class PageResponseDTO<E> {
         this.prev_page_flag = (this.page_block_start > 1);
         this.next_page_flag = (this.total_page > this.page_block_end);
         this.dtoList = dtoList;
+
+        this.searchCategory = reqDTO.getSearchCategory();
+        this.searchKeyword = reqDTO.getSearchKeyword();
     }
 
     public int getTotal_page() {

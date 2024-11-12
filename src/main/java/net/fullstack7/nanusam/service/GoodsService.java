@@ -1,7 +1,10 @@
 package net.fullstack7.nanusam.service;
 
-import org.springframework.stereotype.Service;
-
+import net.fullstack7.nanusam.dto.GoodsDTO;
+import net.fullstack7.nanusam.dto.PageRequestDTO;
+import net.fullstack7.nanusam.dto.PageResponseDTO;
 
 public interface GoodsService {
+    public PageResponseDTO<GoodsDTO> listByPage(PageRequestDTO requestDTO);
+    public int totalCount();
 }

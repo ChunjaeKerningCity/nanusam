@@ -2,18 +2,35 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.GoodsMapper">
-
-    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.BbsVO">
+    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.GoodsVO">
         select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category
-        from tbl_bbs
+        from tbl_goods
         where idx > 0
-        <if test="searchKeyword != null">
+        <if test='searchKeyword != null and searchKeyword != ""'>
         and name like concat('%', #{searchKeyword}, '%')
         </if>
-        <if test="searchCategory != null">
+        <if test='searchCategory != null and searchCategory != ""'>
             and category = #{searchCategory}
         </if>
+        <choose>
+            <when test='orderBy != null and orderBy != ""'>
+                order by ${orderBy} ${orderByDir}
+            </when>
+            <otherwise>
+                order by regDate desc
+            </otherwise>
+        </choose>
         limit #{page_skip_count}, #{page_size}
     </select>
-
+    <select id="totalCount">
+        select count(idx) as total_count
+        from tbl_goods
+        where idx > 0
+        <if test='searchKeyword != null and searchKeyword != ""'>
+            and name like concat('%', #{searchKeyword}, '%')
+        </if>
+        <if test='searchCategory != null and searchCategory != ""'>
+            and category = #{searchCategory}
+        </if>
+    </select>
 </mapper>
