@@ -66,3 +66,6 @@ bin/
 .DS_Store
 .gradle/
 /test/
+
+### remove test ###
+!**/src/test/
