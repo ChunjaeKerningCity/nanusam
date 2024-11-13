@@ -78,7 +78,8 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Override
     public String modifyGoodsInfo(GoodsDTO goodsDTO) {
-        if(goodsMapper.getSellerId(goodsDTO.getIdx()).equals(goodsDTO.getMemberId())){
+        String seller = goodsMapper.getSellerId(goodsDTO.getIdx());
+        if(seller != null && seller.equals(goodsDTO.getMemberId())){
             goodsMapper.modifyGoodsInfo(modelMapper.map(goodsDTO, GoodsVO.class));
             return null;
         }
