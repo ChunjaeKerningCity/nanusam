@@ -119,6 +119,7 @@ public class BbsController {
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("idx", dto.getIdx());
             return "redirect:/bbs/modify.do";
         }
         bbsService.modify(dto);

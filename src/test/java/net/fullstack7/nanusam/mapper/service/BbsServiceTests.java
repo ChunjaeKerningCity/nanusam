@@ -69,8 +69,6 @@ public class BbsServiceTests {
         Assertions.assertEquals("수정", updateDto.getContent());
 
         log.info("updateDTO : "+updateDto);
-
-
     }
 
     @Test
