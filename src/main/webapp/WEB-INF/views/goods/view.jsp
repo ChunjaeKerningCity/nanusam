@@ -20,8 +20,8 @@
         <div class="col">
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
-                    <c:forEach items="${item.images}" var="img">
-                        <div class="carousel-item active">
+                    <c:forEach items="${item.images}" var="img" varStatus="s">
+                        <div class="carousel-item ${s.count==1?'active':''}">
                             <img src="/resources/image/${img.fileName}" class="d-block w-100" alt="...">
                         </div>
                     </c:forEach>

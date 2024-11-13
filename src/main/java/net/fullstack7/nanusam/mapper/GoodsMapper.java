@@ -13,4 +13,6 @@ public interface GoodsMapper {
     void regist(GoodsVO goodsVO);
     void deleteByIdx(int idx);
     GoodsVO view(int idx);
+    void modifyGoodsInfo(GoodsVO goodsVO);
+    String getSellerId(int idx);
 }
