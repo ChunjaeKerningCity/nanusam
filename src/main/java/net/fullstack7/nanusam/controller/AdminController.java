@@ -41,6 +41,4 @@ public class AdminController {
     public String adminMain() {
         return "admin/adminMain";
     }
-
-
 }
