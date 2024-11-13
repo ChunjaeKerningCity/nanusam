@@ -75,9 +75,9 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void regist(CartDTO dto) {
+    public void add(CartDTO dto) {
         CartVO vo = modelMapper.map(dto, CartVO.class);
-        cartMapper.regist(vo);
+        cartMapper.add(vo);
 
         log.info("===================================");
         log.info("CartServiceImpl >> regist() START");

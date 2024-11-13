@@ -9,6 +9,6 @@ public interface CartMapper {
     List<CartVO> list();
     List<CartVO> listByPage(PageRequestDTO requestDTO);
     int totalCount();
-    void regist(CartVO vo);
+    void add(CartVO vo);
     void delete(int idx);
 }
