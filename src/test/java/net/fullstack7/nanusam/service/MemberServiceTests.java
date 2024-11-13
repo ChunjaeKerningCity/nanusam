@@ -14,8 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/config/root-context.xml")
 public class MemberServiceTests {
-
-    @Autowired
+    @Autowired(required=false)
     private MemberService memberService;
 
 /*    @Test

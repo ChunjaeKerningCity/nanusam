@@ -19,16 +19,16 @@ import java.time.LocalDateTime;
 @Builder
 public class MemberDTO {
     @NotBlank
-    @Size(min = 5, max = 20)
+    @Size(min = 5, max = 15)
     private String memberId;
     @NotBlank
-    @Size(min = 8, max = 16)
+    @Size(min = 8, max = 20)
     private String pwd;
     @NotBlank
     @Size(min = 2, max = 10)
     private String name;
     @NotBlank
-    @Size(min = 2, max = 10)
+    @Size(min = 5, max = 20)
     private String email;
     @NotBlank
     @Size(min = 10, max = 11)
@@ -39,6 +39,7 @@ public class MemberDTO {
     private String addr1;
     @NotBlank
     private String addr2;
+    @NotBlank
     @Size(min = 5, max = 6)
     private String zipCode;             // 우편번호
     private String memType;             // 회원유형 t,a
