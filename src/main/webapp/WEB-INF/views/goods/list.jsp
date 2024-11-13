@@ -58,7 +58,7 @@ ${errors}
         <c:forEach items="${pageinfo.dtoList}" var="item">
         <div class="col card-section">
             <div class="card" style="width: 15rem;">
-                <img src="..." class="card-img-top" alt="...">
+                <img src="/resources/image/goods_${item.idx}_0.png" class="card-img-top" alt="/resources/image/goods_${item.idx}_0.jpg">
                 <div class="card-body">
                     <h5 class="card-title">${categories[item.category].value}</h5>
                     <p class="card-text">${item.name} - ${item.price}</p>

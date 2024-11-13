@@ -14,6 +14,9 @@
     <delete id="deleteByBbsCodeAndRefIdx">
         delete from tbl_file where bbsCode=#{bbsCode} and refIdx=#{refIdx}
     </delete>
+    <delete id="deleteByFileName">
+        delete from tbl_file where fileName=#{fileName}
+    </delete>
     <select id="view" resultType="net.fullstack7.nanusam.domain.FileVO">
         select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName
         from tbl_file

@@ -13,4 +13,6 @@ public interface GoodsService {
     void fileupload(FileDTO file);
     GoodsDTO view(int idx);
     List<CodeDTO> codeList(String type);
+    List<FileDTO> fileListByBbsCodeAndRefIdx(String bbsCode, int refIdx);
+    void deleteFileByName(String name);
 }

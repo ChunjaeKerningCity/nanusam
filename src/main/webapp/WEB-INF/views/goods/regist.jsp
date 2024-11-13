@@ -129,6 +129,19 @@
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    // 파일이 선택될 때마다 실행되는 이벤트 리스너
+    fileInput.addEventListener('change', function() {
+        // 선택된 파일의 개수
+        const files = fileInput.files;
 
+        // 파일 개수가 3개를 초과하면
+        if (files.length > 3) {
+            alert('최대 3개의 파일만 선택할 수 있습니다.');
+            // 선택된 파일 개수를 3개로 제한
+            fileInput.value = ''; // 파일 선택 초기화
+        }
+    });
+</script>
 </body>
 </html>
