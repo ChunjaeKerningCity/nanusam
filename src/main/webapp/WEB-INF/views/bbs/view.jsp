@@ -86,12 +86,12 @@
                 <a href="/bbs/list.do" class="btn-back">목록보기</a>
 
 <%--                관리자게시판에서만 활성화--%>
-<%--                <div class="form-group row justify-content-center mt-3">--%>
-<%--                    <div class="col">--%>
-<%--                        <button type="button" class="btnModify" onclick="javascript:location.href='/bbs/modify.do?idx=${dto.idx}'">수정</button>--%>
-<%--                        <button type="button" class="btnDelete" onclick="javascript:location.href='/bbs/delete.do?idx=${dto.idx}'">삭제</button>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
+                <div class="form-group row justify-content-center mt-3">
+                    <div class="col">
+                        <button type="button" class="btnModify" onclick="javascript:location.href='/bbs/modify.do?idx=${dto.idx}'">수정</button>
+                        <button type="button" class="btnDelete" onclick="javascript:location.href='/bbs/delete.do?idx=${dto.idx}'">삭제</button>
+                    </div>
+                </div>
             </div>
         </div>
         <!--// 상세 내용 -->
@@ -108,6 +108,5 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
 </body>
 </html>

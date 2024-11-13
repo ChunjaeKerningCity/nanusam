@@ -169,9 +169,9 @@
         <!--// 페이징 영역 -->
 
         <!-- 글 작성 버튼/ 관리자 게시판에서만 활성화 -->
-<%--        <div>--%>
-<%--            <button type="button" class="btnRegist" onclick="javascript:location.href='/bbs/regist.do'">글 작성</button>--%>
-<%--        </div>--%>
+        <div>
+            <button type="button" class="btnRegist" onclick="javascript:location.href='/bbs/regist.do'">글 작성</button>
+        </div>
     </div>
 </main>
 
