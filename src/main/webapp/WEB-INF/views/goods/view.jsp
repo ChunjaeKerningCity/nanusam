@@ -39,11 +39,21 @@
         <div class="col">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">${item.name}</h5>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">${item.price}</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+                    <h5 class="card-title">${item.name}&nbsp;
+                            <c:choose>
+                                <c:when test="${item.status eq 'R'}">
+                                    <span class="badge text-bg-success">예약중</span>
+                                </c:when>
+                                <c:when test="${item.status eq 'N'}">
+                                    <span class="badge text-bg-secondary">판매완료</span>
+                                </c:when>
+                            </c:choose>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">${item.price} - ${item.quality}</h6>
+                    <p class="card-text">${item.content}</p>
+                    <a href="#" class="card-link">장바구니</a>
+                    <a href="#" class="card-link">바로구매</a>
+                    <a href="#" class="card-link">채팅</a>
                 </div>
             </div>
         </div>

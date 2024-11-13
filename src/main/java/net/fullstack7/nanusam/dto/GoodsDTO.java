@@ -24,11 +24,13 @@ public class GoodsDTO {
     @NotNull
     private String quality;
     @Builder.Default
-    private String status = "N";
+    private String status = "Y";
+    private String content;
     private String regDate;
     private String modifyDate;
     private String readCnt;
     private String category;
+    private String reservationId;
 
     private List<FileDTO> images;
 }

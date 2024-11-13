@@ -30,7 +30,7 @@ import java.util.UUID;
 @RequestMapping("/goods")
 public class GoodsController {
     private final GoodsService goodsService;
-    private final String uploadDir = "E:\\nanusam\\src\\main\\webapp\\resources\\image";
+    private final String uploadDir = "D:\\java7\\nanusam\\src\\main\\webapp\\resources\\image";
 
     @GetMapping("/list.do")
     public String list(Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {

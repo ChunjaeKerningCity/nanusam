@@ -89,6 +89,11 @@
             </div>
         </div>
 
+        <div class="mb-3">
+            <label for="content" class="form-label">상품 설명</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="상품 설명"></textarea>
+        </div>
+
         <div class="row">
             <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">

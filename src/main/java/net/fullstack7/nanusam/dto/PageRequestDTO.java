@@ -34,6 +34,8 @@ public class PageRequestDTO {
     private String searchCategory;
     private String orderBy;
     private String orderDir;
+    private String memberId;
+    private String reservationId;
 
     public int getPage_skip_count() {
         return (this.page_no - 1) * this.page_size;
