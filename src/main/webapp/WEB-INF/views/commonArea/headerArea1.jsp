@@ -12,5 +12,5 @@
       <a href="#">공지사항</a>
       <a href="#">상품</a>
       <a href="#">내 상품</a>
-      <a href="#">셀파톡</a>
+      <a href="/chat/list.do">셀파톡</a>
     </div>

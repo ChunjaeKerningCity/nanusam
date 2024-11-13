@@ -110,6 +110,7 @@ public class BbsServiceImpl implements BbsService {
     }
 
     @Override
-    public void addReadCnt(int idx){
+    public int addReadCnt(int idx){
+        return bbsMapper.addReadCnt(idx);
     }
 }

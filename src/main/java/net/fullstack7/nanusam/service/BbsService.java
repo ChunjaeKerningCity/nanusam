@@ -19,5 +19,5 @@ public interface BbsService {
 
 
     void delete(int idx);
-    void addReadCnt(int idx);
+    int addReadCnt(int idx);
 }

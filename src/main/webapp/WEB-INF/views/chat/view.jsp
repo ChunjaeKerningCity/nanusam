@@ -153,7 +153,7 @@
         <c:if test="${loginId eq seller}">
           <li><a class="dropdown-item" onclick="reserve()">예약확정</a></li>
         </c:if>
-        <li><a class="dropdown-item" href="/goods/view.do?goodsIdx=${goodsIdx}">상품상세</a></li>
+        <li><a class="dropdown-item" href="/goods/view.do?idx=${goodsIdx}">상품상세</a></li>
       </ul>
     </div>
   </div>

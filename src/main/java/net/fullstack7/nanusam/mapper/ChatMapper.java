@@ -2,7 +2,6 @@ package net.fullstack7.nanusam.mapper;
 
 import net.fullstack7.nanusam.domain.ChatGroupVO;
 import net.fullstack7.nanusam.domain.ChatMessageVO;
-import net.fullstack7.nanusam.domain.ChatVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

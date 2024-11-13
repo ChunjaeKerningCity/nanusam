@@ -1,7 +1,6 @@
 package net.fullstack7.nanusam.websocket;
 
 import lombok.extern.log4j.Log4j2;
-import net.fullstack7.nanusam.dto.ChatDTO;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
 import net.fullstack7.nanusam.service.ChatService;
@@ -15,7 +14,6 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import javax.websocket.server.ServerEndpointConfig;
 import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
