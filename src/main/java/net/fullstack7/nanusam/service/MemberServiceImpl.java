@@ -18,12 +18,12 @@ public class MemberServiceImpl implements MemberService{
 
     //로그인
     @Override
-    public boolean login(String memberId, String pwd) {
+    public MemberDTO login(String memberId, String pwd) {
         MemberVO memberVO = memberXmlmapper.login(memberId);
-        if (memberVO == null) {
-            return false;
+        if (memberVO != null && memberVO.getPwd().equals(pwd)) {
+            return modelmapper.map(memberVO, MemberDTO.class);
         }
-        return memberVO.getPwd().equals(pwd);
+        return null;
     }
 
     //회원정보확인

@@ -15,4 +15,5 @@ public interface GoodsService {
     List<CodeDTO> codeList(String type);
     List<FileDTO> fileListByBbsCodeAndRefIdx(String bbsCode, int refIdx);
     void deleteFileByName(String name);
+    String modifyGoodsInfo(GoodsDTO goodsDTO);
 }

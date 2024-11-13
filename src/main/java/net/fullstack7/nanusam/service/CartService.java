@@ -11,6 +11,6 @@ public interface CartService {
     List<CartDTO> list();
     PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO);
 
-    void regist(CartDTO dto);
+    void add(CartDTO dto);
     void delete(int idx);
 }

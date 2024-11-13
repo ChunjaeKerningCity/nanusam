@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.BbsVO;
 import net.fullstack7.nanusam.domain.CartVO;
+import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.CartDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
@@ -45,20 +46,49 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO) {
+    public PageResponseDTO<CartDTO> listByPage(PageRequestDTO pageRequestDTO) {
+        log.info("===================================");
+        log.info("CartServiceImpl >> listByPage() START");
+        log.info("page_no = " + pageRequestDTO.getPage_no());
+        log.info("page_size = " + pageRequestDTO.getPage_size());
+        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
+        log.info("page_block = " + pageRequestDTO.getPage_block_size());
 
+        List<CartVO> voList = cartMapper.listByPage(pageRequestDTO);
+        List<CartDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo, CartDTO.class))
+                .collect(Collectors.toList());
+        int total_count = cartMapper.totalCount();
+
+        PageResponseDTO<CartDTO> pageResponseDTO = PageResponseDTO.<CartDTO>withAll()
+                .reqDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        log.info("voList = " + voList);
+        log.info("dtoList = " + dtoList);
+        log.info("CartServiceImpl >> listByPage() END");
+        log.info("===================================");
         return null;
     }
 
 
     @Override
-    public void regist(CartDTO dto) {
+    public void add(CartDTO dto) {
+        CartVO vo = modelMapper.map(dto, CartVO.class);
+        cartMapper.add(vo);
 
+        log.info("===================================");
+        log.info("CartServiceImpl >> regist() START");
+        log.info("vo = " + vo);
+        log.info("CartServiceImpl >> regist() END");
+        log.info("===================================");
     }
 
     @Override
     public void delete(int idx) {
-
+        cartMapper.delete(idx);
     }
 
 }

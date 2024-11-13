@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.fullstack7.nanusam.mapper.CartMapper">
+    <select id="list" resultType="net.fullstack7.nanusam.domain.CartVO">
+        SELECT idx, memberId, goodsIdx
+        FROM tbl_cart
+        ORDER BY idx DESC
+--         LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.CartVO">
+        SELECT idx, memberId, goodsIdx
+        FROM tbl_cart
+        ORDER BY idx DESC
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="totalCount" resultType="int">
+        SELECT COUNT(*) AS total_count
+        FROM tbl_cart
+    </select>
+
+    <insert id="add">
+        INSERT INTO tbl_cart(idx, memberId, goodsIdx)
+        VALUES(#{idx}, #{memberId}, #{goodsIdx})
+    </insert>
+
+    <delete id="delete">
+        DELETE FROM tbl_cart WHERE idx=#{idx}
+    </delete>
+</mapper>

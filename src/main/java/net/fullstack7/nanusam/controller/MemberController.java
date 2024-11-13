@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.service.MemberService;
+import net.fullstack7.nanusam.util.JSFunc;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.lang.reflect.Member;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,10 +36,10 @@ public class MemberController {
     public String login(@RequestParam("memberId") String memberId,
                         @RequestParam("pwd") String pwd,
                         HttpSession session, Model model) {
-        boolean loginOk = memberService.login(memberId, pwd);
-        log.info("loginOk" + loginOk);
-        if (loginOk) {
-            session.setAttribute("memberId", memberId);
+        MemberDTO memberDTO = memberService.login(memberId, pwd);
+        if (memberDTO != null) {
+            session.setAttribute("memberId", memberDTO.getMemberId());
+            session.setAttribute("memberName", memberDTO.getName());
             return "redirect:/";
         } else {
             model.addAttribute("errors", "아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -58,7 +58,23 @@ public class MemberController {
     }
     // 가입전 약관동의
     @GetMapping("/registCheck.do")
-    public String registCheck(HttpSession session) {
+    public String registCheck(
+            HttpServletResponse res,
+            HttpSession session) throws IOException {
+        String loginCheck = (String) session.getAttribute("memberId");
+        if (loginCheck != null) {
+            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
+            String redirectUrl = "/";
+            res.setCharacterEncoding("UTF-8");
+            res.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = res.getWriter();
+            out.println("<script type='text/javascript'>");
+            out.println("alert('" + alertMessage + "');");
+            out.println("window.location.href = '" + redirectUrl + "';");
+            out.println("</script>");
+            out.flush();
+            return null;
+        }
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
         if (termsAgree != null && termsAgree) {
             return "login/regist";
@@ -78,8 +94,24 @@ public class MemberController {
     }
 
     @GetMapping("/regist.do")
-    public String registGet(HttpSession session, Model model) {
+    public String registGet(HttpSession session,
+                            HttpServletResponse res,
+                            Model model) throws IOException {
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
+        String loginCheck = (String) session.getAttribute("memberId");
+        if(loginCheck != null){
+            res.setCharacterEncoding("UTF-8");
+            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
+            String redirectUrl = "/";
+            res.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = res.getWriter();
+            out.println("<script type='text/javascript'>");
+            out.println("alert('" + alertMessage + "');");
+            out.println("window.location.href = '" + redirectUrl + "';");
+            out.println("</script>");
+            out.flush();
+            return null;
+        }
         if (termsAgree == null || !termsAgree) {
             model.addAttribute("errors", "약관에 동의한 후 회원가입이 가능합니다.");
             return "forward:/member/registCheck.do";

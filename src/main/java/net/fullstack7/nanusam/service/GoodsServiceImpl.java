@@ -75,4 +75,13 @@ public class GoodsServiceImpl implements GoodsService {
     public void deleteFileByName(String name) {
         fileMapper.deleteByFileName(name);
     }
+
+    @Override
+    public String modifyGoodsInfo(GoodsDTO goodsDTO) {
+        if(goodsMapper.getSellerId(goodsDTO.getIdx()).equals(goodsDTO.getMemberId())){
+            goodsMapper.modifyGoodsInfo(modelMapper.map(goodsDTO, GoodsVO.class));
+            return null;
+        }
+        return "상품 등록한 회원만 수정할 수 있습니다.";
+    }
 }

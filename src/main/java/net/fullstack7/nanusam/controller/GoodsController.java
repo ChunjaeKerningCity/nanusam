@@ -76,7 +76,7 @@ public class GoodsController {
 
             int count = 1;
             for (MultipartFile detail : detailImage) {
-                message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_" + count++ + getExt(detail.getOriginalFilename()));
+                message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
                 if (message != null) {
                     redirectAttributes.addFlashAttribute("message", message);
                 }
@@ -98,10 +98,18 @@ public class GoodsController {
 
     @GetMapping("/modify.do")
     public String modifyGet(HttpSession session, Model model, @RequestParam(required = true) int idx) {
+        GoodsDTO goodsDTO = goodsService.view(idx);
+
+        if(session.getAttribute("memberId") == null || !session.getAttribute("memberId").equals(goodsDTO.getMemberId()) ) {
+            //alert
+        }
 
         model.addAttribute("categories", goodsService.codeList("goods"));
-        model.addAttribute("item", goodsService.view(idx));
+        model.addAttribute("item", goodsDTO);
         List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("상품", idx);
+
+
+
         model.addAttribute("orgMainImage", list.remove(0));
         model.addAttribute("images", list);
         return "goods/modify";
@@ -113,6 +121,14 @@ public class GoodsController {
             , @RequestParam String[] deleteFile
             , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage
     ) {
+        goodsDTO.setMemberId(session.getAttribute("memberId").toString());
+        String message = goodsService.modifyGoodsInfo(goodsDTO);
+        if(message != null){
+            redirectAttributes.addFlashAttribute("message", message);
+            //alert하는거
+            return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
+        }
+
 
         if(deleteFile != null && deleteFile.length > 0) {
             for(String filename : deleteFile) {
@@ -122,7 +138,32 @@ public class GoodsController {
             }
         }
 
-        return "redirect:goods/modify.do?idx=" + goodsDTO.getIdx();
+        if(mainImage != null && mainImage.getOriginalFilename() != null) {
+            int count = 1;
+            try {
+                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+
+                if (message != null) {
+                    redirectAttributes.addFlashAttribute("message", message);
+                }
+
+
+                for (MultipartFile detail : detailImage) {
+                    message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx()+"_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                    if (message != null) {
+                        redirectAttributes.addFlashAttribute("message", message);
+                    }
+                }
+
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("message", e.getMessage());
+            }
+        }
+
+
+
+
+        return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
     }
 
     @GetMapping("delete.do")
@@ -131,7 +172,6 @@ public class GoodsController {
     }
 
     private String uploadFile(String orgName, String newName, byte[] fileData) throws Exception {
-        UUID uuid = UUID.randomUUID();
         String saveName = newName;
         File targetFile = new File(uploadDir, saveName);
         FileCopyUtils.copy(fileData, targetFile);
