@@ -52,7 +52,23 @@ public class BbsServiceTests {
 
     @Test
     public void testModify(){
+        int idx = 1;
+        BbsDTO originDto = bbsService.view(idx);
+        BbsDTO modifyDto = BbsDTO.builder()
+                .idx(idx)
+                .title("안녕")
+                .content("수정")
+                .build();
 
+        bbsService.modify(modifyDto);
+
+        BbsDTO updateDto = bbsService.view(idx);
+
+        Assertions.assertNotNull(updateDto);
+        Assertions.assertEquals("안녕", updateDto.getTitle());
+        Assertions.assertEquals("수정", updateDto.getContent());
+
+        log.info("updateDTO : "+updateDto);
     }
 
     @Test
