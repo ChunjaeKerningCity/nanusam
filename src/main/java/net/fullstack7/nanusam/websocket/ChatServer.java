@@ -15,14 +15,21 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import javax.websocket.server.ServerEndpointConfig;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 @ServerEndpoint(value = "/chat/{groupIdx}", configurator = ChatServer.EndpointConfigurator.class)
 @Log4j2
 public class ChatServer {
     private static ChatService chatService;// 정적 필드로 ChatService를 선언
+
     private String errCode;
     //세션없음 001, 로그인아이디가없음 002, 채팅방없음 003, 접근권한없음 004, 메시지 형식오류 005, db등록실패 006
+
+    // ExecutorService 선언 및 초기화
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
 
     // 에러 메시지 전송 메서드
     private void sendErrorMessage(Session session, String errCode) {
@@ -66,6 +73,7 @@ public class ChatServer {
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config, @PathParam("groupIdx") int groupIdx) {
+        log.info("onOpen");
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         if(httpSession != null) {
             String loginId = (String) httpSession.getAttribute("memberId");
@@ -89,6 +97,25 @@ public class ChatServer {
     public synchronized void onMessage(String message, Session session) throws IOException {
         log.info("onMessage: " + message);
 
+            // 비동기 작업으로 메시지 처리
+            executorService.submit(() -> {
+                processMessage(message, session);
+            });
+
+    }
+
+    @OnClose
+    public void onClose(Session session) {
+        log.info("웹소켓 종료 : " + (String)session.getUserProperties().get("memberId"));
+    }
+
+    @OnError
+    public void onError(Session session, Throwable error) {
+        log.info("웹소켓 에러발생");
+        log.info("에러메세지 :" + error.getMessage());
+    }
+
+    private void processMessage(String message, Session session) {
         Integer groupIdx = (Integer)session.getUserProperties().get("groupIdx");
         log.info("groupIdx : " + groupIdx);
 
@@ -138,16 +165,24 @@ public class ChatServer {
         log.info("content : " + content);
 
         //int result = chatService.messageRegist(ChatMessageDTO.builder().groupIdx(groupIdx).senderId(sender).content(content).build());
-        int messageIdx = chatService.messageRegist(ChatMessageDTO.builder().groupIdx(groupIdx).senderId(sender).content(content).build());
+        int messageIdx = chatService.messageRegist(ChatMessageDTO.builder()
+                .groupIdx(groupIdx)
+                .senderId(sender)
+                .content(content)
+                .build());
         ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
 
         if(messageDTO != null){
             // 수신자에게 메시지를 전송
             log.info("db등록성공");
             session.getOpenSessions().forEach(s -> {
-                if (receiver.equals(s.getUserProperties().get("memberId"))) {
+                if (receiver.equals(s.getUserProperties().get("memberId"))||sender.equals(s.getUserProperties().get("memberId"))) {
                     try {
-                        s.getBasicRemote().sendText(sender + "\\|\\|" + content);
+                        s.getBasicRemote().sendText(messageDTO.getSenderId()
+                                + "\\|\\|" + messageDTO.getContent()
+                                + "\\|\\|" + messageDTO.getRegDate()
+                                + "\\|\\|" + messageDTO.getReadChk()
+                        );
                     } catch (Exception e) {
                         log.info(e.getMessage());
                     }
@@ -158,20 +193,6 @@ public class ChatServer {
             this.errCode = "006";
             sendErrorMessage(session, this.errCode);
         }
-
-
-    }
-
-    @OnClose
-    public void onClose(Session session) {
-
-        log.info("웹소켓 종료 : " + (String)session.getUserProperties().get("memberId"));
-    }
-
-    @OnError
-    public void onError(Session session, Throwable error) {
-        log.info("웹소켓 에러발생");
-        log.info("에러메세지 :" + error.getMessage());
     }
 
     public static class EndpointConfigurator extends ServerEndpointConfig.Configurator{

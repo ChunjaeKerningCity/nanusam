@@ -17,4 +17,5 @@ public class ChatMessageVO {
     private String content;
     private LocalDateTime regDate;
     private String delChk;
+    private String readChk;
 }

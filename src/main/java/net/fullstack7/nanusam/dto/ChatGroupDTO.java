@@ -18,4 +18,5 @@ public class ChatGroupDTO {
     private String delChk;
     private LocalDateTime regDate;
     private ChatMessageDTO lastMessage;
+    private int unreadCount;
 }

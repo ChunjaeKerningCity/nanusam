@@ -29,7 +29,14 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public int messageRegist(ChatMessageDTO dto) {
-        return chatMapper.messageRegist(modelMapper.map(dto, ChatMessageVO.class));
+        // DTO를 VO로 변환
+        ChatMessageVO vo = modelMapper.map(dto, ChatMessageVO.class);
+
+        // Mapper 호출
+        chatMapper.messageRegist(vo);
+
+        // 자동 생성된 idx를 VO에서 반환
+        return vo.getIdx();
     }
 
     @Override
@@ -41,6 +48,7 @@ public class ChatServiceImpl implements ChatService {
                 continue;
             }
             dto.setLastMessage(modelMapper.map(chatMessageVO,ChatMessageDTO.class));
+            dto.setUnreadCount(chatMapper.countUnreadMessages(dto.getIdx(),memberId));
         }
         return list;
     }
@@ -81,6 +89,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatMessageDTO getMessage(int idx) {
         return modelMapper.map(chatMapper.getMessage(idx),ChatMessageDTO.class);
+    }
+
+    @Override
+    public int countUnreadMessages(int groupIdx, String memberId) {
+        return chatMapper.countUnreadMessages(groupIdx, memberId);
     }
 
 }
