@@ -105,6 +105,7 @@
                 <h2>오늘의 상품 추천</h2>
                 <a href="#">더보기 ▶</a>
             </div>
+            <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
             <div class="cardContainer">
                 <a href="#" class="card">
                     <img
@@ -227,5 +228,15 @@
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" charEncoding="UTF-8" />
 </footer>
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
+<script>
+    window.onload = function() {
+        var topButton = document.querySelector('.topButton');
+        if (topButton) {
+            topButton.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
+    };
+</script>
 </body>
 </html>
