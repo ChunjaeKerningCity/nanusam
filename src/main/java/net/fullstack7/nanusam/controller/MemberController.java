@@ -105,11 +105,12 @@ public class MemberController {
         if(bindingResult.hasErrors()){
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
             return "redirect:/member/regist.do";
         }
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
-            return "redirect:/login/login";
+            return "redirect:/member/login.do";
         } else {
             model.addAttribute("errors", "회원가입에 실패했습니다.");
             return "login/regist";
