@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.service.MemberService;
+import net.fullstack7.nanusam.util.JSFunc;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

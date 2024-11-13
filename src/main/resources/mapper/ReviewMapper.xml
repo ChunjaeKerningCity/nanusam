@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.fullstack7.nanusam.mapper.ReviewMapper">
+    <insert id="regist">
+        INSERT INTO tbl_review(buyer, seller, content, score)
+        VALUES (#{buyer},#{seller},#{content},#{score})
+    </insert>
+    <select id="view" resultType="net.fullstack7.nanusam.domain.ReviewVO">
+        SELECT idx, buyer, seller, content, score, regDate, modifyDate
+        FROM tbl_review
+        WHERE idx=#{idx}
+    </select>
+    <select id="listWithPage" resultType="net.fullstack7.nanusam.domain.ReviewVO">
+        SELECT idx, buyer, seller, content, score, regDate, modifyDate
+        FROM tbl_review
+        <where>
+        ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+        </where>
+        <if test="orderBy == null or orderBy ==''">
+            ORDER BY regDate desc
+        </if>
+        <if test="orderBy !=null and orderBy !=''">
+            ORDER BY ${orderBy} ${orderDir}
+        </if>
+        LIMIT #{page_skip_count}, #{page_size}
+    </select>
+    <select id="totalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_review
+        <where>
+            ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+        </where>
+    </select>
+    <update id="modify">
+        UPDATE tbl_review
+        <set>
+            <if test="buyer != null">buyer=#{buyer}</if>
+            <if test="seller != null">seller=#{seller}</if>
+            <if test="content != null">content=#{content}</if>
+        </set>
+        WHERE
+    </update>
+</mapper>
