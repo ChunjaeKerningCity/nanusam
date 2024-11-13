@@ -38,7 +38,6 @@
                     <c:forEach items="${categories}" var="category">
                         <option value="${category.code}">${category.value}</option>
                     </c:forEach>
-                    <option value="00">기타</option>
                 </select>
                 <div id="div_err_category"></div>
             </div>
@@ -87,6 +86,11 @@
                     <input class="form-control" type="file" id="detailImage" name="detailImage" accept="image/*" multiple>
                 </div>
             </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="content" class="form-label">상품 설명</label>
+            <textarea class="form-control" id="content" name="content" rows="3" placeholder="상품 설명"></textarea>
         </div>
 
         <div class="row">

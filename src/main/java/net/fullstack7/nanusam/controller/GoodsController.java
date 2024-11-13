@@ -39,11 +39,13 @@ public class GoodsController {
             return "redirect:/goods/list.do";
         }
         model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/list";
     }
 
     @GetMapping("/regist.do")
-    public String registGet() {
+    public String registGet(Model model) {
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/regist";
     }
 
@@ -89,12 +91,14 @@ public class GoodsController {
     }
 
     @GetMapping("/view.do")
-    public String viewGet() {
+    public String viewGet(@RequestParam(required = true) int idx, Model model) {
+        model.addAttribute("item", goodsService.view(idx));
         return "goods/view";
     }
 
     @GetMapping("/modify.do")
-    public String modifyGet() {
+    public String modifyGet(Model model) {
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/modify";
     }
 
@@ -131,6 +135,7 @@ public class GoodsController {
                 dto.setFileName(newName);
                 dto.setFileExt(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
                 dto.setFileContentType(file.getContentType());
+                dto.setFileSize(file.getSize());
 //                dto.setFileData(mainImage.getBytes());
                 dto.setBbsCode("상품");
                 goodsService.fileupload(dto);

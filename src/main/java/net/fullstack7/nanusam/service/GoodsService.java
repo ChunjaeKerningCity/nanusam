@@ -1,14 +1,16 @@
 package net.fullstack7.nanusam.service;
 
-import net.fullstack7.nanusam.dto.FileDTO;
-import net.fullstack7.nanusam.dto.GoodsDTO;
-import net.fullstack7.nanusam.dto.PageRequestDTO;
-import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.domain.CodeVO;
+import net.fullstack7.nanusam.dto.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 public interface GoodsService {
     PageResponseDTO<GoodsDTO> listByPage(PageRequestDTO requestDTO);
     int totalCount();
     void regist(GoodsDTO goodsDTO);
     void fileupload(FileDTO file);
+    GoodsDTO view(int idx);
+    List<CodeDTO> codeList(String type);
 }
