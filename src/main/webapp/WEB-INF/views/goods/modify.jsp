@@ -133,6 +133,22 @@
             fileInput.value = ''; // 파일 선택 초기화
         }
     });
+
+    const fileInputOrg = document.getElementById('orgMainImage');
+
+    // 파일이 선택될 때마다 실행되는 이벤트 리스너
+    fileInputOrg.addEventListener('change', function() {
+        // 선택된 파일의 개수
+
+        const files = fileInput.files;
+
+        // 파일 개수가 3개를 초과하면
+        if (files.length >= 1) {
+            alert('최대 3개의 파일만 선택할 수 있습니다.');
+            // 선택된 파일 개수를 3개로 제한
+            fileInput.value = ''; // 파일 선택 초기화
+        }
+    });
 </script>
 </body>
 </html>
