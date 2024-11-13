@@ -36,7 +36,11 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatGroupDTO> groupList(String memberId) {
         List<ChatGroupDTO> list = chatMapper.groupList(memberId).stream().map(vo->modelMapper.map(vo,ChatGroupDTO.class)).collect(Collectors.toList());
         for(ChatGroupDTO dto : list){
-            dto.setLastMessage(modelMapper.map(chatMapper.getLastMessage(dto.getIdx()),ChatMessageDTO.class));
+            ChatMessageVO chatMessageVO = chatMapper.getLastMessage(dto.getIdx());
+            if(chatMessageVO == null){
+                continue;
+            }
+            dto.setLastMessage(modelMapper.map(chatMessageVO,ChatMessageDTO.class));
         }
         return list;
     }
@@ -52,8 +56,31 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public int getGroupIdx(int goodsIdx, String customer) {
+    public Integer getGroupIdx(int goodsIdx, String customer) {
+        if(chatMapper.getGroupIdx(goodsIdx, customer)==null){
+            return -1;
+        }
         return chatMapper.getGroupIdx(goodsIdx, customer);
+    }
+
+    @Override
+    public ChatGroupDTO getGroup(int groupIdx) {
+        return modelMapper.map(chatMapper.getGroup(groupIdx),ChatGroupDTO.class);
+    }
+
+    @Override
+    public int deleteGroup(int groupIdx) {
+        return chatMapper.deleteGroup(groupIdx);
+    }
+
+    @Override
+    public int readMessages(int groupIdx, String memberId) {
+        return chatMapper.readMessages(groupIdx, memberId);
+    }
+
+    @Override
+    public ChatMessageDTO getMessage(int idx) {
+        return modelMapper.map(chatMapper.getMessage(idx),ChatMessageDTO.class);
     }
 
 }

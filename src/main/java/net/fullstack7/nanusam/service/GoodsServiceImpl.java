@@ -2,10 +2,13 @@ package net.fullstack7.nanusam.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.domain.FileVO;
 import net.fullstack7.nanusam.domain.GoodsVO;
+import net.fullstack7.nanusam.dto.FileDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.mapper.FileMapper;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class GoodsServiceImpl implements GoodsService {
     private final GoodsMapper goodsMapper;
+    private final FileMapper fileMapper;
     private final ModelMapper modelMapper;
     @Override
     public PageResponseDTO<GoodsDTO> listByPage(PageRequestDTO requestDTO) {
@@ -46,7 +50,7 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void fileupload(MultipartFile file) {
-
+    public void fileupload(FileDTO fileDTO) {
+        fileMapper.regist(modelMapper.map(fileDTO, FileVO.class));
     }
 }

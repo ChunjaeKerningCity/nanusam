@@ -15,7 +15,6 @@ public class ChatGroupVO {
     private String seller;
     private String customer;
     private int goodsIdx;
-    private String sellerDel;
-    private String customerDel;
+    private String delChk;
     private LocalDateTime regDate;
 }

@@ -22,15 +22,15 @@
         </tr>
         <c:forEach items="${chatList}" var="chat">
             <tr>
-                <td>${chat.sender}</td>
-                <td onclick="chatViewOpen('sender=${chat.sender}&receiver=${chat.receiver}&goodsIdx=${chat.goodsIdx}')">${chat.content}</td>
-                <td>${chat.regDate}</td>
+                <td>${sessionScope.memberId ne chat.seller ? chat.seller : chat.customer}</td>
+                <td onclick="chatViewOpen('groupIdx=${chat.idx}')">${chat.lastMessage.content}</td>
+                <td>${chat.lastMessage.regDate}</td>
             </tr>
         </c:forEach>
     </table>
     <script>
         function chatViewOpen (queryString){
-            window.open("/chat/view.do?"+queryString, "", "width=320,height=400");
+            location.href="/chat/view.do?"+queryString;
         }
     </script>
 </body>

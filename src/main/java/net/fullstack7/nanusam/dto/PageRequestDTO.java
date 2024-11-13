@@ -29,7 +29,7 @@ public class PageRequestDTO {
     @Builder.Default
     @Positive
     @Min(value=1)
-    private int page_block_size=10;
+    private int page_block_size=5;
     private String searchKeyword;
     private String searchCategory;
     private String orderBy;
