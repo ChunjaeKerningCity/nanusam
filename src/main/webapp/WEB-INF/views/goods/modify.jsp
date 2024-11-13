@@ -17,7 +17,7 @@
 <div style="width: 70%; margin: auto; padding: 5rem">
 
 
-    <form action="/goods/regist.do" method="post" name="frmGoodsRegist" id="frmGoodsRegist" enctype="multipart/form-data">
+    <form action="/goods/modify.do?idx=${item.idx}" method="post" name="frmGoodsRegist" id="frmGoodsRegist" enctype="multipart/form-data">
         <div class="row">
             <div class="col">
                 <label for="category" class="form-label">카테고리</label>
@@ -127,28 +127,44 @@
         const files = fileInput.files;
 
         // 파일 개수가 3개를 초과하면
-        if (files.length > 3) {
+        if (files.length + getVisibleLiCount() > 3) {
             alert('최대 3개의 파일만 선택할 수 있습니다.');
             // 선택된 파일 개수를 3개로 제한
             fileInput.value = ''; // 파일 선택 초기화
         }
     });
 
-    const fileInputOrg = document.getElementById('orgMainImage');
+    const fileInputOrg = document.getElementById('mainImage');
 
     // 파일이 선택될 때마다 실행되는 이벤트 리스너
     fileInputOrg.addEventListener('change', function() {
         // 선택된 파일의 개수
 
-        const files = fileInput.files;
+        const files = fileInputOrg.files;
 
-        // 파일 개수가 3개를 초과하면
-        if (files.length >= 1) {
-            alert('최대 3개의 파일만 선택할 수 있습니다.');
+        // 파일 개수가 1개를 초과하면
+        if (files.length >= 1 && document.getElementById('orgMainImage').checked == false ) {
+            alert('메인 사진은 1개의 파일만 선택할 수 있습니다.');
             // 선택된 파일 개수를 3개로 제한
-            fileInput.value = ''; // 파일 선택 초기화
+            fileInputOrg.value = ''; // 파일 선택 초기화
         }
     });
+
+    function getVisibleLiCount() {
+        // 모든 <li> 요소를 가져옵니다
+        const liElements = document.querySelectorAll('#existing-files li');
+        let visibleCount = 0;
+
+        liElements.forEach(function(li) {
+            // 해당 li 요소의 display 스타일이 'none'인지 확인
+            const style = window.getComputedStyle(li);
+            if (style.display !== 'none') {
+                visibleCount++;  // display: none이 아니면 visibleCount 증가
+            }
+        });
+
+        return visibleCount;
+    }
 </script>
 </body>
 </html>

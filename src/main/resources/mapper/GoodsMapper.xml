@@ -50,11 +50,16 @@
         values (#{name},#{memberId},#{price},#{quality},#{status},#{category},#{content})
     </insert>
 
-<!--    <update id="modify">-->
-<!--        update tbl_goods set -->
-<!--    </update>-->
+    <update id="modifyGoodsInfo">
+        update tbl_goods set price=#{price}, quality=#{quality}, category=#{category}, content=#{content}, name=#{name}
+        where idx=#{idx}
+    </update>
 
     <delete id="deleteByIdx">
         delete from tbl_goods where idx=#{idx}
     </delete>
+
+    <select id="getSellerId" resultType="int">
+        select memberId from tbl_goods where idx=#{idx}
+    </select>
 </mapper>
