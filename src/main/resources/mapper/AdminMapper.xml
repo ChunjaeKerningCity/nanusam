@@ -8,4 +8,6 @@
     FROM tbl_member
     WHERE memberId = #{memberId} AND memType = 'a'
   </select>
+
+<!--  메인페이지에서 사용할 것들-->
 </mapper>
