@@ -48,6 +48,7 @@ public class ChatServiceImpl implements ChatService {
                 continue;
             }
             dto.setLastMessage(modelMapper.map(chatMessageVO,ChatMessageDTO.class));
+            dto.setUnreadCount(chatMapper.countUnreadMessages(dto.getIdx(),memberId));
         }
         return list;
     }
@@ -88,6 +89,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public ChatMessageDTO getMessage(int idx) {
         return modelMapper.map(chatMapper.getMessage(idx),ChatMessageDTO.class);
+    }
+
+    @Override
+    public int countUnreadMessages(int groupIdx, String memberId) {
+        return chatMapper.countUnreadMessages(groupIdx, memberId);
     }
 
 }

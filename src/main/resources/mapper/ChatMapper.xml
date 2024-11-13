@@ -7,13 +7,13 @@
         VALUES (#{seller},#{customer},#{goodsIdx})
     </insert>
     <insert id="messageRegist" useGeneratedKeys="true" keyProperty="idx" parameterType="net.fullstack7.nanusam.domain.ChatMessageVO">
-        INSERT INTO tbl_chat_message(groupIdx, senderId, content, readChk)
-        VALUES (#{groupIdx},#{senderId},#{content}, #{readChk})
+        INSERT INTO tbl_chat_message(groupIdx, senderId, content)
+        VALUES (#{groupIdx},#{senderId},#{content})
     </insert>
     <select id="groupList" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
         SELECT idx, seller, customer, goodsIdx, delChk, regDate
         FROM tbl_chat_group
-        WHERE seller=#{memberId} OR customer=#{memberId}
+        WHERE delChk='N' AND (seller=#{memberId} OR customer=#{memberId})
     </select>
     <select id="messageList" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
         SELECT idx, groupIdx, senderId, content, regDate, delChk, readChk
@@ -30,7 +30,7 @@
     <select id="getGroupIdx" resultType="Integer">
         SELECT IFNULL(idx,-1)
         FROM tbl_chat_group
-        WHERE goodsIdx = #{goodsIdx} AND customer = #{customer}
+        WHERE goodsIdx = #{goodsIdx} AND customer = #{customer} AND delChk='N'
     </select>
     <select id="getGroup" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
         SELECT idx, seller, customer, goodsIdx, delChk, regDate
@@ -51,5 +51,10 @@
         SELECT idx, groupIdx, senderId, content, regDate, delChk, readCHk
         FROM tbl_chat_message
         WHERE idx=#{idx}
+    </select>
+    <select id="countUnreadMessages" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_chat_message
+        WHERE groupIdx = #{groupIdx} AND senderId != #{memberId} AND readChk = 'N'
     </select>
 </mapper>

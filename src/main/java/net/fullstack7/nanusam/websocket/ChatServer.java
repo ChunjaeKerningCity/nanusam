@@ -25,9 +25,6 @@ import java.util.concurrent.Executors;
 public class ChatServer {
     private static ChatService chatService;// 정적 필드로 ChatService를 선언
 
-    // 사용자 ID를 키로 세션을 저장하는 ConcurrentHashMap
-    private static ConcurrentHashMap<String, Session> activeSessions = new ConcurrentHashMap<>();
-
     private String errCode;
     //세션없음 001, 로그인아이디가없음 002, 채팅방없음 003, 접근권한없음 004, 메시지 형식오류 005, db등록실패 006
 
@@ -100,15 +97,15 @@ public class ChatServer {
     public synchronized void onMessage(String message, Session session) throws IOException {
         log.info("onMessage: " + message);
 
-        // 비동기 작업으로 메시지 처리
-        executorService.submit(() -> {
-            processMessage(message, session);
-        });
+            // 비동기 작업으로 메시지 처리
+            executorService.submit(() -> {
+                processMessage(message, session);
+            });
+
     }
 
     @OnClose
     public void onClose(Session session) {
-
         log.info("웹소켓 종료 : " + (String)session.getUserProperties().get("memberId"));
     }
 
@@ -172,7 +169,6 @@ public class ChatServer {
                 .groupIdx(groupIdx)
                 .senderId(sender)
                 .content(content)
-                .readChk(isUserOnline(receiver)?"Y":"N")
                 .build());
         ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
 
@@ -207,10 +203,5 @@ public class ChatServer {
                 config.getUserProperties().put(HttpSession.class.getName(), httpSession);
             }
         }
-    }
-
-    // 사용자가 현재 접속 중인지 확인하는 메서드
-    private boolean isUserOnline(String userId) {
-        return activeSessions.containsKey(userId);
     }
 }

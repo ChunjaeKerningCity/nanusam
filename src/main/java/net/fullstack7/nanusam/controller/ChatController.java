@@ -30,8 +30,9 @@ public class ChatController {
         log.info("chatList");
         if(session == null || session.getAttribute("memberId") == null) {
             log.info("session is null");
-            return "redirect:/main.do";
+            return "redirect:/";
         }
+        String memberId = (String)session.getAttribute("memberId");
         List<ChatGroupDTO> chatList = chatService.groupList((String)session.getAttribute("memberId"));
         model.addAttribute("chatList", chatList);
         return "chat/list";
@@ -41,7 +42,7 @@ public class ChatController {
         log.info("chatView");
         if(session == null || session.getAttribute("memberId") == null) {
             log.info("session is null");
-            return "redirect:/main.do";
+            return "redirect:/";
         }
         String memberId = (String)session.getAttribute("memberId");
         int readResult = chatService.readMessages(groupIdx, memberId);
@@ -50,7 +51,8 @@ public class ChatController {
         }
         List<ChatMessageDTO> chatMessageList = chatService.messageList(groupIdx);
         ChatGroupDTO chatGroupDTO = chatService.getGroup(groupIdx);
-        model.addAttribute("sender", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());
+        model.addAttribute("other", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());
+        model.addAttribute("seller", chatGroupDTO.getSeller());
         model.addAttribute("chatMessageList", chatMessageList);
         model.addAttribute("groupIdx", groupIdx);
         return "chat/view";
@@ -60,11 +62,12 @@ public class ChatController {
         log.info("chatFromGoods");
         if(session == null || session.getAttribute("memberId") == null) {
             log.info("session is null");
-            return "redirect:/main.do";
+            return "redirect:/";
         }
         String customer = (String) session.getAttribute("memberId");
 
         if(customer.equals(seller)) {
+            model.addAttribute("errors","자기자신과 채팅방 생성 불가");
             log.info("customer is seller");
             return "redirect:/goods/view.do?goodsIdx="+goodsIdx;
         }
@@ -76,13 +79,31 @@ public class ChatController {
         }
 
         result = chatService.groupRegist(ChatGroupDTO.builder().seller(seller).customer(customer).goodsIdx(goodsIdx).build());
-        if(result<0){
+        if(result<=0){
             model.addAttribute("errors","채팅방 생성실패");
             log.info("채팅방 생성 실패");
-            return "redirect:/main.do";
+            return "redirect:/";
         }
         int groupIdx = chatService.getGroupIdx(goodsIdx,customer);
         log.info("새로생성한 그룹 번호 : " + groupIdx);
         return "forward:/chat/view.do?groupIdx="+groupIdx;
+    }
+
+    @GetMapping("/deleteGroup.do")
+    public String deleteGroup(@RequestParam int groupIdx, HttpSession session, Model model) {
+        log.info("deleteGroup");
+        if(session == null || session.getAttribute("memberId") == null) {
+            log.info("session is null");
+            return "redirect:/";
+        }
+
+        int result = chatService.deleteGroup(groupIdx);
+        if(result<=0){
+            model.addAttribute("errors","채팅방 삭제실패");
+            log.info("채팅방삭제실패");
+            return "redirect:/chat/view.do?groupIdx="+groupIdx;
+        }
+        log.info("채팅방삭제성공");
+        return "redirect:/chat/list.do";
     }
 }
