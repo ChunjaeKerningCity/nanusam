@@ -46,7 +46,9 @@ public class MemberServiceImpl implements MemberService{
     //회원가입
     @Override
     public int registMember(MemberDTO memberDTO) {
+        log.info("regist member");
         MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
+        log.info("memberDTO: {}", memberDTO);
         return memberXmlmapper.registMember(memberVO);
     }
 

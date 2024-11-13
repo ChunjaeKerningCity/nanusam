@@ -7,10 +7,14 @@ import net.fullstack7.nanusam.service.MemberService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -94,10 +98,18 @@ public class MemberController {
     }
 
     @PostMapping("/regist.do")
-    public String registPost(@ModelAttribute MemberDTO memberDTO, Model model) {
+    public String registPost(@Valid MemberDTO memberDTO
+                             , BindingResult bindingResult
+                             , RedirectAttributes redirectAttributes
+                             , Model model) {
+        if(bindingResult.hasErrors()){
+            log.info("hasErrors");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/member/regist.do";
+        }
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
-            return "redirect:/member/list.do";
+            return "redirect:/login/login";
         } else {
             model.addAttribute("errors", "회원가입에 실패했습니다.");
             return "login/regist";
