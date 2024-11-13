@@ -38,7 +38,6 @@
                     <c:forEach items="${categories}" var="category">
                         <option value="${category.code}">${category.value}</option>
                     </c:forEach>
-                    <option value="00">기타</option>
                 </select>
                 <div id="div_err_category"></div>
             </div>

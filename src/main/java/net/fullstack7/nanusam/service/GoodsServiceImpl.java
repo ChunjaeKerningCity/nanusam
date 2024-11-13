@@ -2,12 +2,11 @@ package net.fullstack7.nanusam.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.domain.CodeVO;
 import net.fullstack7.nanusam.domain.FileVO;
 import net.fullstack7.nanusam.domain.GoodsVO;
-import net.fullstack7.nanusam.dto.FileDTO;
-import net.fullstack7.nanusam.dto.GoodsDTO;
-import net.fullstack7.nanusam.dto.PageRequestDTO;
-import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.dto.*;
+import net.fullstack7.nanusam.mapper.CodeMapper;
 import net.fullstack7.nanusam.mapper.FileMapper;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
 import org.modelmapper.ModelMapper;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 public class GoodsServiceImpl implements GoodsService {
     private final GoodsMapper goodsMapper;
     private final FileMapper fileMapper;
+    private final CodeMapper codeMapper;
     private final ModelMapper modelMapper;
     @Override
     public PageResponseDTO<GoodsDTO> listByPage(PageRequestDTO requestDTO) {
@@ -59,5 +59,10 @@ public class GoodsServiceImpl implements GoodsService {
         GoodsDTO dto = modelMapper.map(goodsMapper.view(idx), GoodsDTO.class);
         dto.setImages(fileMapper.listByBbsCodeAndRefIdx("상품", idx).stream().map(vo->modelMapper.map(vo, FileDTO.class)).collect(Collectors.toList()));
         return dto;
+    }
+
+    @Override
+    public List<CodeDTO> codeList(String type) {
+        return codeMapper.list(type).stream().map(vo-> modelMapper.map(vo, CodeDTO.class)).collect(Collectors.toList());
     }
 }

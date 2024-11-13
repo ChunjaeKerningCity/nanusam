@@ -39,11 +39,13 @@ public class GoodsController {
             return "redirect:/goods/list.do";
         }
         model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/list";
     }
 
     @GetMapping("/regist.do")
-    public String registGet() {
+    public String registGet(Model model) {
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/regist";
     }
 
@@ -95,7 +97,8 @@ public class GoodsController {
     }
 
     @GetMapping("/modify.do")
-    public String modifyGet() {
+    public String modifyGet(Model model) {
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/modify";
     }
 

@@ -60,7 +60,7 @@ ${errors}
             <div class="card" style="width: 15rem;">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
-                    <h5 class="card-title">${item.category}</h5>
+                    <h5 class="card-title">${categories[item.category].value}</h5>
                     <p class="card-text">${item.name} - ${item.price}</p>
                     <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a><a href="#" class="btn btn-info">장바구니</a>
                 </div>
