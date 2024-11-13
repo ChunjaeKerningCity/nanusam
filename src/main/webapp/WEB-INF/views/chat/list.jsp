@@ -67,7 +67,7 @@
         .unreadCount {
             font-size: 12px;
             color: white;
-            background-color: #e74c3c;
+            background-color: #34495e;
             padding: 2px 8px;
             border-radius: 12px;
             margin-left: 8px;
@@ -97,16 +97,19 @@
                 <c:if test="${not empty chat.lastMessage.content}" var="lastMessage">
                 </c:if>
 
-                <td class="${(sender eq chat.lastMessage.senderId) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
+                <td class="${(sender eq chat.lastMessage.senderId) and (chat.unreadCount gt 0) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
                     <div>${sender}</div>
                     <c:if test="${lastMessage}">
-                        ${chat.lastMessage.content} <span class="unreadCount">${chat.unreadCount}</span>
+                        ${chat.lastMessage.content}
+                        <c:if test="${chat.unreadCount gt 0}">
+                            <span class="unreadCount">${chat.unreadCount}</span>
+                        </c:if>
                     </c:if>
                     <c:if test="${not lastMessage}">
                         새로운 채팅방
                     </c:if>
                 </td>
-                <td>${chat.lastMessage.regDate}</td>
+                <td>${chat.lastMessage.regDateStr}<br>${chat.lastMessage.regTimeStr}</td>
             </tr>
         </c:forEach>
     </table>

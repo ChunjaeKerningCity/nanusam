@@ -153,6 +153,73 @@ public class ChatServer {
         }
         String receiver = messageArr[0];
         log.info("receiver : " + receiver);
+        if(receiver.equals("system")) {
+            if (messageArr[1].equals("reservation")) {
+                log.info("reservation");
+                String content = messageArr[2];
+                String reservationMemberId = messageArr[3];
+                int goodsIdx = groupDTO.getGoodsIdx();
+                String customer = groupDTO.getCustomer();
+                log.info("예약 로직 수행");
+                log.info("goodsIdx : " + goodsIdx);
+                log.info("reservationId : " + reservationMemberId);
+                int messageIdx = chatService.messageRegist(ChatMessageDTO.builder()
+                        .groupIdx(groupIdx)
+                        .senderId("system")
+                        .content(content)
+                        .build());
+                ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
+                if(messageDTO==null){
+                    log.info("시스템메시지 등록 실패");
+                    return;
+                }
+                session.getOpenSessions().forEach(s -> {
+                    if (customer.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
+                        try {
+                            s.getBasicRemote().sendText(
+                                    "system"
+                                    + "\\|\\|" + messageDTO.getContent()
+                                    + "\\|\\|" + messageDTO.getRegDateStr()+" "+messageDTO.getRegTimeStr()
+                                    + "\\|\\|" + "예약번호"
+                            );
+                        } catch (Exception e) {
+                            log.info(e.getMessage());
+                        }
+                    }
+                });
+                return;
+            }else if(messageArr[1].equals("disconnect")) {
+                log.info("disconnect");
+                String content = messageArr[2];
+                String receiverId = messageArr[3];
+                int messageIdx = chatService.messageRegist(ChatMessageDTO.builder()
+                        .groupIdx(groupIdx)
+                        .senderId("system")
+                        .content(content)
+                        .build());
+                ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
+                if(messageDTO==null){
+                    log.info("시스템메시지 등록 실패");
+                    return;
+                }
+                session.getOpenSessions().forEach(s -> {
+                    if (receiverId.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
+                        try {
+                            s.getBasicRemote().sendText(
+                                    "system"
+                                    + "\\|\\|" + messageDTO.getContent()
+                                    + "\\|\\|" + messageDTO.getRegDateStr()+" "+messageDTO.getRegTimeStr()
+                                    + "\\|\\|disconnectFinished"
+                            );
+                        } catch (Exception e) {
+                            log.info(e.getMessage());
+                        }
+                    }
+                });
+                return;
+            }
+        }
+
 
         if(!groupDTO.getSeller().equals(receiver)&&!groupDTO.getCustomer().equals(receiver)) {
             log.info("채팅방접근권한없는사람");
@@ -180,7 +247,7 @@ public class ChatServer {
                     try {
                         s.getBasicRemote().sendText(messageDTO.getSenderId()
                                 + "\\|\\|" + messageDTO.getContent()
-                                + "\\|\\|" + messageDTO.getRegDate()
+                                + "\\|\\|" + messageDTO.getRegDateStr()+" "+messageDTO.getRegTimeStr()
                                 + "\\|\\|" + messageDTO.getReadChk()
                         );
                     } catch (Exception e) {
