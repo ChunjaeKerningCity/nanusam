@@ -18,8 +18,13 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/main/directions")
-    public String www(){
+    @GetMapping("/main/directions.do")
+    public String directions(){
         return "navigation/directions";
+    }
+
+    @GetMapping("/main/cpInfo.do")
+    public String cpInfo(){
+        return "navigation/cpInfo";
     }
 }

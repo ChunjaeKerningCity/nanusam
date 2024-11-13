@@ -3,7 +3,7 @@
   <img src="/resources/public/nanusamLogo.png" alt="로고" id="footerLogo" />
   <div>
     <p class="footerLink">
-      <a href="#" style="padding-left: 0px">회사소개</a> |
+      <a href="/main/cpInfo.do" style="padding-left: 0px">회사소개</a> |
       <a href="#">회원약관</a> | <a href="#">개인정보처리방침</a> |
       <a href="#">이메일수집거부</a> | <a href="#">고객센터</a> |
       <a
@@ -26,7 +26,7 @@
       디지털로9길 23 11층 (가산동) | 대표번호 : 1661-0901
     </p>
     <p style="color: rgb(153, 153, 153)">
-      <a href="/admin/index.do" style="color: rgb(153, 153, 153); text-decoration: none">Copyright</a> © TeacherOfDivision Corp. All Rights Reserved
+      <a href="/admin/login.do" style="color: rgb(153, 153, 153); text-decoration: none">Copyright</a> © TeacherOfDivision Corp. All Rights Reserved
     </p>
   </div>
   <img src="/resources/public/footerRight.png" alt="가맹문의" />
