@@ -11,6 +11,7 @@
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
 </head>
 <body>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />

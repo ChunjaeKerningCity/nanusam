@@ -9,8 +9,8 @@
     <div class="navGnb">
       <a href="/main/cpInfo.do">회사 소개글</a>
       <a href="/main/directions.do">오시는 길</a>
-      <a href="#">공지사항</a>
-      <a href="#">상품</a>
+      <a href="/bbs/list.do">공지사항</a>
+      <a href="/goods/list.do">상품</a>
       <a href="#">내 상품</a>
-      <a href="#">셀파톡</a>
+      <a href="/chat/list.do">셀파톡</a>
     </div>

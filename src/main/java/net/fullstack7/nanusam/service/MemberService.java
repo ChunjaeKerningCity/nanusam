@@ -2,7 +2,6 @@ package net.fullstack7.nanusam.service;
 
 import net.fullstack7.nanusam.dto.MemberDTO;
 
-
 public interface MemberService {
     public MemberDTO login(String memberId, String pwd);
     public MemberDTO viewMember(String memberId);
