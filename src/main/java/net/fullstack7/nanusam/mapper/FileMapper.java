@@ -13,4 +13,5 @@ public interface FileMapper {
     FileVO view(int idx);
     List<FileVO> listByBbsCodeAndRefIdx(@Param("bbsCode") String bbsCode, @Param("refIdx") int refIdx);
     void deleteByBbsCodeAndRefIdx(String bbsCode, int refIdx);
+    void deleteByFileName(String fileName);
 }

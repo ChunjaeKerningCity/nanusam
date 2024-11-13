@@ -65,4 +65,14 @@ public class GoodsServiceImpl implements GoodsService {
     public List<CodeDTO> codeList(String type) {
         return codeMapper.list(type).stream().map(vo-> modelMapper.map(vo, CodeDTO.class)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<FileDTO> fileListByBbsCodeAndRefIdx(String bbsCode, int refIdx) {
+        return fileMapper.listByBbsCodeAndRefIdx(bbsCode, refIdx).stream().map(vo->modelMapper.map(vo, FileDTO.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteFileByName(String name) {
+        fileMapper.deleteByFileName(name);
+    }
 }

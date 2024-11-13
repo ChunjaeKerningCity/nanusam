@@ -21,6 +21,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,7 +35,7 @@ public class GoodsController {
 
     @GetMapping("/list.do")
     public String list(Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/goods/list.do";
         }
@@ -52,12 +53,11 @@ public class GoodsController {
     @PostMapping("/regist.do")
     public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage, @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info(goodsDTO.toString());
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             log.info("registPost > bindingResult has errors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/goods/regist.do";
         }
-
 
 
         log.info(goodsDTO.getName());
@@ -68,16 +68,16 @@ public class GoodsController {
 
 
         try {
-            String message = upload(mainImage, goodsDTO.getIdx(), "goods_"+goodsDTO.getIdx()+"_0"+getExt(mainImage.getOriginalFilename()) );
+            String message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
 
-            if(message != null) {
+            if (message != null) {
                 redirectAttributes.addFlashAttribute("message", message);
             }
 
             int count = 1;
-            for(MultipartFile detail : detailImage) {
-                message = upload(detail, goodsDTO.getIdx(), "goods_"+goodsDTO.getIdx()+"_" + count++ +getExt(detail.getOriginalFilename()));
-                if(message != null) {
+            for (MultipartFile detail : detailImage) {
+                message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_" + count++ + getExt(detail.getOriginalFilename()));
+                if (message != null) {
                     redirectAttributes.addFlashAttribute("message", message);
                 }
             }
@@ -97,14 +97,32 @@ public class GoodsController {
     }
 
     @GetMapping("/modify.do")
-    public String modifyGet(Model model) {
+    public String modifyGet(HttpSession session, Model model, @RequestParam(required = true) int idx) {
+
         model.addAttribute("categories", goodsService.codeList("goods"));
+        model.addAttribute("item", goodsService.view(idx));
+        List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("상품", idx);
+        model.addAttribute("orgMainImage", list.remove(0));
+        model.addAttribute("images", list);
         return "goods/modify";
     }
 
     @PostMapping("/modify.do")
-    public String modifyPost() {
-        return "goods/modify";
+    public String modifyPost(@Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
+            , HttpSession session
+            , @RequestParam String[] deleteFile
+            , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage
+    ) {
+
+        if(deleteFile != null && deleteFile.length > 0) {
+            for(String filename : deleteFile) {
+                File dfile = new File(uploadDir, filename);
+                dfile.delete();
+                goodsService.deleteFileByName(filename);
+            }
+        }
+
+        return "redirect:goods/modify.do?idx=" + goodsDTO.getIdx();
     }
 
     @GetMapping("delete.do")
@@ -138,20 +156,21 @@ public class GoodsController {
                 dto.setFileSize(file.getSize());
 //                dto.setFileData(mainImage.getBytes());
                 dto.setBbsCode("상품");
+                dto.setOrgFileName(file.getOriginalFilename());
                 goodsService.fileupload(dto);
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             log.info(e.getMessage());
             message = e.getMessage();
         }
 
-        log.info("uploadDir : "+ uploadDir);
-        log.info("orgName : "+ file.getOriginalFilename());
-        log.info("newName : "+ newName);
+        log.info("uploadDir : " + uploadDir);
+        log.info("orgName : " + file.getOriginalFilename());
+        log.info("newName : " + newName);
         //log.info("ext : "+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
-        log.info("ext : "+ Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
-        log.info("size : "+ file.getSize());
-        log.info("contentType : "+ file.getContentType());
+        log.info("ext : " + Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
+        log.info("size : " + file.getSize());
+        log.info("contentType : " + file.getContentType());
         log.info("UploadController >> uploadPOST END");
         log.info("================================");
 
