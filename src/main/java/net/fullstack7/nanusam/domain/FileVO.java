@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString(exclude = "fileData")
 public class FileVO {
     private int idx;
     private String fileName;
