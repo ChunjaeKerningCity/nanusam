@@ -15,7 +15,7 @@ public class BbsVO {
     private String memberId;
     private String title;
     private String content;
-    private String category;
+    private String bbsCode;
     private String displayDate;
     private LocalDate regDate;
     private LocalDateTime modifyDate;

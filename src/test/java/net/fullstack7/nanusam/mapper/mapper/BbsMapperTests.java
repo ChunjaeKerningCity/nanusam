@@ -32,7 +32,7 @@ public class BbsMapperTests {
                 .memberId("테스트유저1")
                 .title("테스트제목")
                 .content("테스트내용")
-                .category("1")
+                .bbsCode("1")
                 .displayDate("2024-11-11")
                 .build();
 

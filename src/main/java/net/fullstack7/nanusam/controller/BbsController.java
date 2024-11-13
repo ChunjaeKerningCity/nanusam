@@ -67,6 +67,7 @@ public class BbsController {
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/bbs/regist.do";
         }
         bbsService.regist(dto);
         log.info("dto : " + dto);

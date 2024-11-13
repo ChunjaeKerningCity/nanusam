@@ -12,6 +12,6 @@
     <title>bbs delete</title>
 </head>
 <body>
-  <h1>bbs delete</h1>
+  <h1>필요없음</h1>
 </body>
 </html>

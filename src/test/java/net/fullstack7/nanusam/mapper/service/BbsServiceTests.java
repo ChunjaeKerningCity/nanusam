@@ -39,7 +39,15 @@ public class BbsServiceTests {
 
     @Test
     public void testRegist(){
+        BbsDTO dto = BbsDTO.builder()
+                .memberId("테스트유저2")
+                .title("테스트제목2")
+                .content("테스트내용2")
+                .bbsCode("2")
+                .displayDate("2024-11-13")
+                .build();
 
+        bbsService.regist(dto);
     }
 
     @Test

@@ -19,25 +19,21 @@
     </select>
 
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.BbsVO">
-        SELECT idx, memberId, title, content, category, displayDate, regDate, modifyDate, readCnt
+        SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
         FROM tbl_bbs
         ORDER BY idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
 
-<!--    <select id="getCount" resultType="int">-->
-<!--        select count(idx) from tbl_bbs-->
-<!--    </select>-->
-
     <select id="view" resultType="net.fullstack7.nanusam.domain.BbsVO">
-        SELECT idx, memberId, title, content, category, displayDate, regDate, modifyDate, readCnt
+        SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
         FROM tbl_bbs
         WHERE idx = #{idx}
     </select>
 
     <insert id="regist">
-        INSERT INTO tbl_bbs(idx, memberId, title, content, category, displayDate)
-        VALUES (#{idx}, #{memberId}, #{title}, #{content}, #{category}, #{displayDate})
+        INSERT INTO tbl_bbs(idx, memberId, title, content, bbsCode, displayDate)
+        VALUES (#{idx}, #{memberId}, #{title}, #{content}, #{bbsCode}, #{displayDate})
     </insert>
 
     <update id="modify">
