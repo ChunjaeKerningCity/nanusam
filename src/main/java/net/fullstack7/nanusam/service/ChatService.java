@@ -20,4 +20,5 @@ public interface ChatService {
     public int deleteGroup(int groupIdx);
     public int readMessages(int groupIdx, String memberId);
     public ChatMessageDTO getMessage(int idx);
+    public int countUnreadMessages(int groupIdx, String memberId);
 }

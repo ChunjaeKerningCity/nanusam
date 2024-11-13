@@ -16,8 +16,10 @@ public class GoodsVO {
     private int price;
     private String quality;
     private String status;
+    private String content;
     private String regDate;
     private String modifyDate;
     private String readCnt;
     private String category;
+    private String reservationId;
 }

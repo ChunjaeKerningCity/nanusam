@@ -7,10 +7,14 @@ import net.fullstack7.nanusam.service.MemberService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,12 +77,6 @@ public class MemberController {
         }
     }
 
-    @PostMapping
-    @ResponseBody
-  
-
-
-
     @GetMapping("/regist.do")
     public String registGet(HttpSession session, Model model) {
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
@@ -88,9 +86,35 @@ public class MemberController {
         }
         return "login/regist";
     }
+
+    // 아이디 중복체크
+    @PostMapping("/memberIdCheck.do")
+    @ResponseBody
+    public String checkMemberId(@RequestParam String memberId) {
+        boolean available = memberService.memberIdCheck(memberId);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("available", available);
+        return jsonResponse.toString();
+    }
+
     @PostMapping("/regist.do")
-    public String registPost(){
-        return "member/list";
+    public String registPost(@Valid MemberDTO memberDTO
+                             , BindingResult bindingResult
+                             , RedirectAttributes redirectAttributes
+                             , Model model) {
+        if(bindingResult.hasErrors()){
+            log.info("hasErrors");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+            return "redirect:/member/regist.do";
+        }
+        int result = memberService.registMember(memberDTO);
+        if (result > 0) {
+            return "redirect:/member/login.do";
+        } else {
+            model.addAttribute("errors", "회원가입에 실패했습니다.");
+            return "login/regist";
+        }
     }
     @GetMapping("/view.do")
     public String viewGet(){

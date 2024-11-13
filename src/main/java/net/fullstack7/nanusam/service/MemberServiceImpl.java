@@ -46,16 +46,18 @@ public class MemberServiceImpl implements MemberService{
     //회원가입
     @Override
     public int registMember(MemberDTO memberDTO) {
+        log.info("regist member");
         MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
+        log.info("memberDTO: {}", memberDTO);
         return memberXmlmapper.registMember(memberVO);
     }
 
     // 마이페이지 진입전 비밀번호확인
     @Override
-    public boolean pwdCheck(String memberId) {
+    public boolean pwdCheck(String memberId,String pwd) {
         MemberVO memberVO = memberXmlmapper.viewMember(memberId);
         if (memberVO != null) {
-            return memberVO.getPwd().equals(memberId);
+            return memberVO.getPwd().equals(pwd);
         }
         return false;
     }

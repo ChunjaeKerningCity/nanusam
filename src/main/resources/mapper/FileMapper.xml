@@ -10,7 +10,6 @@
         select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName
         from tbl_file
         where bbsCode=#{bbsCode} and refIdx=#{refIdx}
-        order by fileName
     </select>
     <delete id="deleteByBbsCodeAndRefIdx">
         delete from tbl_file where bbsCode=#{bbsCode} and refIdx=#{refIdx}

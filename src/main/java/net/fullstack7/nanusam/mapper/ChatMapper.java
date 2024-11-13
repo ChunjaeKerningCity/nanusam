@@ -20,4 +20,5 @@ public interface ChatMapper {
     public int deleteGroup(@Param("idx") int idx);
     public int readMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
     public ChatMessageVO getMessage(@Param("idx")int idx);
+    public int countUnreadMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
 }

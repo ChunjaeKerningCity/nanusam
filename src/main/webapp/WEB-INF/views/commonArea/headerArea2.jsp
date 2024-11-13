@@ -12,8 +12,8 @@
     </c:when>
     <c:otherwise>
       <!-- 비로그인 상태 -->
-      <a href="/member/login.do">로그인</a> <!-- 로그인 페이지로 이동하는 링크 -->
-      <a href="/member/registCheck.do">회원가입</a> <!-- 회원가입 페이지로 이동하는 링크 -->
+      <a href="/member/login.do">로그인</a>
+      <a href="/member/registCheck.do">회원가입</a>
     </c:otherwise>
   </c:choose>
 </div>
