@@ -27,6 +27,6 @@ public class ChatMessageDTO {
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
         regDateStr = dFormatter.format(regDate);
-        regTimeStr = dFormatter.format(regDate);
+        regTimeStr = tFormatter.format(regDate);
     }
 }

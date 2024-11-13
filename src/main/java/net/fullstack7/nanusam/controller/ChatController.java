@@ -29,6 +29,7 @@ public class ChatController {
     public String chatList(HttpSession session, Model model) {
         log.info("chatList");
         if(session == null || session.getAttribute("memberId") == null) {
+            model.addAttribute("errors","세션이없습니다.");
             log.info("session is null");
             return "redirect:/";
         }
@@ -41,18 +42,25 @@ public class ChatController {
     public String chatView(@RequestParam int groupIdx, HttpSession session, Model model) {
         log.info("chatView");
         if(session == null || session.getAttribute("memberId") == null) {
+            model.addAttribute("errors","세션이없습니다.");
             log.info("session is null");
             return "redirect:/";
         }
         String memberId = (String)session.getAttribute("memberId");
         int readResult = chatService.readMessages(groupIdx, memberId);
         if(readResult <= 0) {
+            model.addAttribute("errors","메시지 불러오기 실패.");
             log.info("readMessages failed");
         }
-        List<ChatMessageDTO> chatMessageList = chatService.messageList(groupIdx);
         ChatGroupDTO chatGroupDTO = chatService.getGroup(groupIdx);
+        if(chatGroupDTO == null) {
+            model.addAttribute("errors","채팅방 불러오기 실패.");
+            log.info("chatGroupDTO is null");
+        }
+        List<ChatMessageDTO> chatMessageList = chatService.messageList(groupIdx);
         model.addAttribute("other", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());
         model.addAttribute("seller", chatGroupDTO.getSeller());
+        model.addAttribute("goodsIdx", chatGroupDTO.getGoodsIdx());
         model.addAttribute("chatMessageList", chatMessageList);
         model.addAttribute("groupIdx", groupIdx);
         return "chat/view";
@@ -61,6 +69,7 @@ public class ChatController {
     public String chatFromGoods(@RequestParam int goodsIdx, @RequestParam String seller, HttpSession session, Model model) {
         log.info("chatFromGoods");
         if(session == null || session.getAttribute("memberId") == null) {
+            model.addAttribute("errors","세션이없습니다.");
             log.info("session is null");
             return "redirect:/";
         }
