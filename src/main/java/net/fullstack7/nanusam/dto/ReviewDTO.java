@@ -17,10 +17,10 @@ public class ReviewDTO {
     private String seller;
     private String content;
     private int score;
-    private String displayDate;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
     private String regDateStr;
+    @Builder.Default
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
