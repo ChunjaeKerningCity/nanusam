@@ -1,7 +1,15 @@
 package net.fullstack7.nanusam.domain;
 
-import java.time.LocalDateTime;
+import lombok.*;
+import lombok.extern.log4j.Log4j2;
 
+import java.time.LocalDateTime;
+@Log4j2
+@Getter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ReviewVO {
     private int idx;
     private String buyer;

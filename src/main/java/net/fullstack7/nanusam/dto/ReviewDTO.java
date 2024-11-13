@@ -1,7 +1,16 @@
 package net.fullstack7.nanusam.dto;
 
-import java.time.LocalDateTime;
+import lombok.*;
+import lombok.extern.log4j.Log4j2;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+@Log4j2
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class ReviewDTO {
     private int idx;
     private String buyer;
@@ -11,4 +20,10 @@ public class ReviewDTO {
     private String displayDate;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
+    private String regDateStr;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public void setRegDate(LocalDateTime regDate) {
+        this.regDate = regDate;
+        this.regDateStr = formatter.format(regDate);
+    }
 }

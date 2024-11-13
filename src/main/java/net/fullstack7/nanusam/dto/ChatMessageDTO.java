@@ -22,7 +22,9 @@ public class ChatMessageDTO {
     private String readChk;
     private String regDateStr;
     private String regTimeStr;
+    @Builder.Default
     private DateTimeFormatter dFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    @Builder.Default
     private DateTimeFormatter tFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
