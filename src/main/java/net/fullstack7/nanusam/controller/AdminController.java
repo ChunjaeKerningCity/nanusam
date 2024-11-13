@@ -8,6 +8,7 @@ import net.fullstack7.nanusam.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class AdminController {
     @PostMapping("/login.do")
     public String login(@RequestParam("memberId") String memberId,
         @RequestParam("pwd") String pwd,
-        HttpSession session, Model model) {
+        HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         boolean adminLoginOK = adminService.adminLogin(memberId, pwd);
         model.addAttribute("success", true);
         log.info("adminLogin" + adminLoginOK);
