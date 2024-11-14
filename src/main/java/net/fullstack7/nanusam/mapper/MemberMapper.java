@@ -14,14 +14,13 @@ public interface MemberMapper {
     String memberIdCheck(String memberId);
     // 회원탈퇴부분
     // R 상품 있는지 확인
-    String goodsStatusCheck(String memberId);
+    String goodsStatusCheck(String memberId, String status);
     // 배송상태 확인
-    String deliveryStatusCheck(String memberId);
+    String deliveryStatusCheck(String memberId, String deliveryStatus);
 
     // 여기까지 있는 경우 탈퇴 및 상태 변경 불가함...
-
     // Y 상품 D 로전환
-    int goodsStatusUpdate(String memberId);
+    int goodsStatusUpdate(String memberId, String status);
     // 회원상태 전환
     int memberStatusUpdate(String memberId);
     // 테이블 이동

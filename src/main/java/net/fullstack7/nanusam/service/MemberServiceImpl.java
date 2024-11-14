@@ -5,9 +5,12 @@ import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.MemberVO;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.dto.MemberModifyDTO;
+import net.fullstack7.nanusam.dto.SecessionMemberDTO;
 import net.fullstack7.nanusam.mapper.MemberMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Log4j2
 @Service
@@ -70,10 +73,43 @@ public class MemberServiceImpl implements MemberService{
         return memberXmlmapper.modifyMember(memberVO);
     }
 
-    //회원삭제(본인탈퇴)
+
     @Override
-    public int deleteMember(String memberId) {
-        return  0;
-//        return memberXmlmapper.deleteMember(memberId);
+    public boolean checkGoodsStatus(String memberId, String status) {
+        String result = memberXmlmapper.goodsStatusCheck(memberId, status);
+        return result != null && Integer.parseInt(result) < 0;
     }
+
+    @Override
+    public boolean checkDeliveryStatus(String memberId, String deliveryStatus) {
+        String result = memberXmlmapper.deliveryStatusCheck(memberId, deliveryStatus);
+        return result != null && Integer.parseInt(result) < 0;
+    }
+
+    @Override
+    public boolean updateGoodsStatus(String memberId, String status) {
+        int result = memberXmlmapper.goodsStatusUpdate(memberId, status);
+        return result > 0;
+    }
+
+    @Override
+    public boolean updateMemberStatus(String memberId) {
+        int result = memberXmlmapper.memberStatusUpdate(memberId);
+        return result > 0;
+    }
+
+    @Override
+    public boolean moveToSecessionMember(
+            SecessionMemberDTO secessionMemberDTO) {
+        int result = memberXmlmapper.insertSecessionMember(secessionMemberDTO.getMemberId());
+        return result > 0;
+    }
+
+    @Override
+    public boolean deleteMemberInfo(String memberId) {
+        int result = memberXmlmapper.deleteMember(memberId);
+        return result > 0;
+    }
+
+        
 }

@@ -61,15 +61,15 @@
     SELECT COUNT(*)
     FROM tbl_goods
     WHERE memberId = #{memberId}
-    AND status =  "R"
+    AND status =  #{status}
   </select>
 
 <!--    배송상태 확인-->
     <select id="deliveryStatusCheck">
         SELECT COUNT(*)
-        FROM tbl_goods
+        FROM tbl_payment
         WHERE memberId = #{memberId}
-        AND deliveryStatus =  "1"
+        AND deliveryStatus = #{deliveryStatus}
     </select>
 
 <!--    Y 상품 D 로전환-->
