@@ -32,13 +32,13 @@
             ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
         </where>
     </select>
-    <update id="modify">
+    <update id="modify" parameterType="net.fullstack7.nanusam.domain.ReviewVO">
         UPDATE tbl_review
         <trim prefix="set" suffixOverrides=",">
             <if test="buyer != null">buyer=#{buyer},</if>
             <if test="seller != null">seller=#{seller},</if>
             <if test="content != null">content=#{content},</if>
-            <if test="score >= 0">score=#{score},</if>
+            <if test="score > 0">score=#{score},</if>
             modifyDate = NOW()
         </trim>
         WHERE idx=#{idx}

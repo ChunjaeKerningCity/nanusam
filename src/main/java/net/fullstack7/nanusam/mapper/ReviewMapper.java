@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ReviewMapper {
     public int regist(ReviewVO vo);
-    public ReviewVO getReview(int idx);
+    public ReviewVO view(int idx);
     public List<ReviewVO> listWithPage(PageRequestDTO dto);
     public int totalCount(PageRequestDTO dto);
     public int modify(ReviewVO vo);
