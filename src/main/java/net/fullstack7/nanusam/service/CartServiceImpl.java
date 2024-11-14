@@ -10,9 +10,11 @@ import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.mapper.CartMapper;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
+import org.apache.ibatis.annotations.Param;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
     private final ModelMapper modelMapper;
+    private final HttpSession httpSession;
 
     @Override
     public int totalCount() {
@@ -29,11 +32,11 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartDTO> list() {
+    public List<CartDTO> list(String memberId) {
         log.info("===================================");
         log.info("CartServiceImpl >> list() START");
 
-        List<CartVO> voList = cartMapper.list();
+        List<CartVO> voList = cartMapper.list(memberId);
         List<CartDTO> dtoList = voList.stream()
                 .map(vo->modelMapper.map(vo, CartDTO.class))
                 .collect(Collectors.toList());
@@ -44,6 +47,8 @@ public class CartServiceImpl implements CartService {
         log.info("===================================");
         return dtoList;
     }
+
+
 
     @Override
     public PageResponseDTO<CartDTO> listByPage(PageRequestDTO pageRequestDTO) {

@@ -8,9 +8,8 @@ import java.util.List;
 
 public interface CartService {
     public int totalCount();
-    public List<CartDTO> list();
+    public List<CartDTO> list(String memberId);
     public PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO);
-
     void add(CartDTO dto);
     void delete(int idx);
 }
