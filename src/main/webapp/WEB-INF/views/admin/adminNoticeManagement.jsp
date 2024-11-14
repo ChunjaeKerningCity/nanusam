@@ -347,8 +347,8 @@
                   <tr>
                     <td>${notice.idx}</td>
                     <td>${notice.memberId}</td>
-                    <td class="noticeTitle">
-                      <a href="/bbs/view.do?idx=${notice.idx}">${notice.title}</a>
+                    <td>
+                      <a href="/bbs/view.do?idx=${notice.idx}" class="noticeTitle">${notice.title}</a>
                     </td>
                     <td class="noticeContent">${notice.content}</td>
                     <td>${notice.displayDate}</td>
