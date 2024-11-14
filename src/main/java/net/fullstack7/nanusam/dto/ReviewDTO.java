@@ -17,13 +17,27 @@ public class ReviewDTO {
     private String seller;
     private String content;
     private int score;
+    private String status;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
+    private LocalDateTime deleteDate;
     private String regDateStr;
-    @Builder.Default
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private String modifyDateStr;
+    private String deleteDateStr;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
-        this.regDateStr = formatter.format(regDate);
+        if(regDate == null) return;
+        this.regDateStr = FORMATTER.format(regDate);
+    }
+    public void setModifyDate(LocalDateTime modifyDate) {
+        this.modifyDate = modifyDate;
+        if(modifyDate == null) return;
+        this.modifyDateStr = FORMATTER.format(modifyDate);
+    }
+    public void setDeleteDate(LocalDateTime deleteDate) {
+        this.deleteDate = deleteDate;
+        if(deleteDate == null) return;
+        this.deleteDateStr = FORMATTER.format(deleteDate);
     }
 }

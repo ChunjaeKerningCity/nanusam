@@ -5,7 +5,9 @@ import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.dto.ReadCntDTO;
 import net.fullstack7.nanusam.service.BbsService;
+import net.fullstack7.nanusam.service.ReadCntService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,7 +27,7 @@ import javax.validation.Valid;
 @RequestMapping("/bbs")
 public class BbsController {
     private final BbsService bbsService;
-
+    private final ReadCntService readCntService;
     @GetMapping("/list.do")
     public String list(
             @Valid PageRequestDTO pageRequestDTO,
@@ -77,12 +81,41 @@ public class BbsController {
     }
     @GetMapping("/view.do")
     public String viewGet(
-            @RequestParam int idx, Model model
+            @RequestParam(required = false, defaultValue = "-1") int idx
+            , HttpSession session
+            , Model model
+            , RedirectAttributes redirectAttributes
     ){
-        BbsDTO dto = bbsService.view(idx);
-        if(dto != null){
-            bbsService.addReadCnt(idx);
+        if(idx==-1){
+            log.info("idx==null");
+            redirectAttributes.addFlashAttribute("errors", "파라미터오류");
+            return "redirect:/bbs/list.do";
         }
+        BbsDTO dto = bbsService.view(idx);
+        if(dto==null){
+            log.info("dto == null");
+            redirectAttributes.addFlashAttribute("errors", "게시글조회 실패");
+            return "redirect:/bbs/list.do";
+        }
+
+        int readCntFlag = readCntService.regist(ReadCntDTO
+                .builder()
+                .memberId((String)session.getAttribute("memberId"))
+                .bbsNo("01")
+                .bbsIdx(dto.getIdx())
+                .build());
+
+        if(readCntFlag>0){
+            int readCntResult = bbsService.addReadCnt(dto.getIdx());
+            if(readCntResult>0){
+                dto.setReadCnt(dto.getReadCnt()+1);
+            }
+        }else if(readCntFlag==0){
+            log.info("readCntFlag == 0 에러확인하셈 조회수증가안시킴");
+        }else{
+            log.info("조회수증가안시킴");
+        }
+
         model.addAttribute("dto", dto);
 
         log.info("===========================");

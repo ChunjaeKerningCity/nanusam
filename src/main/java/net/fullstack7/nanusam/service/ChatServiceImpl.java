@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.ChatGroupVO;
 import net.fullstack7.nanusam.domain.ChatMessageVO;
-import net.fullstack7.nanusam.domain.ChatVO;
-import net.fullstack7.nanusam.dto.ChatDTO;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
 import net.fullstack7.nanusam.mapper.ChatMapper;

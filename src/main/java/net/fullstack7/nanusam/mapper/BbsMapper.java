@@ -18,5 +18,5 @@ public interface BbsMapper {
     void regist(BbsVO vo);
     void modify(BbsVO vo);
     void delete(int idx);
-    void addReadCnt(int idx);
+    int addReadCnt(int idx);
 }
