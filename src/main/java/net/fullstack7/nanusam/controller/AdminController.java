@@ -6,10 +6,12 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.AdminDTO;
+import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.service.AdminService;
+import net.fullstack7.nanusam.service.BbsService;
 import net.fullstack7.nanusam.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin")
 public class AdminController {
     private final AdminService adminService;
+    private final BbsService bbsService;
 
     @GetMapping("/login.do")
     public String adminLogin() {
@@ -46,9 +49,17 @@ public class AdminController {
     }
 
     @GetMapping("/main.do")
-    public String adminMain() {
+    public String adminMain(Model model) {
+        int totalMemberCount = adminService.getTotalMemberCount();
+        int totalGoodsCount = adminService.getTotalGoodsCount();
+
+
+        model.addAttribute("totalMemberCount", totalMemberCount);
+        model.addAttribute("totalGoodsCount", totalGoodsCount);
+
         return "admin/adminMain";
     }
+
 
     @GetMapping("/memberMm.do")
     public String memberList(Model model) {
@@ -85,5 +96,12 @@ public class AdminController {
             redirectAttributes.addFlashAttribute("errors", "회원 정보를 탈퇴 테이블에 삽입하는 데 실패했습니다.");
         }
         return "redirect:/admin/memberMm.do";
+    }
+
+    @GetMapping("/noticeMm.do")
+    public String noticeList(Model model) {
+        List<BbsDTO> noticeList = adminService.noticeList();
+        model.addAttribute("noticeList", noticeList);
+        return "admin/adminNoticeManagement";
     }
 }
