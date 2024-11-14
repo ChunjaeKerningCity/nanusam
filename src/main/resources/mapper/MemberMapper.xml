@@ -8,6 +8,8 @@
         SELECT memberId, pwd
         FROM tbl_member
         WHERE memberId = #{memberId}
+--         AND memType = #{memType}
+--         AND status = #{status}
     </select>
 
     <!-- 관리자 로그인 -->
@@ -19,7 +21,7 @@
 
     <!-- 회원 정보 확인 -->
     <select id="viewMember" >
-        SELECT *
+        SELECT memberId, pwd, name, email, phone, birthday, addr1, zipCode
         FROM tbl_member
         WHERE memberId = #{memberId}
     </select>
@@ -55,9 +57,40 @@
         WHERE memberId = #{memberId}
     </update>
 
-    <!-- 회원 삭제 -->
-    <delete id="deleteMember">
-        DELETE FROM tbl_member
+    <!-- 회원상태 비활성화 -->
+    <update id="deleteMember">
+        UPDATE tbl_member
+        SET leaveDate = NOW(),
+            status = 'N'
         WHERE memberId = #{memberId}
-    </delete>
+    </update>
+
+<!--    탈퇴테이블 업데이트-->
+    <insert id="insertSecessionMember" parameterType="net.fullstack7.nanusam.domain.SecessionMemberVO">
+        INSERT INTO tbl_secession_member
+        (memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, memType, regDate, leaveDate, status, description)
+        SELECT
+            memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, memType, regDate, leaveDate, status, '직접탈퇴'
+        FROM tbl_member
+        WHERE memberId = #{memberId}
+    </insert>
+
+<!--    원래테이블 정보 지우기-->
+    <update id="deleteMemberInfo" parameterType="String">
+        UPDATE tbl_member
+        SET status = 'N',
+            pwd = NULL,
+            name = NULL,
+            email = NULL,
+            phone = NULL,
+            birthday = NULL,
+            addr1 = NULL,
+            addr2 = NULL,
+            zipCode = NULL,
+            memType = NULL,
+            regDate = NULL,
+            changeDate = NULL,
+            description = NULL
+        WHERE memberId = #{memberId}
+    </update>
 </mapper>
