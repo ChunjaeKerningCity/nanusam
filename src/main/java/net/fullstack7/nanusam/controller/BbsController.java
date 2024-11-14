@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -70,7 +71,7 @@ public class BbsController {
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/bbs/regist.do";
+            return "redirect:/admin/noticeMm.do";
         }
         bbsService.regist(dto);
 //        log.info("dto : " + dto);
@@ -158,9 +159,9 @@ public class BbsController {
 
 //        log.info("dto : " + dto);
 //        log.info("===========================");
-        return "redirect:/bbs/list.do";
+        return "redirect:/admin/noticeMm.do";
     }
-    @GetMapping("delete.do")
+    @PostMapping("/delete.do")
     public String deleteGet(
             @RequestParam int idx, RedirectAttributes redirectAttributes
     ){
@@ -169,7 +170,7 @@ public class BbsController {
 //        log.info("delete");
 //        log.info("idx : " + idx);
 //        log.info("===========================");
-        return "redirect:/bbs/list.do";
+        return "redirect:/admin/noticeMm.do";
     }
 
 }
