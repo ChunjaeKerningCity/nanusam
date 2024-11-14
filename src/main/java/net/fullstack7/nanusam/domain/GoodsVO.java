@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.domain;
 
+import java.time.LocalDateTime;
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
 
@@ -13,12 +14,12 @@ public class GoodsVO {
     private int idx;
     private String name;
     private String memberId;
-    private int price;
+    private Integer price;
     private String quality;
     private String status;
     private String content;
-    private String regDate;
-    private String modifyDate;
+    private LocalDateTime regDate;
+    private LocalDateTime modifyDate;
     private String readCnt;
     private String category;
     private String reservationId;
