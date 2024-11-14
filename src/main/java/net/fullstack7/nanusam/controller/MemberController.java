@@ -7,6 +7,7 @@ import net.fullstack7.nanusam.dto.MemberModifyDTO;
 import net.fullstack7.nanusam.service.MemberService;
 import net.fullstack7.nanusam.util.JSFunc;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -93,13 +96,28 @@ public class MemberController {
         }
         return "redirect:/member/view.do";
     }
+    
+    // D전환 여부
+    @GetMapping("/checkGoodsStatusY")
+    @ResponseBody
+    public String checkGoodsStatusY(@RequestParam String memberId) {
+        boolean hasGoods = !memberService.goodsStatusY(memberId);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("hasGoods", hasGoods);
+        return jsonResponse.toString();
+    }
 
+    //탈퇴
     @PostMapping("/delete.do")
-    public String withdraw(@RequestParam String memberId, RedirectAttributes redirectAttributes,HttpSession session) {
-        if (!memberService.dontDelete(memberId)) {
+    public String delete(@RequestParam String memberId, RedirectAttributes redirectAttributes, HttpSession session) {
+        
+//        log.info("탈퇴컨트롤러시작");
+        if (memberService.dontDelete(memberId)) {
+//            log.info("dontDelete실패");
             redirectAttributes.addFlashAttribute("errors", "탈퇴가 불가합니다. 현재 예약 중이거나 배송 중인 상품이 있습니다.");
             return "redirect:/member/view.do";
         }
+//        log.info("dontDelete성공");
         memberService.goDelete(memberId);
         redirectAttributes.addFlashAttribute("errors", "탈퇴가 완료되었습니다.");
         session.invalidate();

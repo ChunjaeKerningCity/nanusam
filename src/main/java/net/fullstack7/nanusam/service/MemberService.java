@@ -14,4 +14,5 @@ public interface MemberService {
     public boolean memberIdCheck(String memberId);
     boolean dontDelete(String memberId);
     void goDelete(String memberId);
+    public boolean goodsStatusY(String memberId);
 }

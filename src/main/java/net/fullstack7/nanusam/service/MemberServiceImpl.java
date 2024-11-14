@@ -75,24 +75,33 @@ public class MemberServiceImpl implements MemberService{
         return memberXmlmapper.modifyMember(memberVO);
     }
 
+    // 탈퇴 불가 사유 확인 ( 예약중 상품, 배송중상품)
     @Override
     public boolean dontDelete(String memberId) {
-        int goodsCount = memberXmlmapper.goodsStatusCheck(memberId, "Y");
+        int goodsCount = memberXmlmapper.goodsStatusCheck(memberId, "R");
         int deliveryCount = memberXmlmapper.deliveryStatusCheck(memberId, "1");
-
-        return goodsCount == 0 && deliveryCount == 0;
+//        log.info("goodsCount: " + goodsCount);
+//        log.info("deliveryCount: " + deliveryCount);
+        return goodsCount > 0 || deliveryCount > 0;
     }
 
+    // 판매중인 상품확인
+    @Override
+    public boolean goodsStatusY(String memberId){
+        int goodsYCount = memberXmlmapper.goodsStatusY(memberId, "Y");
+//        log.info("goodsYCount"+ goodsYCount);
+        return goodsYCount == 0;
+    }
+
+    //탈퇴
     @Override
     @Transactional
     public void goDelete(String memberId) {
-        int goodsYCount = memberXmlmapper.goodsStatusY(memberId, "Y");
-        if (goodsYCount > 0) {
-            // 사용자에게 확인 요청 로직을 구현 (UI 레이어에서 처리)
-            memberXmlmapper.goodsStatusUpdate(memberId, "D");
-        }
+        memberXmlmapper.goodsStatusUpdate(memberId, "D");
+
         memberXmlmapper.memberStatusUpdate(memberId);
         memberXmlmapper.insertSecessionMember(memberId);
+
         memberXmlmapper.deleteMember(memberId);
     }
 
