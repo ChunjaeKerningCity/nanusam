@@ -28,18 +28,18 @@ public class CartController {
             @Valid PageRequestDTO pageRequestDTO,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
-            @SessionAttribute("memberId")String memberId,
+            @SessionAttribute(name="memberId", required = false)String memberId,
             Model model) {
-        log.info("===============================");
-        log.info("CartController >> list START");
+//        log.info("===============================");
+//        log.info("CartController >> list START");
 
         if (bindingResult.hasErrors()) {
-            log.info("CartController >> list ERROR");
+//            log.info("CartController >> list ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
 
         if(memberId == null || memberId.isEmpty()) {
-            log.info("CartController >> login ERROR");
+//            log.info("CartController >> login ERROR");
             return "redirect:/login/login.do";
         }
         pageRequestDTO.setMemberId(memberId);
@@ -48,26 +48,25 @@ public class CartController {
 
         PageResponseDTO<CartDTO> pageResponseDTO = cartService.listByPage(pageRequestDTO);
         model.addAttribute("cartList", pageResponseDTO);
-
-        log.info("cartList : "+ pageResponseDTO);
-        log.info("CartController >> list END");
-        log.info("===========================");
-
+//        log.info("cartList : "+ pageResponseDTO);
+//        log.info("CartController >> list END");
+//        log.info("===========================");
         return "cart/list";
     }
 
+//    @GetMapping("/add.do")
+//    public String addGet(){
+//        log.info("===========================");
+//        log.info("add");
+//        log.info("===========================");
+//        return "cart/add";
+//    }
     @GetMapping("/add.do")
-    public String addGet(){
-        log.info("===========================");
-        log.info("add");
-        log.info("===========================");
-        return "cart/add";
-    }
-    @PostMapping("/add.do")
     public String addPost(
             @Valid CartDTO dto
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
+            , Model model
     ){
         log.info("============================");
         log.info("addPost");
@@ -86,7 +85,9 @@ public class CartController {
 
     @GetMapping("delete.do")
     public String deleteGet(
-            @RequestParam int idx, RedirectAttributes redirectAttributes
+            @RequestParam int idx,
+            RedirectAttributes redirectAttributes,
+            Model model
     ){
         cartService.delete(idx);
         log.info("===========================");

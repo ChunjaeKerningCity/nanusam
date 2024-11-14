@@ -72,8 +72,8 @@
                 <!-- 제목 및 작성자 정보 -->
                 <h2 class="hd">${dto.title}</h2>
                 <div class="sub-info">
-                    <span><strong>작성자:</strong> ${dto.memberId}</span> |
-                    <span><strong>작성일:</strong> ${dto.regDate}</span> |
+                    <span><strong>작성자:</strong> ${dto.memberId}</span>
+                    <span><strong>작성일:</strong> ${dto.regDate}</span>
                     <span><strong>조회수:</strong> ${dto.readCnt}</span>
                 </div>
                 <hr>

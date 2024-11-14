@@ -53,10 +53,14 @@ public class BbsController {
         return "bbs/list";
     }
     @GetMapping("/regist.do")
-    public String registGet(){
-//        log.info("===========================");
-//        log.info("regist");
-//        log.info("===========================");
+    public String registGet(
+            Model model
+    ){
+        BbsDTO dto = BbsDTO.builder().build();
+        model.addAttribute("dto", dto);
+        log.info("===========================");
+        log.info("regist");
+        log.info("===========================");
         return "bbs/regist";
     }
     @PostMapping("/regist.do")
@@ -65,8 +69,8 @@ public class BbsController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
     ){
-//        log.info("===========================");
-//        log.info("registPOST");
+        log.info("===========================");
+        log.info("registPOST");
 
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
@@ -74,8 +78,8 @@ public class BbsController {
             return "redirect:/admin/noticeMm.do";
         }
         bbsService.regist(dto);
-//        log.info("dto : " + dto);
-//        log.info("===========================");
+        log.info("dto : " + dto);
+        log.info("===========================");
 
         return "redirect:/bbs/list.do";
     }
