@@ -22,13 +22,6 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatController {
     private final ChatService chatService;
-
-    @GetMapping("/login.do")
-    public String login(@RequestParam String memberId,HttpSession session,Model model) {
-        session.setAttribute("memberId", memberId);
-        return "/chat/fromGoods";
-    }
-
     @GetMapping("/list.do")
     public String chatList(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         log.info("chatList");

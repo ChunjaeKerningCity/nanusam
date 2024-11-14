@@ -15,7 +15,7 @@ public class ReviewVO {
     private String buyer;
     private String seller;
     private String content;
-    private int score;
+    private Integer score;
     private String status;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;

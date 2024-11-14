@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 
 @Controller
 @RequiredArgsConstructor
@@ -52,9 +53,16 @@ public class LoginController {
             session.setAttribute("memberName", memberDTO.getName());
             //----------------------------
             String redirectURL = (String) session.getAttribute("redirectAfterLogin");
+
             if (redirectURL != null) {
-                session.removeAttribute("redirectAfterLogin");
-                return "redirect:" + redirectURL;
+                try {
+                    session.removeAttribute("redirectAfterLogin");
+
+                    return "redirect:" + URLDecoder.decode(URLDecoder.decode(redirectURL, "UTF-8"), "UTF-8");
+                }catch(Exception e){
+                    log.error(e);
+
+                }
             }
             //----------------------------
             return "redirect:/";

@@ -73,7 +73,7 @@
         <div>
             <hr/>
             <h2 class="hd">
-                ${memberType eq 'buyer'? '판매자' : '내가 쓴'} 후기목록
+                ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록
             </h2>
             <hr/>
             <table class="table table-hover">
@@ -82,8 +82,11 @@
                     <th scope="col" style="width:10%;">번호</th>
                     <th scope="col" style="width:10%;">평점</th>
                     <th scope="col" style="text-align : left;">후기</th>
-                    <th scope="col" style="width:10%;">${memberType eq 'buyer'? '작성자' : '판매자'}</th>
+                    <th scope="col" style="width:10%;">${memberType eq 'seller'? '작성자' : '판매자'}</th>
                     <th scope="col" style="width:10%;">등록일</th>
+                    <c:if test="${memberType eq 'buyer'}" var="buyer">
+                        <th scope="col" style="width:10%;">수정/삭제</th>
+                    </c:if>
                 </tr>
                 </thead>
                 <tbody>
@@ -95,6 +98,9 @@
                             <td style="text-align : left;">${review.content}</td>
                             <td>${memberType eq 'buyer'? review.seller : review.buyer}</td>
                             <td>${review.regDateStr}</td>
+                            <c:if test="${buyer}">
+                                <td><button id="btnModify" onclick="modify(${review.idx})">수정/삭제</button>></td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </c:if>
@@ -157,5 +163,14 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous">
 </script>
+<c:if test="${buyer}">
+   <script>
+       let childWindow;
+        function modify(idx){
+            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=600,height=400,resizable=no");
+        }
+
+   </script>
+</c:if>
 </body>
 </html>
