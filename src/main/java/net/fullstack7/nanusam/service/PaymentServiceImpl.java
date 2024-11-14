@@ -64,4 +64,9 @@ public class PaymentServiceImpl implements PaymentService {
         return pageResponseDTO;
     }
 
+    @Override
+    public PaymentDTO view(int idx) {
+        return paymentMapper.viewWithGoods(idx);
+    }
+
 }

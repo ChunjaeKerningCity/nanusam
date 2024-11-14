@@ -53,7 +53,7 @@ public class PaymentController {
 
         GoodsDTO item = goodsService.view(goodsIdx);
 
-        if(item == null) {
+        if (item == null) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
@@ -74,25 +74,44 @@ public class PaymentController {
             return "redirect:/goods/list.do";
         }
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             log.info("bindingResult has errors");
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
-            return "redirect:/payment/regist.do?goodsIdx="+paymentDTO.getGoodsIdx();
+            return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
         }
 
         paymentDTO.setBuyer(session.getAttribute("memberId").toString());
         String message = paymentService.regist(paymentDTO);
 
-        if(message != null) {
+        if (message != null) {
             redirectAttributes.addFlashAttribute("message", message);
-            return "redirect:/payment/regist.do?goodsIdx="+paymentDTO.getGoodsIdx();
+            return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
         }
 
         return "redirect:/payment/list.do";
     }
 
     @GetMapping("/view.do")
-    public String viewGet(@RequestParam(defaultValue = "0") int idx, HttpSession session, Model model) {
+    public String viewGet(@RequestParam(defaultValue = "0") int idx, RedirectAttributes redirectAttributes, HttpSession session, Model model, HttpServletRequest request) {
+
+        if (idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "주문번호를 선택해주세요.");
+            return "redirect:/payment/list.do";
+        }
+
+        PaymentDTO paymentDTO = paymentService.view(idx);
+        if (paymentDTO == null) {
+            redirectAttributes.addFlashAttribute("errors", "결제 내역이 없습니다.");
+            return "redirect:/payment/list.do";
+        }
+        if (!paymentDTO.getSeller().equals(session.getAttribute("memberId").toString())
+                && !paymentDTO.getBuyer().equals(session.getAttribute("memberId").toString())) {
+            redirectAttributes.addFlashAttribute("errors", "접근 권한이 없습니다.");
+            return "redirect:/payment/list.do";
+        }
+
+        model.addAttribute("item", paymentDTO);
+
         return "payment/view";
     }
 }

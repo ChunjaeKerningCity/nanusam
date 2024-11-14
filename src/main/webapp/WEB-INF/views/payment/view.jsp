@@ -11,28 +11,51 @@
 <head>
     <title>payment-view</title>
 </head>
-<body>
-
 <%--상품정보--%>
+<h3>상품정보</h3>
 <table>
     <tr>
-        <td><img src="/resources/image/goods_${item.goodsinfo.idx}_0.png"></td>
-        <td>${item.goodsinfo.name}</td>
-        <td>${item.goodsinfo.price}</td>
-        <td>${item.goodsinfo.category}</td>
+        <td rowspan="4"><img src="/resources/image/goods_${item.goodsInfo.idx}_0.png"></td>
+        <th>판매자</th>
+        <td>${item.seller}</td>
+    </tr>
+    <tr>
+        <th>카테고리</th>
+        <td>${item.goodsInfo.category}</td>
+    </tr>
+    <tr>
+        <th>상품명</th>
+        <td>${item.goodsInfo.name}</td>
+    </tr>
+    <tr>
+        <th>가격</th>
+        <td>${item.goodsInfo.price}</td>
     </tr>
 </table>
 
 <%--결제정보--%>
+<h3>결제 정보</h3>
 <table>
     <tr>
-        <th>주문일자</th>
+        <th>결제일자</th>
         <td>${item.payDateStr}</td>
     </tr>
     <tr>
-        <th>판매자</th>
-        <td>${item.seller}</td>
+        <th>결제수단</th>
+        <td>${item.method}</td>
     </tr>
+    <tr>
+        <th>결제회사</th>
+        <td>${item.paymentCompany}</td>
+    </tr>
+    <tr>
+        <th>결제번호</th>
+        <td>${item.paymentNo}</td>
+    </tr>
+</table>
+
+<h3>배송 정보</h3>
+<table>
     <tr>
         <th>구매자</th>
         <td>${item.buyer}</td>
@@ -60,30 +83,6 @@
     <tr>
         <th>우편번호</th>
         <td>${item.zipCode}</td>
-    </tr>
-    <tr>
-        <th>우편번호</th>
-        <td>${item.zipCode}</td>
-    </tr>
-    <tr>
-        <th>우편번호</th>
-        <td>${item.zipCode}</td>
-    </tr>
-    <tr>
-        <th>우편번호</th>
-        <td>${item.zipCode}</td>
-    </tr>
-    <tr>
-        <th>결제수단</th>
-        <td>${item.method}</td>
-    </tr>
-    <tr>
-        <th>결제회사</th>
-        <td>${item.paymentCompany}</td>
-    </tr>
-    <tr>
-        <th>결제번호</th>
-        <td>${item.paymentNo}</td>
     </tr>
     <tr>
         <th>배송상태</th>

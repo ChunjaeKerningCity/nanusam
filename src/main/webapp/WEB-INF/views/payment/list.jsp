@@ -31,7 +31,7 @@
     <c:forEach items="${pageinfo.dtoList}" var="item">
         <tr>
             <td><a href="/payment/view.do?idx=${item.idx}">${item.payDateStr}</a></td>
-            <td><img src="/resources/image/goods_${item.goodsInfo.name}_0.png" alt="/resources/image/goods_${item.goodsInfo.name}_0.jpg"></td>
+            <td><img src="/resources/image/goods_${item.goodsInfo.idx}_0.png" alt="/resources/image/goods_${item.goodsInfo.name}_0.jpg"></td>
             <td>${item.seller}</td>
             <td>${item.buyer}</td>
             <td>${item.goodsInfo.name}</td>
