@@ -15,4 +15,5 @@ public interface GoodsMapper {
     GoodsVO view(int idx);
     int modifyGoodsInfo(GoodsVO goodsVO);
     String getSellerId(int idx);
+    int modifyStatus(GoodsVO goodsVO);
 }

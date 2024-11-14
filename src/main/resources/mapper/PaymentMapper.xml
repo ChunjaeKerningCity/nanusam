@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.fullstack7.nanusam.mapper.PaymentMapper">
+    <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
+        insert into tbl_payment(seller, buyer, goodsIdx, name, email, phone, addr1, addr2, zipCode, method,
+                                paymentCompany, paymentNo)
+        values (#{seller}, #{buyer}, #{goodsIdx}, #{name}, #{email}, #{phone}, #{addr1}, #{addr2},
+                #{zipCode}, #{method}, #{paymentCompany}, #{paymentNo})
+    </insert>
+    <delete id="deleteByIdx">
+        delete from tbl_payment where idx=#{idx}
+    </delete>
+</mapper>

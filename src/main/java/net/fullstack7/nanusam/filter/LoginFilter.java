@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/member/*"})
+@WebFilter(urlPatterns = {"/member/*", "/payment/*"})
 public class LoginFilter  implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,7 +24,7 @@ public class LoginFilter  implements Filter {
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().println("<script>");
             response.getWriter().println("alert('로그인 후 이용 가능합니다');");
-            response.getWriter().println("location.href='/member/login.do';");
+            response.getWriter().println("location.href='/login/login.do';");
             response.getWriter().println("</script>");
             return;
         }
