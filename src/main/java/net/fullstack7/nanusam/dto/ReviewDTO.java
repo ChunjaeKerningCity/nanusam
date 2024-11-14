@@ -24,7 +24,7 @@ public class ReviewDTO {
     private String regDateStr;
     private String modifyDateStr;
     private String deleteDateStr;
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
         if(regDate == null) return;

@@ -39,6 +39,21 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public PageResponseDTO<ReviewDTO> listWithPageAndMember(PageRequestDTO dto, String memberType, String memberId) {
+        return PageResponseDTO
+                .<ReviewDTO>withAll()
+                .reqDTO(dto)
+                .dtoList(reviewMapper.listWithPageAndMember(dto,memberType,memberId).stream().map(vo->modelMapper.map(vo,ReviewDTO.class)).collect(Collectors.toList()))
+                .total_count(totalCountWithMember(dto,memberType,memberId))
+                .build();
+    }
+
+    @Override
+    public int totalCountWithMember(PageRequestDTO dto, String memberType, String memberId) {
+        return reviewMapper.totalCountWithMember(dto,memberType,memberId);
+    }
+
+    @Override
     public int totalCount(PageRequestDTO dto) {
         return reviewMapper.totalCount(dto);
     }

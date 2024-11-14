@@ -90,7 +90,7 @@ public class ChatController {
             , Model model) {
         log.info("chatFromGoods");
         if(session == null || session.getAttribute("memberId") == null) {
-            model.addAttribute("errors","세션이없습니다.");
+            redirectAttributes.addFlashAttribute("errors","세션이없습니다.");
             log.info("session is null");
             return "redirect:/";
         }
@@ -108,7 +108,7 @@ public class ChatController {
         }
 
         if(customer.equals(seller)) {
-            model.addAttribute("errors","자기자신과 채팅방 생성 불가");
+            redirectAttributes.addFlashAttribute("errors","자기자신과 채팅방 생성 불가");
             log.info("customer is seller");
             return "redirect:/goods/view.do?idx="+goodsIdx;
         }
