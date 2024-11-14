@@ -35,8 +35,8 @@ public class BbsController {
             RedirectAttributes redirectAttributes,
             Model model
     ) {
-        log.info("===============================");
-        log.info("BbsController >> list START");
+//        log.info("===============================");
+//        log.info("BbsController >> list START");
 
         if (bindingResult.hasErrors()){
             log.info("BbsController >> list ERROR");
@@ -46,17 +46,16 @@ public class BbsController {
         PageResponseDTO pageResponseDTO = bbsService.listByPage(pageRequestDTO);
         model.addAttribute("bbsList", pageResponseDTO);
 
-        log.info("bbsList : "+ pageResponseDTO);
-        log.info("BbsController >> list END");
-        log.info("===========================");
-
+//        log.info("bbsList : "+ pageResponseDTO);
+//        log.info("BbsController >> list END");
+//        log.info("===========================");
         return "bbs/list";
     }
     @GetMapping("/regist.do")
     public String registGet(){
-        log.info("===========================");
-        log.info("regist");
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("regist");
+//        log.info("===========================");
         return "bbs/regist";
     }
     @PostMapping("/regist.do")
@@ -65,8 +64,8 @@ public class BbsController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
     ){
-        log.info("===========================");
-        log.info("registPOST");
+//        log.info("===========================");
+//        log.info("registPOST");
 
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
@@ -74,8 +73,8 @@ public class BbsController {
             return "redirect:/bbs/regist.do";
         }
         bbsService.regist(dto);
-        log.info("dto : " + dto);
-        log.info("===========================");
+//        log.info("dto : " + dto);
+//        log.info("===========================");
 
         return "redirect:/bbs/list.do";
     }
@@ -118,11 +117,11 @@ public class BbsController {
 
         model.addAttribute("dto", dto);
 
-        log.info("===========================");
-        log.info("view");
-        log.info("idx : " + idx);
-        log.info("dto : " + dto);
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("view");
+//        log.info("idx : " + idx);
+//        log.info("dto : " + dto);
+//        log.info("===========================");
         return "bbs/view";
     }
 
@@ -133,11 +132,11 @@ public class BbsController {
         BbsDTO dto = bbsService.view(idx);
         model.addAttribute("dto", dto);
 
-        log.info("===========================");
-        log.info("modifyGET");
-        log.info("idx : " + idx);
-        log.info("dto : " + dto);
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("modifyGET");
+//        log.info("idx : " + idx);
+//        log.info("dto : " + dto);
+//        log.info("===========================");
         return "bbs/modify";
     }
     @PostMapping("/modify.do")
@@ -146,8 +145,8 @@ public class BbsController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
     ){
-        log.info("===========================");
-        log.info("modifyPOST");
+//        log.info("===========================");
+//        log.info("modifyPOST");
 
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
@@ -157,8 +156,8 @@ public class BbsController {
         }
         bbsService.modify(dto);
 
-        log.info("dto : " + dto);
-        log.info("===========================");
+//        log.info("dto : " + dto);
+//        log.info("===========================");
         return "redirect:/bbs/list.do";
     }
     @GetMapping("delete.do")
@@ -166,10 +165,10 @@ public class BbsController {
             @RequestParam int idx, RedirectAttributes redirectAttributes
     ){
         bbsService.delete(idx);
-        log.info("===========================");
-        log.info("delete");
-        log.info("idx : " + idx);
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("delete");
+//        log.info("idx : " + idx);
+//        log.info("===========================");
         return "redirect:/bbs/list.do";
     }
 
