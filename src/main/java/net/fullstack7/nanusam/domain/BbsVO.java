@@ -19,7 +19,7 @@ public class BbsVO {
     private String content;
     private String bbsCode;
     private String displayDate;
-    private LocalDate regDate;
+    private LocalDateTime regDate;
     private LocalDateTime modifyDate;
     private int readCnt;
 }

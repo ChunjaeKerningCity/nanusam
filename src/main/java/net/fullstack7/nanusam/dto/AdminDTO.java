@@ -63,6 +63,6 @@ public class AdminDTO {
       changeDateStr = "변경 X";
       return;
     }
-    changeDateStr = formatter.format(changeDate);
+    changeDateStr = formatter2.format(changeDate);
   }
 }

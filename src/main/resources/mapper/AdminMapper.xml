@@ -30,7 +30,7 @@
   <!-- 맴버 상태 변경 -->
   <update id="updateMemberStatus">
     UPDATE tbl_member
-    SET status = #{status}, changeDate = current_timestamp()
+    SET status = #{status}
     WHERE memberId = #{memberId};
   </update>
 
@@ -55,4 +55,18 @@
   </delete>
 
 <!--  메인페이지에서 사용할 것들-->
+<!--  회원수-->
+  <select id="getTotalMemberCount">
+    SELECT COUNT(*) FROM tbl_member;
+  </select>
+
+  <select id="getTotalGoodsCount">
+    SELECT COUNT(*) FROM tbl_goods;
+  </select>
+
+<!--  공지사항 관련-->
+  <select id="noticeList" resultType="net.fullstack7.nanusam.domain.BbsVO">
+    SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
+    FROM tbl_bbs;
+  </select>
 </mapper>

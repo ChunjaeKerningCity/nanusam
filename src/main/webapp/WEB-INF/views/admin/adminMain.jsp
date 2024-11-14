@@ -186,11 +186,15 @@
           <ul class="sub-menu children dropdown-menu">
             <li>
               <i class="fa fa-table"></i
-              ><a href="tables-basic.html">Basic Table</a>
+              ><a href="/admin/noticeMm.do">공지사항 관리</a>
             </li>
             <li>
               <i class="fa fa-table"></i
               ><a href="/admin/memberMm.do">회원 관리</a>
+            </li>
+            <li>
+              <i class="fa fa-table"></i
+              ><a href="/admin/goodsMm.do">상품 관리</a>
             </li>
           </ul>
         </li>
@@ -279,7 +283,7 @@
                 <div class="stat-content">
                   <div class="text-left dib">
                     <div class="stat-text">
-                      <span class="count">3435</span>
+                      <span class="count">${totalGoodsCount}</span>
                     </div>
                     <div class="stat-heading">상품 수</div>
                   </div>
@@ -319,7 +323,7 @@
                 <div class="stat-content">
                   <div class="text-left dib">
                     <div class="stat-text">
-                      <span class="count">2986</span>
+                      <span class="count">${totalMemberCount}</span>
                     </div>
                     <div class="stat-heading">회원 수</div>
                   </div>
@@ -349,7 +353,7 @@
                   <div class="card-body">
                     <div class="progress-box progress-1">
                       <h4 class="por-title">Visits</h4>
-                      <div class="por-txt">96,930 Users (40%)</div>
+                      <div class="por-txt">1515 Users (40%)</div>
                       <div class="progress mb-2" style="height: 5px">
                         <div
                             class="progress-bar bg-flat-color-1"

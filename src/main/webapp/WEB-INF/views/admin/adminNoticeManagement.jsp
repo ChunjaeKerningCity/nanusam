@@ -150,10 +150,61 @@
     .defaultA:hover {
       transform: scale(1.05);
     }
+
+    .noticeTitle {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 160px;
+    }
+
+    .noticeTitle a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .noticeTitle a:hover {
+      transform: scale(1.05);
+    }
+
+    .noticeContent {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
   </style>
 </head>
 
 <body>
+<script>
+  function confirmDelete() {
+    if (confirm('삭제하시겠습니까?')) {
+      return true;
+    } else {
+      alert('취소되었습니다.');
+      return false;
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.noticeTitle').forEach(element => {
+      const content = element.textContent.trim();
+      if (content.length > 10) {
+        element.textContent = content.substring(0, 10) + '...';
+      }
+    });
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.noticeContent').forEach(element => {
+      const content = element.textContent.trim();
+      if (content.length > 20) {
+        element.textContent = content.substring(0, 20) + '...';
+      }
+    });
+  });
+</script>
 <!-- Left Panel -->
 <aside id="left-panel" class="left-panel">
   <nav class="navbar navbar-expand-sm navbar-default">
@@ -279,56 +330,40 @@
               <table id="bootstrap-data-table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                  <th>MemberId</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Birthday</th>
-                  <th>기본 주소</th>
-                  <th>상세 주소</th>
-                  <th>우편 번호</th>
-                  <th>가입일</th>
-                  <th>정보 변경일</th>
-                  <th>회원 상태</th>
+                  <th>Idx</th>
+                  <th>AdminId</th>
+                  <th>Title</th>
+                  <th>Content</th>
+                  <th>글 노출일</th>
+                  <th>등록일</th>
+                  <th>수정일</th>
+                  <th>조회수</th>
+                  <th>수정</th>
                   <th>삭제</th>
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="member" items="${memberList}">
+                <c:forEach var="notice" items="${noticeList}">
                   <tr>
-                    <td>${member.memberId}</td>
-                    <td>${member.name}</td>
-                    <td>${member.email}</td>
-                    <td>${member.phone}</td>
-                    <td>${member.birthday}</td>
-                    <td>${member.addr1}</td>
-                    <td>${member.addr2}</td>
-                    <td>${member.zipCode}</td>
-                    <td>${member.regDateStr}</td>
-                    <td>${member.changeDateStr}</td>
+                    <td>${notice.idx}</td>
+                    <td>${notice.memberId}</td>
+                    <td class="noticeTitle">
+                      <a href="/bbs/view.do?idx=${notice.idx}">${notice.title}</a>
+                    </td>
+                    <td class="noticeContent">${notice.content}</td>
+                    <td>${notice.displayDate}</td>
+                    <td>${notice.regDateStr}</td>
+                    <td>${notice.modifyDateStr}</td>
+                    <td>${notice.readCnt}</td>
                     <td>
-                      <c:choose>
-                        <c:when test="${member.status == 'Y'}">
-                          <span class="badge badge-complete">생존</span>
-                          <form action="/admin/updateMemberStatus.do" method="post" style="display: inline;">
-                            <input type="hidden" name="memberId" value="${member.memberId}" />
-                            <input type="hidden" name="status" value="N" />
-                            <button type="submit" onclick="return confirmModify();" class="defaultA">변경</button>
-                          </form>
-                        </c:when>
-                        <c:otherwise>
-                          <span class="badge badge-danger">탈퇴</span>
-                          <form action="/admin/updateMemberStatus.do" method="post" style="display: inline;">
-                            <input type="hidden" name="memberId" value="${member.memberId}" />
-                            <input type="hidden" name="status" value="Y" />
-                            <button type="submit" onclick="return confirmModify();" class="defaultA">변경</button>
-                          </form>
-                        </c:otherwise>
-                      </c:choose>
+                      <form action="/bbs/modify.do" method="get" style="display: inline;">
+                        <input type="hidden" name="idx" value="${notice.idx}" />
+                        <button type="submit" class="defaultA">수정</button>
+                      </form>
                     </td>
                     <td>
-                      <form action="/admin/deleteMember.do" method="post" style="display: inline;">
-                        <input type="hidden" name="memberId" value="${member.memberId}" />
+                      <form action="/bbs/delete.do" method="post" style="display: inline;">
+                        <input type="hidden" name="idx" value="${notice.idx}" />
                         <button type="submit" onclick="return confirmDelete();" class="defaultA">삭제</button>
                       </form>
                     </td>
@@ -382,26 +417,6 @@
     alert("${errors}");
   </script>
 </c:if>
-
-<script>
-  function confirmDelete() {
-    if (confirm('삭제하시겠습니까?')) {
-      return true;
-    } else {
-      alert('취소되었습니다.');
-      return false;
-    }
-  }
-
-  function confirmModify() {
-    if (confirm('회원 정보를 변경하시겠습니까?')) {
-      return true;
-    } else {
-      alert('취소되었습니다.');
-      return false;
-    }
-  }
-</script>
 
 </body>
 </html>
