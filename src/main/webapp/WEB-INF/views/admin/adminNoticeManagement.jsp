@@ -167,6 +167,15 @@
       transform: scale(1.05);
     }
 
+    .createNotice {
+      text-decoration: none;
+      color: black;
+    }
+
+    .createNotice:hover {
+      transform: scale(1.05);
+    }
+
     .noticeContent {
       white-space: nowrap;
       overflow: hidden;
@@ -282,7 +291,7 @@
           </a>
 
           <div class="user-menu dropdown-menu">
-            <a class="nav-link" href="#"
+            <a class="nav-link" href="/admin/logout.do"
             ><i class="fa fa-power -off"></i>Logout</a
             >
           </div>
@@ -323,8 +332,9 @@
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header" style="display: flex; justify-content: space-between">
               <strong class="card-title">Data Table</strong>
+              <a href="/bbs/regist.do" class="createNotice"><strong class="card-title">공지 생성</strong></a>
             </div>
             <div class="card-body">
               <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -362,7 +372,7 @@
                       </form>
                     </td>
                     <td>
-                      <form action="/bbs/delete.do" method="post" style="display: inline;">
+                      <form action="/bbs/delete.do" method="get" style="display: inline;">
                         <input type="hidden" name="idx" value="${notice.idx}" />
                         <button type="submit" onclick="return confirmDelete();" class="defaultA">삭제</button>
                       </form>

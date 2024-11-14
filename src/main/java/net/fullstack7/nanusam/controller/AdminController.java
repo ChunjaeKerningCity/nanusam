@@ -32,6 +32,12 @@ public class AdminController {
         return "admin/adminLogin";
     }
 
+    @GetMapping("/logout.do")
+    public String adminLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @PostMapping("/login.do")
     public String login(@RequestParam("memberId") String memberId,
         @RequestParam("pwd") String pwd,

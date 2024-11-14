@@ -158,9 +158,9 @@ public class BbsController {
 
 //        log.info("dto : " + dto);
 //        log.info("===========================");
-        return "redirect:/bbs/list.do";
+        return "redirect:/admin/noticeMm.do";
     }
-    @GetMapping("delete.do")
+    @GetMapping("/delete.do")
     public String deleteGet(
             @RequestParam int idx, RedirectAttributes redirectAttributes
     ){
@@ -169,7 +169,7 @@ public class BbsController {
 //        log.info("delete");
 //        log.info("idx : " + idx);
 //        log.info("===========================");
-        return "redirect:/bbs/list.do";
+        return "redirect:/admin/noticeMm.do";
     }
 
 }
