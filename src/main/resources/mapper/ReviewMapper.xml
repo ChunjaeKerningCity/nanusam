@@ -15,8 +15,12 @@
         SELECT idx, buyer, seller, content, score, `status`, regDate, modifyDate, deleteDate
         FROM tbl_review
         <where>
-        ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+            `status`='Y'
+            <if test="searchKeyword !=null and searchKeyword != ''">
+                AND ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+            </if>
         </where>
+
         <if test="orderBy == null or orderBy ==''">
             ORDER BY regDate desc
         </if>
@@ -25,11 +29,43 @@
         </if>
         LIMIT #{page_skip_count}, #{page_size}
     </select>
+    <select id="listWithPageAndMember" resultType="net.fullstack7.nanusam.domain.ReviewVO">
+        SELECT idx, buyer, seller, content, score, `status`, regDate, modifyDate, deleteDate
+        FROM tbl_review
+        <where>
+            `status`='Y' AND ${memberType} = #{memberId}
+            <if test="dto.searchKeyword !=null and dto.searchKeyword != ''">
+                AND ${dto.searchCategory} LIKE CONCAT('%',#{dto.searchKeyword},'%')
+            </if>
+        </where>
+
+        <if test="dto.orderBy == null or dto.orderBy ==''">
+            ORDER BY regDate desc
+        </if>
+        <if test="dto.orderBy !=null and dto.orderBy !=''">
+            ORDER BY ${dto.orderBy} ${dto.orderDir}
+        </if>
+        LIMIT #{dto.page_skip_count}, #{dto.page_size}
+    </select>
+
     <select id="totalCount" resultType="int">
         SELECT COUNT(*)
         FROM tbl_review
         <where>
-            ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+            `status`='Y'
+            <if test="searchKeyword !=null and searchKeyword != ''">
+                AND ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
+            </if>
+        </where>
+    </select>
+    <select id="totalCountWithMember" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_review
+        <where>
+            `status`='Y' AND ${memberType} = #{memberId}
+            <if test="dto.searchKeyword !=null and dto.searchKeyword != ''">
+                AND ${dto.searchCategory} LIKE CONCAT('%',#{dto.searchKeyword},'%')
+            </if>
         </where>
     </select>
     <update id="modify" parameterType="net.fullstack7.nanusam.domain.ReviewVO">
