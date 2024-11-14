@@ -16,7 +16,7 @@
 </head>
 <body>
 <h1>goods list</h1>
-${errors}
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <div class="container text-center">
 <%--    상품등록버튼--%>
 

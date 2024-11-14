@@ -132,7 +132,7 @@ public class GoodsController {
     public String modifyPost(@RequestParam(required = false, defaultValue = "0") int idx
             , @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
             , HttpSession session
-            , @RequestParam String[] deleteFile
+            , @RequestParam(required = false) String[] deleteFile
             , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage) {
 
         if (idx == 0) {
@@ -156,9 +156,12 @@ public class GoodsController {
             }
         }
 
-        if (mainImage != null && mainImage.getOriginalFilename() != null) {
+
             try {
-                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+                if(mainImage != null && mainImage.getSize() > 0) {
+                    message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+                }
+
 
                 if (message != null) {
                     redirectAttributes.addFlashAttribute("errors", message);
@@ -179,7 +182,7 @@ public class GoodsController {
                 redirectAttributes.addFlashAttribute("errors", e.getMessage());
                 return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
             }
-        }
+
 
         if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);

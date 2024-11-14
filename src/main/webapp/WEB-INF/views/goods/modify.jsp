@@ -25,7 +25,7 @@
                 <select name="category" id="category" class="form-select" aria-label="Default select example" required>
                     <option disabled selected>선택</option>
                     <c:forEach items="${categories}" var="category">
-                        <option value="${category.code}" <c:if test="${item.category=category.code}">selected</c:if> >${category.value}</option>
+                        <option value="${category.code}" <c:if test="${item.category==category.code}">selected</c:if> >${category.value}</option>
                     </c:forEach>
                 </select>
                 <div id="div_err_category"></div>

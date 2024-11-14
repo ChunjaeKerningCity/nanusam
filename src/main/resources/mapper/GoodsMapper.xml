@@ -5,7 +5,7 @@
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.GoodsVO">
         select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category, content, reservationId
         from tbl_goods
-        where status != 'N'
+        where status in ('Y', 'R')
         <if test='searchKeyword != null and searchKeyword != ""'>
             and name like concat('%', #{searchKeyword}, '%')
         </if>
@@ -51,8 +51,12 @@
     </insert>
 
     <update id="modifyGoodsInfo">
-        update tbl_goods set price=#{price}, quality=#{quality}, category=#{category}, content=#{content}, name=#{name}
+        update tbl_goods set price=#{price}, quality=#{quality}, category=#{category}, content=#{content}, name=#{name}, modifyDate=now()
         where idx=#{idx} and memberId=#{memberId}
+    </update>
+
+    <update id="modifyStatus">
+        update tbl_goods set status=#{status}, reservationId=#{reservationId} where idx=#{idx}
     </update>
 
     <delete id="deleteByIdx">
