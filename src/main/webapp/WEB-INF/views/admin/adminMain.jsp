@@ -166,7 +166,7 @@
     <div id="main-menu" class="main-menu collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active">
-          <a href="index.html"
+          <a href="/admin/main.do"
           ><i class="menu-icon fa fa-laptop"></i>Dashboard
           </a>
         </li>
@@ -190,7 +190,7 @@
             </li>
             <li>
               <i class="fa fa-table"></i
-              ><a href="tables-data.html">회원 관리</a>
+              ><a href="/admin/memberMm.do">회원 관리</a>
             </li>
           </ul>
         </li>
@@ -206,10 +206,10 @@
   <header id="header" class="header">
     <div class="top-left">
       <div class="navbar-header">
-        <a class="navbar-brand" href="./"
-        ><img src="/resources/adminG/images/logo.png" alt="Logo"
+        <a class="navbar-brand" href="/admin/main.do"
+        ><img src="/resources/adminG/images/nanusamLogoLong.png" alt="Logo"
         /></a>
-        <a class="navbar-brand hidden" href="./"
+        <a class="navbar-brand hidden" href="/admin/main.do"
         ><img src="/resources/adminG/images/logo2.png" alt="Logo"
         /></a>
         <a id="menuToggle" class="menutoggle"><i class="fa fa-bars"></i></a>
@@ -227,7 +227,7 @@
           >
             <img
                 class="user-avatar rounded-circle"
-                src="/resources/adminG/images/admin.jpg"
+                src="/resources/adminG/images/adminIcon.png"
                 alt="User Avatar"
             />
           </a>

@@ -9,5 +9,50 @@
     WHERE memberId = #{memberId} AND memType = 'a'
   </select>
 
+<!--  맴버 전체 조회-->
+  <select id="memberList" resultType="net.fullstack7.nanusam.domain.MemberVO">
+    SELECT
+      memberId,
+      name,
+      email,
+      phone,
+      birthday,
+      addr1,
+      addr2,
+      zipCode,
+      regDate,
+      changeDate,
+      status
+    FROM tbl_member
+    WHERE memType = 't';
+  </select>
+
+  <!-- 맴버 상태 변경 -->
+  <update id="updateMemberStatus">
+    UPDATE tbl_member
+    SET status = #{status}, changeDate = current_timestamp()
+    WHERE memberId = #{memberId};
+  </update>
+
+  <!-- 상태 변경 회원의 상품 상태 확인 -->
+  <select id="getGoodsStatusByMemberId" resultType="string">
+    SELECT status
+    FROM tbl_goods
+    WHERE memberId = #{memberId};
+  </select>
+
+  <!-- 상태 변경 회원의 상품 상태 업데이트 -->
+  <update id="updateGoodsStatusByMemberId">
+    UPDATE tbl_goods
+    SET status = #{newStatus}
+    WHERE memberId = #{memberId} AND status = #{currentStatus};
+  </update>
+
+  <!-- 맴버 삭제 -->
+  <delete id="deleteMember">
+    DELETE FROM tbl_member
+    WHERE memberId = #{memberId};
+  </delete>
+
 <!--  메인페이지에서 사용할 것들-->
 </mapper>

@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.dto;
 
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -45,5 +46,23 @@ public class MemberDTO {
     private String status;              // 회원상태 Y 활성화 N 비활성화
     private LocalDateTime leaveDate;    // 탈퇴일
 
-    
+    private String regDateStr;
+    @Builder.Default
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public void setRegDate(LocalDateTime regDate) {
+        this.regDate = regDate;
+        regDateStr = formatter.format(regDate);
+    }
+
+    private String changeDateStr;
+    @Builder.Default
+    private DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public void setChangeDate(LocalDateTime changeDate) {
+        this.changeDate = changeDate;
+        if(changeDate == null) {
+            changeDateStr = "변경 X";
+            return;
+        }
+        changeDateStr = formatter.format(changeDate);
+    }
 }
