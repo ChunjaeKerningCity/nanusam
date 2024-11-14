@@ -12,5 +12,4 @@ public interface CartMapper {
     void add(CartVO vo);
     void delete(int idx);
 
-//    List<CartVO> listByPage();
 }

@@ -47,30 +47,30 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public PageResponseDTO<CartDTO> listByPage(PageRequestDTO pageRequestDTO) {
-//        log.info("===================================");
-//        log.info("CartServiceImpl >> listByPage() START");
-//        log.info("page_no = " + pageRequestDTO.getPage_no());
-//        log.info("page_size = " + pageRequestDTO.getPage_size());
-//        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
-//        log.info("page_block = " + pageRequestDTO.getPage_block_size());
-//
-//        List<CartVO> voList = cartMapper.listByPage(pageRequestDTO);
-//        List<CartDTO> dtoList = voList.stream()
-//                .map(vo->modelMapper.map(vo, CartDTO.class))
-//                .collect(Collectors.toList());
-//        int total_count = cartMapper.totalCount();
-//
-//        PageResponseDTO<CartDTO> pageResponseDTO = PageResponseDTO.<CartDTO>withAll()
-//                .reqDTO(pageRequestDTO)
-//                .dtoList(dtoList)
-//                .total_count(total_count)
-//                .build();
-//
-//        log.info("voList = " + voList);
-//        log.info("dtoList = " + dtoList);
-//        log.info("CartServiceImpl >> listByPage() END");
-//        log.info("===================================");
-        return null;
+        log.info("===================================");
+        log.info("CartServiceImpl >> listByPage() START");
+        log.info("page_no = " + pageRequestDTO.getPage_no());
+        log.info("page_size = " + pageRequestDTO.getPage_size());
+        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
+        log.info("page_block = " + pageRequestDTO.getPage_block_size());
+
+        List<CartVO> voList = cartMapper.listByPage(pageRequestDTO);
+        List<CartDTO> dtoList = voList.stream()
+                .map(vo->modelMapper.map(vo, CartDTO.class))
+                .collect(Collectors.toList());
+        int total_count = cartMapper.totalCount();
+
+        PageResponseDTO<CartDTO> pageResponseDTO = PageResponseDTO.<CartDTO>withAll()
+                .reqDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count(total_count)
+                .build();
+
+        log.info("voList = " + voList);
+        log.info("dtoList = " + dtoList);
+        log.info("CartServiceImpl >> listByPage() END");
+        log.info("===================================");
+        return pageResponseDTO;
     }
 
 

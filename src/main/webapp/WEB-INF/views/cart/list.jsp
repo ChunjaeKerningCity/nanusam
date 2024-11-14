@@ -110,7 +110,7 @@
                 <c:if test="${not empty cartList  && not empty cartList.dtoList}">
                     <c:forEach items="${cartList.dtoList}" var="list" varStatus="loop">
                         <tr>
-                            <td ><a style="color: black"  href="/goods/view.do?idx=${list.idx}">${list.idx}</a></td>
+                            <td >${list.idx}</td>
                             <td>${list.memberId}</td>
                             <td>${list.goodsIdx}</td>
                         </tr>
