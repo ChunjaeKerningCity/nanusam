@@ -93,8 +93,12 @@ public class MemberController {
         }
         return "redirect:/member/view.do";
     }
-    @GetMapping("delete.do")
-    public String deleteGet(){
-        return "member/delete";
-    }
+//    @GetMapping("delete.do")
+//    public String deleteGet(HttpSession session, Model model){
+//        String memberId = (String) session.getAttribute("memberId");
+//        String resultMessage = memberService.deleteMember(memberId);
+//        model.addAttribute("message", resultMessage);
+//
+//        return "severanceResult";
+//    }
 }
