@@ -117,10 +117,14 @@
 <%--                                <input type="checkbox" name="select" id="select" value="${list.idx}">--%>
 <%--                            </td>--%>
                                 <td>
-                                    <img src="/resources/image/goods_${list.idx}_0.png" class="card-img-top" alt="${list.name}">
+                                    <a href="/goods/view.do?idx=${list.goodsIdx}"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
                                 </td>
                             <td><button type="button" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
-                            <button type="button" class="btn btn-secondary mx-2">삭제</button></td>
+                            <form action="/cart/delete.do" method="get" style="display:inline;">
+                                <input type="hidden" name="idx" value="${list.idx}"/>
+                                <button type="submit" class="btn btn-secondary mx-2">삭제</button>
+                            </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </c:if>

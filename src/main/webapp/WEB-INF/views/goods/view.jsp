@@ -52,7 +52,7 @@
                     </h5>
                     <h6 class="card-subtitle mb-2 text-body-secondary">${item.price} - ${item.quality}</h6>
                     <p class="card-text">${item.content}</p>
-                    <a href="#" class="card-link">찜</a>
+                    <a href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}" class="card-link">찜</a>
                     <a href="#" class="card-link">바로구매</a>
                     <a href="/chat/fromGoods.do?seller=${item.memberId}&goodsIdx=${item.idx}" class="card-link">셀파톡</a>
                 </div>

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
     private final ModelMapper modelMapper;
-    private final HttpSession httpSession;
 
     @Override
     public int totalCount(String memberId) {
@@ -110,6 +109,12 @@ public class CartServiceImpl implements CartService {
     @Override
     public void delete(int idx) {
         cartMapper.delete(idx);
+
+        log.info("===================================");
+        log.info("CartServiceImpl >> delete() START");
+        log.info("vo = " + idx);
+        log.info("CartServiceImpl >> delete() END");
+        log.info("===================================");
     }
 
 }

@@ -114,7 +114,7 @@
                         <tr>
                             <td ><a style="color: black"  href="/bbs/view.do?idx=${list.idx}">${list.title}</a></td>
                             <td>${list.readCnt}</td>
-                            <td>${list.regDate}</td>
+                            <td id="regDate">${list.regDateStr}</td>
                         </tr>
                     </c:forEach>
                 </c:if>
@@ -180,6 +180,15 @@
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
 </footer>
+<script>
+    let regDateStrDateOnly = list.regDateStrDateOnly;
+
+    // 10글자만 추출
+    let dateOnly = regDateStrDateOnly.substring(0, 10);
+
+    // 해당 값만 업데이트
+    document.querySelector('#regDate').textContent = dateOnly;
+</script>
 
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
