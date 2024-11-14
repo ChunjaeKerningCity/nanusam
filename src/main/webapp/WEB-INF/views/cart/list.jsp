@@ -101,18 +101,26 @@
             <table class="table table-hover">
                 <thead>
                 <tr class="hd2">
+                    <!-- 전체 선택 체크박스 추가 -->
+<%--                    <th scope="col">--%>
+<%--                        <input type="checkbox" id="selectAll">--%>
+<%--                    </th>--%>
                     <th scope="col">상품명</th>
-                    <th scope="col">판매자</th>
-                    <th scope="col">상품코드</th>
+                    <th scope="col"/>
                 </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty cartList  && not empty cartList.dtoList}">
                     <c:forEach items="${cartList.dtoList}" var="list" varStatus="loop">
                         <tr>
-                            <td ><a style="color: black"  href="/goods/view.do?idx=${list.idx}">${list.idx}</a></td>
-                            <td>${list.memberId}</td>
-                            <td>${list.goodsIdx}</td>
+<%--                            <td>--%>
+<%--                                <input type="checkbox" name="select" id="select" value="${list.idx}">--%>
+<%--                            </td>--%>
+                                <td>
+                                    <img src="/resources/image/goods_${list.idx}_0.png" class="card-img-top" alt="${list.name}">
+                                </td>
+                            <td><button type="button" class="btn btn-primary mx-2">결제</button>
+                            <button type="button" class="btn btn-secondary mx-2">삭제</button></td>
                         </tr>
                     </c:forEach>
                 </c:if>
@@ -123,6 +131,11 @@
                 </c:if>
                 </tbody>
             </table>
+
+<%--            <div class="d-flex justify-content-end mt-3">--%>
+<%--                <button type="button" class="btn btn-primary mx-2">결제</button>--%>
+<%--                <button type="button" class="btn btn-secondary mx-2">삭제</button>--%>
+<%--            </div>--%>
             <!--// 리스트 영역 -->
         </div>
 
@@ -163,5 +176,14 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<%--<script>--%>
+<%--    // 전체 선택 체크박스 클릭 시, 모든 체크박스 선택/해제 기능--%>
+<%--    document.getElementById("selectAll").addEventListener("click", function() {--%>
+<%--        var checkboxes = document.getElementsByName("selectedItems");--%>
+<%--        for (var checkbox of checkboxes) {--%>
+<%--            checkbox.checked = this.checked;  // 전체 선택 체크박스 상태에 맞게 모든 체크박스 설정--%>
+<%--        }--%>
+<%--    });--%>
+<%--</script>--%>
 </body>
 </html>
