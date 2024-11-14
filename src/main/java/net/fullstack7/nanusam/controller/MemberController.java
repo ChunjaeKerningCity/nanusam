@@ -63,7 +63,7 @@ public class MemberController {
         }
         return "myPage/view";
     }
-//    @GetMapping("/modify.do")
+    //    @GetMapping("/modify.do")
 //    public String modifyGet(){
 //        return "member/modify";
 //    }
@@ -72,7 +72,7 @@ public class MemberController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
             , Model model
-            ) {
+    ) {
 //        log.info("회원수정 컨트롤러 시작");
         if (bindingResult.hasErrors()) {
             log.info("hasErrors");
@@ -93,12 +93,17 @@ public class MemberController {
         }
         return "redirect:/member/view.do";
     }
-//    @GetMapping("delete.do")
-//    public String deleteGet(HttpSession session, Model model){
-//        String memberId = (String) session.getAttribute("memberId");
-//        String resultMessage = memberService.deleteMember(memberId);
-//        model.addAttribute("message", resultMessage);
-//
-//        return "severanceResult";
-//    }
+
+    @PostMapping("/delete.do")
+    public String withdraw(@RequestParam String memberId, RedirectAttributes redirectAttributes,HttpSession session) {
+        if (!memberService.dontDelete(memberId)) {
+            redirectAttributes.addFlashAttribute("errors", "탈퇴가 불가합니다. 현재 예약 중이거나 배송 중인 상품이 있습니다.");
+            return "redirect:/member/view.do";
+        }
+        memberService.goDelete(memberId);
+        redirectAttributes.addFlashAttribute("errors", "탈퇴가 완료되었습니다.");
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }

@@ -11,7 +11,7 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/member/pwdCheck.do" method="post">
+<form action="/member/pwdCheck.do" method="post" autocomplete="off">
     <label for="pwd">비밀번호: </label>
     <input type="password" id="pwd" name="pwd" required><br><br>
     <button type="submit">비밀번호확인</button>

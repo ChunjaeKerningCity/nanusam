@@ -20,7 +20,7 @@
 
 <main>
   <h1>로그인</h1>
-  <form action="/login/login.do" method="post">
+  <form action="/login/login.do" method="post" autocomplete="off">
     <label for="memberId">아이디: </label>
     <input type="text" id="memberId" name="memberId" required><br><br>
     <label for="pwd">비밀번호: </label>
