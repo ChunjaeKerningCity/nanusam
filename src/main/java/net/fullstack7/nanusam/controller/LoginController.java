@@ -44,11 +44,19 @@ public class LoginController {
     @PostMapping("/login.do")
     public String login(@RequestParam("memberId") String memberId,
                         @RequestParam("pwd") String pwd,
-                        HttpSession session, Model model) {
+                        HttpSession session, Model model,RedirectAttributes redirectAttributes) {
         MemberDTO memberDTO = memberService.login(memberId, pwd);
+
         if (memberDTO != null) {
             session.setAttribute("memberId", memberDTO.getMemberId());
             session.setAttribute("memberName", memberDTO.getName());
+            //----------------------------
+            String redirectURL = (String) session.getAttribute("redirectAfterLogin");
+            if (redirectURL != null) {
+                session.removeAttribute("redirectAfterLogin");
+                return "redirect:" + redirectURL;
+            }
+            //----------------------------
             return "redirect:/";
         } else {
             model.addAttribute("errors", "아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -122,7 +130,7 @@ public class LoginController {
         }
         if (termsAgree == null || !termsAgree) {
             model.addAttribute("errors", "약관에 동의한 후 회원가입이 가능합니다.");
-            return "forward:/member/registCheck.do";
+            return "forward:/login/registCheck.do";
         }
         return "login/regist";
     }
@@ -146,11 +154,11 @@ public class LoginController {
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
-            return "redirect:/member/regist.do";
+            return "redirect:/login/regist.do";
         }
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
-            return "redirect:/member/login.do";
+            return "redirect:/login/login.do";
         } else {
             model.addAttribute("errors", "회원가입에 실패했습니다.");
             return "login/regist";

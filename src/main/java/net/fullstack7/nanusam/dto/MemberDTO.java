@@ -38,12 +38,12 @@ public class MemberDTO {
     @NotBlank
     private String addr2;
     @NotBlank
-    @Pattern(regexp = "^[0-9]{6}$", message = "우편번호는 숫자만 입력 가능합니다.")
+    @Pattern(regexp = "^[0-9]{5,6}$", message = "우편번호는 숫자만 입력 가능합니다.")
     private String zipCode;             // 우편번호
     private String memType;             // 회원유형 t,a
     private LocalDateTime regDate;
     private LocalDateTime changeDate;
-    
+
     private String status;              // 회원상태 Y 활성화 N 비활성화
     private LocalDateTime leaveDate;    // 탈퇴일
 

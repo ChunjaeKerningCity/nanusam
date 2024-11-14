@@ -20,11 +20,18 @@ public class LoginFilter  implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-        if(request.getSession().getAttribute("memberId")==null){
+        if(request.getSession().getAttribute("memberId") == null){
+            // 문제 있으면 이 부분 지우셈...
+            String originalURL = request.getRequestURI();
+            if (request.getQueryString() != null) {
+                originalURL += "?" + request.getQueryString();
+            }
+            request.getSession().setAttribute("redirectAfterLogin", originalURL);
+            //-------------------------
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().println("<script>");
             response.getWriter().println("alert('로그인 후 이용 가능합니다');");
-            response.getWriter().println("location.href='/member/login.do';");
+            response.getWriter().println("location.href='/login/login.do';");
             response.getWriter().println("</script>");
             return;
         }

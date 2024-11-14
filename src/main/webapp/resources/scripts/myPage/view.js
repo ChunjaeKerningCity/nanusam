@@ -1,52 +1,48 @@
-let isIdChecked = false;
-
-// 아이디 중복확인
-function checkId() {
-    const memberId = document.getElementById("memberId").value;
-    if (!memberId) {
-        alert("아이디를 입력하세요.");
-        return;
-    }
-
-    fetch("/login/memberIdCheck.do", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "memberId=" + encodeURIComponent(memberId)
-    })
-        .then(response => response.json())
-        .then(data => {
-            const idCheckResult = document.getElementById("idCheckResult");
-            if (data.available) {
-                idCheckResult.textContent = "사용 가능한 아이디입니다.";
-                idCheckResult.style.color = "green";
-                isIdChecked = true;
-            } else {
-                idCheckResult.textContent = "이미 사용 중인 아이디입니다.";
-                idCheckResult.style.color = "red";
-                isIdChecked = false;
-            }
-        })
-        .catch(error => {
-            const idCheckResult = document.getElementById("idCheckResult");
-            idCheckResult.textContent = "중복 확인에 실패했습니다.";
-            idCheckResult.style.color = "red";
-            isIdChecked = false;
-        });
-}
+// let isIdChecked = false;
+//
+// // 아이디 중복확인
+// function checkId() {
+//     const memberId = document.getElementById("memberId").value;
+//     if (!memberId) {
+//         alert("아이디를 입력하세요.");
+//         return;
+//     }
+//
+//     fetch("/login/memberIdCheck.do", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/x-www-form-urlencoded",
+//         },
+//         body: "memberId=" + encodeURIComponent(memberId)
+//     })
+//         .then(response => response.json())
+//         .then(data => {
+//             const idCheckResult = document.getElementById("idCheckResult");
+//             if (data.available) {
+//                 idCheckResult.textContent = "사용 가능한 아이디입니다.";
+//                 idCheckResult.style.color = "green";
+//                 isIdChecked = true;
+//             } else {
+//                 idCheckResult.textContent = "이미 사용 중인 아이디입니다.";
+//                 idCheckResult.style.color = "red";
+//                 isIdChecked = false;
+//             }
+//         })
+//         .catch(error => {
+//             const idCheckResult = document.getElementById("idCheckResult");
+//             idCheckResult.textContent = "중복 확인에 실패했습니다.";
+//             idCheckResult.style.color = "red";
+//             isIdChecked = false;
+//         });
+// }
 
 // 유효성검사 시작
 document.addEventListener("DOMContentLoaded", function () {
-    const memberIdInput = document.getElementById("memberId");
-    const passwordInput = document.getElementById("pwd");
-    const nameInput = document.getElementById("name");
     const phoneInput = document.getElementById("phone");
     const emailInput = document.getElementById("email");
     const zipCodeInput = document.getElementById("zipCode");
     const addr1Input = document.getElementById("addr1");
     const addr2Input = document.getElementById("addr2");
-    const checkIdButton = document.querySelector("button[onclick='checkId()']");
 
 
     function showMessage(field, isValid, message) {
@@ -63,31 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    memberIdInput.addEventListener("keyup", function () {
-        const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,14}$/;
-        if (idRegex.test(memberIdInput.value)) {
-            showMessage(memberIdInput, true, "");
-            checkIdButton.classList.remove("disabled");
-            checkIdButton.disabled = false;
-        } else {
-            showMessage(memberIdInput, false, "아이디는 영문자로 시작하고 5~15자의 영문자와 숫자만 사용 가능합니다.");
-            checkIdButton.classList.add("disabled");
-            checkIdButton.disabled = true;
-        }
-    });
-
-    passwordInput.addEventListener("keyup", function () {
-        const pwRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,20}$/;
-        showMessage(passwordInput, pwRegex.test(passwordInput.value),
-            "비밀번호는 영문, 숫자, 특수문자를 포함하여 8~20자로 입력해주세요.");
-    });
-
-    nameInput.addEventListener("keyup", function () {
-        const nameRegex = /^[가-힣]{2,10}$/;
-        showMessage(nameInput, nameRegex.test(nameInput.value),
-            "이름은 한글 2~10자 이내로 입력 가능합니다.");
-    });
-
     phoneInput.addEventListener("keyup", function () {
         const phoneRegex = /^[0-9]{11}$/;
         showMessage(phoneInput, phoneRegex.test(phoneInput.value),
@@ -100,11 +71,8 @@ document.addEventListener("DOMContentLoaded", function () {
             "유효한 이메일 형식으로 입력해주세요.");
     });
 
-    document.getElementById("registerForm").addEventListener("submit", function (event) {
-        if (!memberIdInput.classList.contains("valid") || !isIdChecked) {
-            alert("아이디를 확인해주세요.");
-            event.preventDefault();
-        } else if (passwordInput.classList.contains("invalid") ||
+    document.getElementById("modifyForm").addEventListener("submit", function (event) {
+         if (passwordInput.classList.contains("invalid") ||
             nameInput.classList.contains("invalid") ||
             phoneInput.classList.contains("invalid") ||
             emailInput.classList.contains("invalid") ||
@@ -164,8 +132,24 @@ function enforceReadOnly(field) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const memberIdField = document.getElementById("memberId");
+    const nameField = document.getElementById("name");
     const zipCodeField = document.getElementById("zipCode");
     const addr1Field = document.getElementById("addr1");
+    enforceReadOnly(memberIdField);
+    enforceReadOnly(nameField);
     enforceReadOnly(zipCodeField);
     enforceReadOnly(addr1Field);
 });
+
+function enableEdit() {
+    document.getElementById("phone").readOnly = false;
+    document.getElementById("email").readOnly = false;
+    document.getElementById("addr2").readOnly = false;
+    document.getElementById("birthday").readOnly = false;
+
+    document.getElementById("editBtn").style.display = "none";
+    document.getElementById("saveBtn").style.display = "inline";
+    document.getElementById("zipcodeBtn").style.display = "inline";
+
+}
