@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 
-@WebFilter(urlPatterns = {"/member/*", "/payment/*"})
+@WebFilter(urlPatterns = {"/member/*", "/payment/*","/review/*","/cart/*","/chat/*","/bbs/view.do","/goods/regist.do","/goods/modify.do","/goods/delete.do"})
 public class LoginFilter  implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,7 +27,7 @@ public class LoginFilter  implements Filter {
             if (request.getQueryString() != null) {
                 originalURL += "?" + request.getQueryString();
             }
-            request.getSession().setAttribute("redirectAfterLogin", originalURL);
+            request.getSession().setAttribute("redirectAfterLogin", URLEncoder.encode(URLEncoder.encode(originalURL,"UTF-8"),"UTF-8"));
             //-------------------------
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().println("<script>");
