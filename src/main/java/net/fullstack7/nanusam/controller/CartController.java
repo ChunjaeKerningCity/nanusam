@@ -33,17 +33,18 @@ public class CartController {
         log.info("===============================");
         log.info("CartController >> list START");
 
-//        if (bindingResult.hasErrors()) {
-//            log.info("CartController >> list ERROR");
-//            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-//        }
+        if (bindingResult.hasErrors()) {
+            log.info("CartController >> list ERROR");
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+        }
 
         if(memberId == null || memberId.isEmpty()) {
             log.info("CartController >> login ERROR");
             return "redirect:/login/login.do";
         }
-
         pageRequestDTO.setMemberId(memberId);
+        int totalCount = cartService.totalCount(memberId);
+        log.info("totalCount : "+ totalCount);
 
         PageResponseDTO<CartDTO> pageResponseDTO = cartService.listByPage(pageRequestDTO);
         model.addAttribute("cartList", pageResponseDTO);

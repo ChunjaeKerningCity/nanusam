@@ -119,7 +119,7 @@
                                 <td>
                                     <img src="/resources/image/goods_${list.idx}_0.png" class="card-img-top" alt="${list.name}">
                                 </td>
-                            <td><button type="button" class="btn btn-primary mx-2">결제</button>
+                            <td><button type="button" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
                             <button type="button" class="btn btn-secondary mx-2">삭제</button></td>
                         </tr>
                     </c:forEach>
@@ -164,7 +164,6 @@
             </ul>
         </nav>
         <!--// 페이징 영역 -->
-
     </div>
 </main>
 

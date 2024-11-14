@@ -6,9 +6,10 @@ import net.fullstack7.nanusam.dto.PageRequestDTO;
 import java.util.List;
 
 public interface CartMapper {
+    List<CartVO> list();
     List<CartVO> list(String memberId);
     List<CartVO> listByPage(PageRequestDTO requestDTO);
-    int totalCount();
+    int totalCount(String memberId);
     void add(CartVO vo);
     int delete(int idx);
 }

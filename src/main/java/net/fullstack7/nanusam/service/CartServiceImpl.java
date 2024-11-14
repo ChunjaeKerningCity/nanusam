@@ -27,8 +27,21 @@ public class CartServiceImpl implements CartService {
     private final HttpSession httpSession;
 
     @Override
-    public int totalCount() {
-        return 0;
+    public int totalCount(String memberId) {
+        log.info("===================================");
+        log.info("CartServiceImpl >> totalCount() START");
+
+        int count = cartMapper.totalCount(memberId);
+
+        log.info("Total cart count for memberId = " + memberId + ": " + count);
+        log.info("CartServiceImpl >> totalCount() END");
+        log.info("===================================");
+        return count;
+    }
+
+    @Override
+    public List<CartDTO> list(){
+        return List.of();
     }
 
     @Override
@@ -59,11 +72,15 @@ public class CartServiceImpl implements CartService {
         log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
         log.info("page_block = " + pageRequestDTO.getPage_block_size());
 
+//        pageRequestDTO.setMemberId(memberId);
+
         List<CartVO> voList = cartMapper.listByPage(pageRequestDTO);
+        log.info("voList = " + voList);
+
         List<CartDTO> dtoList = voList.stream()
                 .map(vo->modelMapper.map(vo, CartDTO.class))
                 .collect(Collectors.toList());
-        int total_count = cartMapper.totalCount();
+        int total_count = cartMapper.totalCount(pageRequestDTO.getMemberId());
 
         PageResponseDTO<CartDTO> pageResponseDTO = PageResponseDTO.<CartDTO>withAll()
                 .reqDTO(pageRequestDTO)
@@ -71,7 +88,6 @@ public class CartServiceImpl implements CartService {
                 .total_count(total_count)
                 .build();
 
-        log.info("voList = " + voList);
         log.info("dtoList = " + dtoList);
         log.info("CartServiceImpl >> listByPage() END");
         log.info("===================================");
