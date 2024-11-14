@@ -1,14 +1,14 @@
 package net.fullstack7.nanusam.service;
 
 import java.util.List;
-import net.fullstack7.nanusam.dto.MemberDTO;
+import net.fullstack7.nanusam.dto.AdminDTO;
 
 public interface AdminService {
    // admin 로그인
    public boolean adminLogin(String memberId, String pwd);
 
    // admin페이지 맴버 조회
-   public List<MemberDTO> memberList();
+   public List<AdminDTO> memberList();
 
    // admin페이지 맴버 상태 변경
    public boolean updateMemberStatus(String memberId, String status);

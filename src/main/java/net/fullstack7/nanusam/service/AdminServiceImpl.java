@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.MemberVO;
-import net.fullstack7.nanusam.dto.BbsDTO;
+import net.fullstack7.nanusam.dto.AdminDTO;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.mapper.AdminMapper;
 import org.modelmapper.ModelMapper;
@@ -30,10 +30,10 @@ public class AdminServiceImpl implements AdminService {
 
   // 맴버 전체 조회
   @Override
-  public List<MemberDTO> memberList() {
+  public List<AdminDTO> memberList() {
     List<MemberVO> voList = adminXmlmapper.memberList();
     return voList.stream()
-        .map(vo -> modelmapper.map(vo, MemberDTO.class))
+        .map(vo -> modelmapper.map(vo, AdminDTO.class))
         .collect(Collectors.toList());
   }
 
