@@ -11,4 +11,6 @@ public interface CartMapper {
     int totalCount();
     void add(CartVO vo);
     void delete(int idx);
+
+//    List<CartVO> listByPage();
 }
