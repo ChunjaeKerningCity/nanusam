@@ -21,7 +21,9 @@ public class MemberServiceImpl implements MemberService{
     public MemberDTO login(String memberId, String pwd) {
         MemberVO memberVO = memberXmlmapper.login(memberId);
         if (memberVO != null && memberVO.getPwd().equals(pwd)) {
-            return modelmapper.map(memberVO, MemberDTO.class);
+            if(memberVO.getStatus().equals("Y")&&memberVO.getMemType().equals("t")){
+                return modelmapper.map(memberVO, MemberDTO.class);
+            }
         }
         return null;
     }
@@ -72,7 +74,8 @@ public class MemberServiceImpl implements MemberService{
     //회원삭제(본인탈퇴)
     @Override
     public int deleteMember(String memberId) {
-        return memberXmlmapper.deleteMember(memberId);
+        return  0;
+//        return memberXmlmapper.deleteMember(memberId);
     }
 
 
