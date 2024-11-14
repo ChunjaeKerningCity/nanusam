@@ -29,9 +29,10 @@ public class PaymentController {
     private final GoodsService goodsService;
 
     @GetMapping("list.do")
-    public String list(HttpSession session, Model model, @RequestParam PageRequestDTO pageRequestDTO) {
+    public String list(HttpSession session, Model model, @Valid PageRequestDTO pageRequestDTO) {
 
-        model.addAttribute("list", paymentService.listWithGoodsByBuyer(session.getAttribute("memberId").toString()));
+        pageRequestDTO.setReservationId(session.getAttribute("memberId").toString());
+        model.addAttribute("pageinfo", paymentService.listWithGoodsByBuyer(pageRequestDTO));
 
         return "payment/list";
     }

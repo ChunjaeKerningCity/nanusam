@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.domain.PaymentVO;
+import net.fullstack7.nanusam.dto.PageRequestDTO;
+import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.dto.PaymentDTO;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
 import net.fullstack7.nanusam.mapper.PaymentMapper;
@@ -48,8 +50,14 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public List<PaymentDTO> listWithGoodsByBuyer(String buyer) {
-        return paymentMapper.listWithGoodsByBuyer(buyer);
+    public PageResponseDTO<PaymentDTO> listWithGoodsByBuyer(PageRequestDTO pageRequestDTO) {
+        List<PaymentDTO> paymentlist = paymentMapper.listWithGoodsByBuyer(pageRequestDTO);
+        PageResponseDTO<PaymentDTO> pageResponseDTO = PageResponseDTO.<PaymentDTO>withAll().
+                dtoList(paymentlist)
+                .reqDTO(pageRequestDTO)
+                .total_count(paymentMapper.total_count(pageRequestDTO))
+                .build();
+        return pageResponseDTO;
     }
 
 }

@@ -73,7 +73,36 @@
             g.reservationId
         FROM tbl_payment p
         inner join tbl_goods g ON p.goodsIdx = g.idx
-        WHERE p.buyer = #{buyer}
+        WHERE p.idx > 0
+        <choose>
+            <when test="memberId != null and memberId != '' ">
+                and p.seller = #{memberId}
+            </when>
+            <when test="reservationId != null and reservationId != '' ">
+                and p.buyer = #{reservationId}
+            </when>
+        </choose>
+        <if test="searchCategory != null and searchCategory != ''">
+            and p.deliveryStatus=#{searchCategory}
+        </if>
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="total_count" resultType="int">
+        select count(idx)
+        from tbl_payment
+        WHERE idx > 0
+        <choose>
+            <when test="memberId != null and memberId != '' ">
+                and seller = #{memberId}
+            </when>
+            <when test="reservationId != null and reservationId != '' ">
+                and buyer = #{reservationId}
+            </when>
+        </choose>
+        <if test="searchCategory != null and searchCategory != ''">
+            and deliveryStatus=#{searchCategory}
+        </if>
     </select>
 
     <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
