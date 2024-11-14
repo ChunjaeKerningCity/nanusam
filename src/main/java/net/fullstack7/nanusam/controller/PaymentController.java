@@ -90,4 +90,9 @@ public class PaymentController {
 
         return "redirect:/payment/list.do";
     }
+
+    @GetMapping("/view.do")
+    public String viewGet(@RequestParam(defaultValue = "0") int idx, HttpSession session, Model model) {
+        return "payment/view";
+    }
 }

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class CartServiceImpl implements CartService {
     private final CartMapper cartMapper;
     private final ModelMapper modelMapper;
-    private final HttpSession httpSession;
 
     @Override
     public int totalCount(String memberId) {
