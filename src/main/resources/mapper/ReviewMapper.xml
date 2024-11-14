@@ -7,12 +7,12 @@
         VALUES (#{buyer},#{seller},#{content},#{score})
     </insert>
     <select id="view" resultType="net.fullstack7.nanusam.domain.ReviewVO">
-        SELECT idx, buyer, seller, content, score, regDate, modifyDate
+        SELECT idx, buyer, seller, content, score, `status`, regDate, modifyDate, deleteDate
         FROM tbl_review
         WHERE idx=#{idx}
     </select>
     <select id="listWithPage" resultType="net.fullstack7.nanusam.domain.ReviewVO">
-        SELECT idx, buyer, seller, content, score, regDate, modifyDate
+        SELECT idx, buyer, seller, content, score, `status`, regDate, modifyDate, deleteDate
         FROM tbl_review
         <where>
         ${searchCategory} LIKE CONCAT('%',#{searchKeyword},'%')
@@ -34,11 +34,18 @@
     </select>
     <update id="modify">
         UPDATE tbl_review
-        <set>
-            <if test="buyer != null">buyer=#{buyer}</if>
-            <if test="seller != null">seller=#{seller}</if>
-            <if test="content != null">content=#{content}</if>
-        </set>
-        WHERE
+        <trim prefix="set" suffixOverrides=",">
+            <if test="buyer != null">buyer=#{buyer},</if>
+            <if test="seller != null">seller=#{seller},</if>
+            <if test="content != null">content=#{content},</if>
+            <if test="score >= 0">score=#{score},</if>
+            modifyDate = NOW()
+        </trim>
+        WHERE idx=#{idx}
+    </update>
+    <update id="delete">
+        UPDATE tbl_review
+        SET `status` = 'N', deleteDate = NOW()
+        WHERE idx=#{idx}
     </update>
 </mapper>

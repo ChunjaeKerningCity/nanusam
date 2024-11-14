@@ -16,6 +16,8 @@ public class ReviewVO {
     private String seller;
     private String content;
     private int score;
+    private String status;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
+    private LocalDateTime deleteDate;
 }
