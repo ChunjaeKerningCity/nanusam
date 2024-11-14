@@ -13,7 +13,7 @@
         SELECT idx, memberId, goodsIdx
         FROM tbl_cart
         ORDER BY idx DESC
---         LIMIT #{page_skip_count}, #{page_size}
+        LIMIT #{page_skip_count}, #{page_size}
     </select>
 
     <select id="totalCount" resultType="int">
