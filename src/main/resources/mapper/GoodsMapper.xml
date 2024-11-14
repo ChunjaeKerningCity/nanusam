@@ -52,14 +52,14 @@
 
     <update id="modifyGoodsInfo">
         update tbl_goods set price=#{price}, quality=#{quality}, category=#{category}, content=#{content}, name=#{name}
-        where idx=#{idx}
+        where idx=#{idx} and memberId=#{memberId}
     </update>
 
     <delete id="deleteByIdx">
         delete from tbl_goods where idx=#{idx}
     </delete>
 
-    <select id="getSellerId" resultType="int">
+    <select id="getSellerId" resultType="String">
         select memberId from tbl_goods where idx=#{idx}
     </select>
 </mapper>

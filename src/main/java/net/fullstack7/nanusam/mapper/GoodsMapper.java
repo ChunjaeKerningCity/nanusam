@@ -11,8 +11,8 @@ public interface GoodsMapper {
     List<GoodsVO> listByPage(PageRequestDTO requestDTO);
     int totalCount(PageRequestDTO requestDTO);
     void regist(GoodsVO goodsVO);
-    void deleteByIdx(int idx);
+    int deleteByIdx(int idx);
     GoodsVO view(int idx);
-    void modifyGoodsInfo(GoodsVO goodsVO);
+    int modifyGoodsInfo(GoodsVO goodsVO);
     String getSellerId(int idx);
 }

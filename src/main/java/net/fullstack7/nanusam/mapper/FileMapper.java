@@ -9,9 +9,9 @@ import java.util.List;
 
 @Mapper
 public interface FileMapper {
-    void regist(FileVO fileVO);
+    int regist(FileVO fileVO);
     FileVO view(int idx);
     List<FileVO> listByBbsCodeAndRefIdx(@Param("bbsCode") String bbsCode, @Param("refIdx") int refIdx);
-    void deleteByBbsCodeAndRefIdx(String bbsCode, int refIdx);
-    void deleteByFileName(String fileName);
+    int deleteByBbsCodeAndRefIdx(String bbsCode, int refIdx);
+    int deleteByFileName(String fileName);
 }

@@ -2,7 +2,6 @@ package net.fullstack7.nanusam.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.fullstack7.nanusam.domain.CodeVO;
 import net.fullstack7.nanusam.domain.FileVO;
 import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.dto.*;
@@ -11,7 +10,6 @@ import net.fullstack7.nanusam.mapper.FileMapper;
 import net.fullstack7.nanusam.mapper.GoodsMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,16 +40,23 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void regist(GoodsDTO goodsDTO) {
+    public String regist(GoodsDTO goodsDTO) {
         GoodsVO goodsVO = modelMapper.map(goodsDTO, GoodsVO.class);
         goodsMapper.regist(goodsVO);
-        log.info("idx="+goodsVO.getIdx());
+
+        if(goodsVO.getIdx() < 1) return "다시 시도해주세요.";
+
         goodsDTO.setIdx(goodsVO.getIdx());
+        return null;
     }
 
     @Override
-    public void fileupload(FileDTO fileDTO) {
-        fileMapper.regist(modelMapper.map(fileDTO, FileVO.class));
+    public String fileupload(FileDTO fileDTO) {
+        int result = fileMapper.regist(modelMapper.map(fileDTO, FileVO.class));
+        if(result < 1) {
+            return "다시 시도해주세요.";
+        }
+        return null;
     }
 
     @Override
@@ -72,17 +77,22 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public void deleteFileByName(String name) {
-        fileMapper.deleteByFileName(name);
+    public String deleteFileByName(String name) {
+        int result = fileMapper.deleteByFileName(name);
+        if(result < 1)
+            return "다시 시도해주세요.";
+        return null;
     }
 
     @Override
     public String modifyGoodsInfo(GoodsDTO goodsDTO) {
-        String seller = goodsMapper.getSellerId(goodsDTO.getIdx());
-        if(seller != null && seller.equals(goodsDTO.getMemberId())){
-            goodsMapper.modifyGoodsInfo(modelMapper.map(goodsDTO, GoodsVO.class));
-            return null;
+
+        int result = goodsMapper.modifyGoodsInfo(modelMapper.map(goodsDTO, GoodsVO.class));
+
+        if(result < 1) {
+            return "수정 권한이 없습니다.";
         }
-        return "상품 등록한 회원만 수정할 수 있습니다.";
+
+        return null;
     }
 }
