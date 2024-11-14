@@ -20,8 +20,14 @@ public class MemberServiceImpl implements MemberService{
     @Override
     public MemberDTO login(String memberId, String pwd) {
         MemberVO memberVO = memberXmlmapper.login(memberId);
+        log.info(memberVO);
+//        log.info("회원아이디 "+ memberVO.getMemberId());
+//        log.info("회원타입 " + memberVO.getMemType());
+//        log.info("회원상태"+memberVO.getStatus());
         if (memberVO != null && memberVO.getPwd().equals(pwd)) {
-            return modelmapper.map(memberVO, MemberDTO.class);
+            if(memberVO.getStatus().equals("Y")&&memberVO.getMemType().equals("t")){
+                return modelmapper.map(memberVO, MemberDTO.class);
+            }
         }
         return null;
     }
@@ -72,7 +78,8 @@ public class MemberServiceImpl implements MemberService{
     //회원삭제(본인탈퇴)
     @Override
     public int deleteMember(String memberId) {
-        return memberXmlmapper.deleteMember(memberId);
+       return  0;
+//        return memberXmlmapper.deleteMember(memberId);
     }
 
 
