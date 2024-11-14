@@ -14,7 +14,12 @@
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 
+<c:forEach items="list" var="item">
 
+</c:forEach>
+<ul>
+    <li></li>
+</ul>
 
 
 </body>

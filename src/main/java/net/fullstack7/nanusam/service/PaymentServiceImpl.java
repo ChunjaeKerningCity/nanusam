@@ -10,6 +10,8 @@ import net.fullstack7.nanusam.mapper.PaymentMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Log4j2
@@ -46,7 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public void checkReservation(String memberId) {
-
+    public List<PaymentDTO> listWithGoodsByBuyer(String buyer) {
+        return paymentMapper.listWithGoodsByBuyer(buyer);
     }
+
 }

@@ -3,6 +3,7 @@ package net.fullstack7.nanusam.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.GoodsDTO;
+import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PaymentDTO;
 import net.fullstack7.nanusam.service.GoodsService;
 import net.fullstack7.nanusam.service.PaymentService;
@@ -28,7 +29,10 @@ public class PaymentController {
     private final GoodsService goodsService;
 
     @GetMapping("list.do")
-    public String list() {
+    public String list(HttpSession session, Model model, @RequestParam PageRequestDTO pageRequestDTO) {
+
+        model.addAttribute("list", paymentService.listWithGoodsByBuyer(session.getAttribute("memberId").toString()));
+
         return "payment/list";
     }
 
