@@ -9,6 +9,9 @@ import net.fullstack7.nanusam.dto.ReviewDTO;
 import net.fullstack7.nanusam.mapper.ReviewMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
+
 @Log4j2
 @Service
 @RequiredArgsConstructor
@@ -21,27 +24,32 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDTO getReview(int idx) {
-        return modelMapper.map(reviewMapper.getReview(idx), ReviewDTO.class);
+    public ReviewDTO view(int idx) {
+        return modelMapper.map(reviewMapper.view(idx), ReviewDTO.class);
     }
 
     @Override
     public PageResponseDTO<ReviewDTO> listWithPage(PageRequestDTO dto) {
-        return null;
+        return PageResponseDTO
+                .<ReviewDTO>withAll()
+                .reqDTO(dto)
+                .dtoList(reviewMapper.listWithPage(dto).stream().map(vo->modelMapper.map(vo,ReviewDTO.class)).collect(Collectors.toList()))
+                .total_count(reviewMapper.totalCount(dto))
+                .build();
     }
 
     @Override
     public int totalCount(PageRequestDTO dto) {
-        return 0;
+        return reviewMapper.totalCount(dto);
     }
 
     @Override
-    public int modify(ReviewVO vo) {
-        return 0;
+    public int modify(ReviewDTO dto) {
+        return reviewMapper.modify(modelMapper.map(dto, ReviewVO.class));
     }
 
     @Override
     public int delete(int idx) {
-        return 0;
+        return reviewMapper.delete(idx);
     }
 }

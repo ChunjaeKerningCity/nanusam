@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface ReviewService {
     public int regist(ReviewDTO dto);
-    public ReviewDTO getReview(int idx);
+    public ReviewDTO view(int idx);
     public PageResponseDTO<ReviewDTO> listWithPage(PageRequestDTO dto);
     public int totalCount(PageRequestDTO dto);
-    public int modify(ReviewVO vo);
+    public int modify(ReviewDTO dto);
     public int delete(int idx);
 }
