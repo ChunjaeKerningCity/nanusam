@@ -372,7 +372,7 @@
                       </form>
                     </td>
                     <td>
-                      <form action="/bbs/delete.do" method="get" style="display: inline;">
+                      <form action="/bbs/delete.do" method="post" style="display: inline;">
                         <input type="hidden" name="idx" value="${notice.idx}" />
                         <button type="submit" onclick="return confirmDelete();" class="defaultA">삭제</button>
                       </form>
