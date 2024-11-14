@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
@@ -74,7 +75,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="mainImage" class="form-label">대표 사진</label>
-                    <input class="form-control" type="file" id="mainImage" name="mainImage" accept="image/*">
+                    <input class="form-control" type="file" id="mainImage" name="mainImage" accept="image/*" required>
                 </div>
             </div>
         </div>
@@ -112,7 +113,7 @@
 
 <script>
     const svrValidateResult = {};
-    <c:forEach items="${errors}" var="err">
+    <c:forEach items="${formerrors}" var="err">
     if(document.getElementById("div_err_${err.getField()}") != null) {
         console.log("1");
         document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color: red;'>"+"${err.getField()} 필드는 ${err.defaultMessage}</span>";

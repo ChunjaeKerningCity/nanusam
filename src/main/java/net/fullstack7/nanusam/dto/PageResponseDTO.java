@@ -26,6 +26,10 @@ public class PageResponseDTO<E> {
 
     private String searchKeyword;
     private String searchCategory;
+    private String orderBy;
+    private String orderDir;
+    private String memberId;
+    private String reservationId;
 
     public PageResponseDTO() {}
 
@@ -47,6 +51,10 @@ public class PageResponseDTO<E> {
 
         this.searchCategory = reqDTO.getSearchCategory();
         this.searchKeyword = reqDTO.getSearchKeyword();
+        this.orderBy = reqDTO.getOrderBy();
+        this.orderDir = reqDTO.getOrderDir();
+        this.memberId = reqDTO.getMemberId();
+        this.reservationId = reqDTO.getReservationId();
     }
 
     public int getTotal_page() {

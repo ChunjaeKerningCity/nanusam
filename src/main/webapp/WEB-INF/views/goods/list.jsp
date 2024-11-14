@@ -30,8 +30,6 @@ ${errors}
                         <c:forEach items="${categories}" var="category">
                             <option value="${category.code}" ${pageinfo.searchCategory eq category.code ? 'selected' : ''}>${category.value}</option>
                         </c:forEach>
-                        <option value="01" ${pageinfo.searchCategory eq '01' ? 'selected' : ''}>카테고리</option>
-                        <option value="00" ${pageinfo.searchCategory eq '00' ? 'selected' : ''}>기타</option>
                     </select>
                 </div>
                 <div class="col">
