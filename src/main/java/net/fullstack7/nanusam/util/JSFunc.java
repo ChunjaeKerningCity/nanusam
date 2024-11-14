@@ -9,7 +9,7 @@ public class JSFunc {
     public static void alertLocation(String msg, String url, HttpServletResponse response) {
         try {
             PrintWriter writer = response.getWriter();
-            response.setContentType("text/html;charset=UTF-8");
+            response.setContentType("text/html;charset=UTF-8") ;
             String code = "<script>"
                     + "alert('"+msg+"');"
                     + "location.href='"+url+"';"
