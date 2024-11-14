@@ -19,7 +19,7 @@
 
     <!-- 회원 정보 확인 -->
     <select id="viewMember" >
-        SELECT memberId, pwd, name, email, phone, birthday, addr1, zipCode
+        SELECT memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, changeDate
         FROM tbl_member
         WHERE memberId = #{memberId}
     </select>
@@ -51,19 +51,43 @@
             phone = #{phone},
             addr1 = #{addr1},
             addr2 = #{addr2},
-            zipCode = #{zipCode}
+            zipCode = #{zipCode},
+            changeDate = now()
         WHERE memberId = #{memberId}
     </update>
 
-    <!-- 회원상태 비활성화 -->
-    <update id="deleteMember">
+<!--    R 상품 있는지 확인-->
+  <select id="goodsStatusCheck">
+    SELECT COUNT(*)
+    FROM tbl_goods
+    WHERE memberId = #{memberId}
+    AND status =  "R"
+  </select>
+
+<!--    배송상태 확인-->
+    <select id="deliveryStatusCheck">
+        SELECT COUNT(*)
+        FROM tbl_goods
+        WHERE memberId = #{memberId}
+        AND deliveryStatus =  "1"
+    </select>
+
+<!--    Y 상품 D 로전환-->
+    <update id="goodsStatusUpdate">
+    UPDATE tbl_goods
+    SET status = #{status}
+    WHERE memberId = #{memberId}
+    </update>
+
+    <!-- 회원상태 전환 -->
+    <update id="memberStatusUpdate">
         UPDATE tbl_member
         SET leaveDate = NOW(),
             status = 'N'
         WHERE memberId = #{memberId}
     </update>
 
-<!--    탈퇴테이블 업데이트-->
+    <!--    테이블 이동-->
     <insert id="insertSecessionMember" parameterType="net.fullstack7.nanusam.domain.SecessionMemberVO">
         INSERT INTO tbl_secession_member
         (memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, memType, regDate, leaveDate, status, description)
@@ -73,8 +97,8 @@
         WHERE memberId = #{memberId}
     </insert>
 
-<!--    원래테이블 정보 지우기-->
-    <update id="deleteMemberInfo" parameterType="String">
+    <!--    기존 테이블에서회원정보 N 처리-->
+    <update id="deleteMember" parameterType="String">
         UPDATE tbl_member
         SET pwd = 'N',
             name = 'N',

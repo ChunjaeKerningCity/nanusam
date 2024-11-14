@@ -6,7 +6,7 @@
   <c:choose>
     <c:when test="${not empty sessionScope.memberId}">
       <!-- 로그인된 상태 -->
-      <a href="#">마이페이지</a>
+      <a href="/member/pwdCheck.do">마이페이지</a>
       <a href="#">나의 결제내역</a>
       <a href="/login/logout.do">로그아웃</a>
     </c:when>
