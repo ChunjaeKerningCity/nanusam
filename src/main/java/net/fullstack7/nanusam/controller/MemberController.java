@@ -147,37 +147,19 @@ public class MemberController {
 //            return "login/regist";
 //        }
 //    }
-    //=========이동완료===========
-
-    //    @GetMapping("/pwdCheck.do")
-//    public String pwdCheck() {
-//        return "member/pwdCheck";
-//    }
-//
-//    @PostMapping("/pwdCheck.do")
-//    public String pwdCheck(String memberId, String pwd,
-//                           Model model) {
-//        memberService.pwdCheck(memberId, pwd);
-//        return "member/pwdCheck";
-//    }
     
     @GetMapping("/view.do")
     public String viewGet(){
         return "member/view";
     }
-
     @GetMapping("/modify.do")
-    public String modifyGet(Model model,HttpSession session){
-//        String memberId = (String) session.getAttribute("memberId");
-//        MemberDTO memberDTO =memberService.viewMember(memberId);
-//        model.addAttribute("member", memberDTO);
+    public String modifyGet(){
         return "member/modify";
     }
-//    @PostMapping("/modify.do")
-//    public String modifyPost(@RequestParam ){
-//
-//        return "member/modify";
-//    }
+    @PostMapping("/modify.do")
+    public String modifyPost(){
+        return "member/modify";
+    }
     @GetMapping("delete.do")
     public String deleteGet(){
         return "member/delete";

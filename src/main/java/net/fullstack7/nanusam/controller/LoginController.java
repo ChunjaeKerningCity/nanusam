@@ -66,7 +66,6 @@ public class LoginController {
     public String list() {
         return "member/list";
     }
-
     // 가입전 약관동의
     @GetMapping("/registCheck.do")
     public String registCheck(
@@ -157,6 +156,4 @@ public class LoginController {
             return "login/regist";
         }
     }
-
-
 }
