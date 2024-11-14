@@ -8,6 +8,7 @@ import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.service.GoodsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -51,11 +52,10 @@ public class GoodsController {
     }
 
     @PostMapping("/regist.do")
-    public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) List<MultipartFile> detailImage, @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage, @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info(goodsDTO.toString());
         if (bindingResult.hasErrors()) {
             log.info("registPost > bindingResult has errors");
-            log.info("1 " + bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
             return "redirect:/goods/regist.do";
         }
@@ -63,8 +63,7 @@ public class GoodsController {
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
         String message = goodsService.regist(goodsDTO);
 
-        if(message != null) {
-            log.info("2 " + message);
+        if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);
             return "redirect:/goods/regist.do";
         }
@@ -76,13 +75,16 @@ public class GoodsController {
                 redirectAttributes.addFlashAttribute("errors", message);
             }
 
-            for (MultipartFile detail : detailImage) {
-                message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
-                if (message != null) {
-                    redirectAttributes.addFlashAttribute("errors", message);
+            if(detailImage != null && detailImage.length > 0) {
+                for (MultipartFile detail : detailImage) {
+                    if(detail.getSize() > 0) {
+                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                        if (message != null) {
+                            redirectAttributes.addFlashAttribute("errors", message);
+                        }
+                    }
                 }
             }
-
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("errors", e.getMessage());
         }
@@ -93,7 +95,7 @@ public class GoodsController {
 
     @GetMapping("/view.do")
     public String viewGet(@RequestParam(required = true, defaultValue = "0") int idx, Model model, RedirectAttributes redirectAttributes) {
-        if(idx == 0) {
+        if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
@@ -104,14 +106,14 @@ public class GoodsController {
     @GetMapping("/modify.do")
     public String modifyGet(HttpSession session, Model model, @RequestParam(required = false, defaultValue = "0") int idx, RedirectAttributes redirectAttributes) {
 
-        if(idx == 0) {
+        if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
 
         GoodsDTO goodsDTO = goodsService.view(idx);
 
-        if(session.getAttribute("memberId") == null || !session.getAttribute("memberId").equals(goodsDTO.getMemberId()) ) {
+        if (session.getAttribute("memberId") == null || !session.getAttribute("memberId").equals(goodsDTO.getMemberId())) {
             redirectAttributes.addFlashAttribute("errors", "수정 권한이 없습니다.");
             return "redirect:/goods/view.do?idx=" + idx;
         }
@@ -121,7 +123,6 @@ public class GoodsController {
         List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("상품", idx);
 
 
-
         model.addAttribute("orgMainImage", list.remove(0));
         model.addAttribute("images", list);
         return "goods/modify";
@@ -129,33 +130,33 @@ public class GoodsController {
 
     @PostMapping("/modify.do")
     public String modifyPost(@RequestParam(required = false, defaultValue = "0") int idx
-            ,@Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
+            , @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
             , HttpSession session
             , @RequestParam String[] deleteFile
-            , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) List<MultipartFile> detailImage ) {
+            , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage) {
 
-        if(idx == 0) {
+        if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
 
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
         String message = goodsService.modifyGoodsInfo(goodsDTO);
-        if(message != null){
+        if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);
             return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
         }
 
 
-        if(deleteFile != null && deleteFile.length > 0) {
-            for(String filename : deleteFile) {
+        if (deleteFile != null && deleteFile.length > 0) {
+            for (String filename : deleteFile) {
                 File dfile = new File(uploadDir, filename);
                 dfile.delete();
                 goodsService.deleteFileByName(filename);
             }
         }
 
-        if(mainImage != null && mainImage.getOriginalFilename() != null) {
+        if (mainImage != null && mainImage.getOriginalFilename() != null) {
             try {
                 message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
 
@@ -163,10 +164,14 @@ public class GoodsController {
                     redirectAttributes.addFlashAttribute("errors", message);
                 }
 
-                for (MultipartFile detail : detailImage) {
-                    message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx()+"_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
-                    if (message != null) {
-                        redirectAttributes.addFlashAttribute("errors", message);
+                if(detailImage != null && detailImage.length > 0) {
+                    for (MultipartFile detail : detailImage) {
+                        if(detail.getSize() > 0) {
+                            message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                            if (message != null) {
+                                redirectAttributes.addFlashAttribute("errors", message);
+                            }
+                        }
                     }
                 }
 
@@ -176,7 +181,7 @@ public class GoodsController {
             }
         }
 
-        if(message != null) {
+        if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);
             return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
         }
@@ -196,12 +201,15 @@ public class GoodsController {
     }
 
     private String upload(MultipartFile file, int refIdx, String name) throws Exception {
+        log.info("0");
         String message = null;
         String newName = "";
         log.info("================================");
         log.info("UploadController >> uploadPOST START");
         try {
+            log.info("1");
             if (file != null && !file.isEmpty()) {
+                log.info("2");
                 FileDTO dto = new FileDTO();
                 dto.setRefIdx(refIdx);
                 dto.setFilePath(uploadDir);
@@ -217,9 +225,10 @@ public class GoodsController {
                 message = goodsService.fileupload(dto);
             }
         } catch (Exception e) {
+            log.info("3");
             log.info(e.getMessage());
             message = e.getMessage();
-            log.info("upload "+message);
+            log.info("upload " + message);
         }
 
         log.info("uploadDir : " + uploadDir);
