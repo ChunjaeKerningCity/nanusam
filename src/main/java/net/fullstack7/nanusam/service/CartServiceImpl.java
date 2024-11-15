@@ -2,19 +2,14 @@ package net.fullstack7.nanusam.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.fullstack7.nanusam.domain.BbsVO;
 import net.fullstack7.nanusam.domain.CartVO;
-import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.CartDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.mapper.CartMapper;
-import net.fullstack7.nanusam.mapper.GoodsMapper;
-import org.apache.ibatis.annotations.Param;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -112,6 +107,13 @@ public class CartServiceImpl implements CartService {
         log.info("vo = " + vo);
         log.info("CartServiceImpl >> regist() END");
         log.info("===================================");
+    }
+
+    @Override
+    public boolean existCart(CartDTO dto){
+        CartVO vo = modelMapper.map(dto, CartVO.class);
+        int count = cartMapper.exist(vo);
+        return count>0;
     }
 
 
