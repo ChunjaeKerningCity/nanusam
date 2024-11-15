@@ -46,6 +46,7 @@ public class AdminDTO {
   private String status;              // 회원상태 Y 활성화 N 비활성화
   private LocalDateTime leaveDate;    // 탈퇴일
 
+  // Formatter
   private String regDateStr;
   @Builder.Default
   private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

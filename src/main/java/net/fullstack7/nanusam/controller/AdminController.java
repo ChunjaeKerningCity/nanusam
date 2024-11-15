@@ -2,20 +2,15 @@ package net.fullstack7.nanusam.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.AdminDTO;
 import net.fullstack7.nanusam.dto.BbsDTO;
-import net.fullstack7.nanusam.dto.MemberDTO;
-import net.fullstack7.nanusam.dto.PageRequestDTO;
-import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.service.AdminService;
 import net.fullstack7.nanusam.service.BbsService;
-import net.fullstack7.nanusam.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -109,5 +104,34 @@ public class AdminController {
         List<BbsDTO> noticeList = adminService.noticeList();
         model.addAttribute("noticeList", noticeList);
         return "admin/adminNoticeManagement";
+    }
+
+    @GetMapping("/goodsMm.do")
+    public String goodsList(Model model) {
+        List<GoodsDTO> goodsList = adminService.goodsList();
+        model.addAttribute("goodsList", goodsList);
+        return "admin/adminGoodsManagement";
+    }
+
+    @PostMapping("/deleteGoods.do")
+    public String deleteGoods(@RequestParam("idx") int idx, RedirectAttributes redirectAttributes) {
+        boolean deleted = adminService.deleteGoods(idx);
+        if (deleted) {
+            redirectAttributes.addFlashAttribute("errors", "상품이 성공적으로 삭제되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errors", "상품 삭제에 실패했습니다.");
+        }
+        return "redirect:/admin/goodsMm.do"; // 상품 관리 페이지로 리디렉션
+    }
+
+    @PostMapping("/updateGoodsStatus.do")
+    public String updateGoodsStatus(@RequestParam("idx") int idx, @RequestParam("status") String status, RedirectAttributes redirectAttributes) {
+        boolean updated = adminService.updateGoodsStatus(idx, status);
+        if (updated) {
+            redirectAttributes.addFlashAttribute("errors", "상품 상태가 성공적으로 변경되었습니다.");
+        } else {
+            redirectAttributes.addFlashAttribute("errors", "상품 상태 변경에 실패했습니다.");
+        }
+        return "redirect:/admin/goodsMm.do";
     }
 }

@@ -30,6 +30,7 @@ public class BbsDTO {
     private LocalDateTime modifyDate;
     private int readCnt;
 
+    // Formatter
     private String regDateStr;
     @Builder.Default
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

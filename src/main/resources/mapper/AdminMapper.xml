@@ -69,4 +69,36 @@
     SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
     FROM tbl_bbs;
   </select>
+
+<!--  상품 관련-->
+  <select id="goodsList">
+    SELECT
+      idx,
+      name,
+      memberId,
+      price,
+      quality,
+      status,
+      regDate,
+      modifyDate,
+      readCnt,
+      category,
+      content,
+      reservationId
+    FROM
+      tbl_goods;
+  </select>
+
+<!--  상품 삭제-->
+  <delete id="deleteGoods">
+    DELETE FROM tbl_goods
+    WHERE idx = #{idx};
+  </delete>
+
+<!--  상품 status 변경 ('Y', 'R', 'N', 'D')-->
+  <update id="updateGoodsStatus" parameterType="map">
+    UPDATE tbl_goods
+    SET status = #{status}
+    WHERE idx = #{idx};
+  </update>
 </mapper>

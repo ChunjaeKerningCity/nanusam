@@ -5,9 +5,11 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.BbsVO;
+import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.domain.MemberVO;
 import net.fullstack7.nanusam.dto.AdminDTO;
 import net.fullstack7.nanusam.dto.BbsDTO;
+import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.mapper.AdminMapper;
 import org.modelmapper.ModelMapper;
@@ -123,5 +125,28 @@ public class AdminServiceImpl implements AdminService {
     return voList.stream()
         .map(vo -> modelmapper.map(vo, BbsDTO.class))
         .collect(Collectors.toList());
+  }
+
+  // 상품 전체 조회
+  @Override
+  public List<GoodsDTO> goodsList() {
+    List<GoodsVO> voList = adminXmlmapper.goodsList();
+    return voList.stream()
+        .map(vo -> modelmapper.map(vo, GoodsDTO.class))
+        .collect(Collectors.toList());
+  }
+
+  // 상품 선택 삭제
+  @Override
+  public boolean deleteGoods(int idx) {
+    int result = adminXmlmapper.deleteGoods(idx);
+    return result > 0;
+  }
+
+  // 상품 상태 변경
+  @Override
+  public boolean updateGoodsStatus(int idx, String status) {
+    int result = adminXmlmapper.updateGoodsStatus(idx, status);
+    return result > 0;
   }
 }
