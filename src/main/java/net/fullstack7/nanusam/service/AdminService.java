@@ -1,7 +1,6 @@
 package net.fullstack7.nanusam.service;
 
 import java.util.List;
-import net.fullstack7.nanusam.domain.BbsVO;
 import net.fullstack7.nanusam.dto.AdminDTO;
 import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;

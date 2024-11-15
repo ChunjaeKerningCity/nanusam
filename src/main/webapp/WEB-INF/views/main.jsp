@@ -11,6 +11,36 @@
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
 </head>
 <body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let page = 1;
+        let isLoading = false;
+
+        const loadMoreItems = () => {
+            if (isLoading) return;
+            isLoading = true;
+
+            fetch(`/loadMoreGoods?page=${page}`)
+            .then(response => response.text())
+            .then(data => {
+                document.querySelector('.cardContainer').insertAdjacentHTML('beforeend', data);
+                page++;
+                isLoading = false;
+            })
+            .catch(error => {
+                console.error('Error loading more items:', error);
+                isLoading = false;
+            });
+        };
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                loadMoreItems();
+            }
+        });
+    });
+</script>
+
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
@@ -108,18 +138,20 @@
             </div>
             <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
             <div class="cardContainer">
-                <a href="#" class="card">
-                    <img
-                        src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcT1zTEjLKDLX5fawB6m2I8Q0Q616nJhoBmnHEqCjNovbJUG4ni_piGhQ7VsXSQbYDCRoIcnDDQfDkMrM08zVYa7mg3PLo9W3zAlfD4rcbc&usqp=CAE"
-                        class="cardImage"
-                    />
-                    <p class="cardName">하츄핑 팝니다</p>
-                    <div class="cardInfo">
-                        <p class="cardPrice">38,000원</p>
-                        <p class="regDate">4분 전</p>
-                    </div>
-                </a>
-            <div>여기 무한 스크롤 넣을 예정</div>
+                <c:forEach items="${mainViewGoodsList}" var="item">
+                    <a href="/goods/view.do?idx=${item.idx}" class="card">
+                        <img
+                            src="/resources/image/goods_${item.idx}_0.png"
+                            class="cardImage"
+                            alt="cardImage"
+                        />
+                        <p class="cardName">${item.name}</p>
+                        <div class="cardInfo">
+                            <p class="cardPrice">${item.price}</p>
+                            <p class="regDate">${item.regDateStr}</p>
+                        </div>
+                    </a>
+                </c:forEach>
             </div>
             <div class="line" style="margin: 20px 0 10px 0"></div>
         </div>
@@ -130,15 +162,5 @@
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" charEncoding="UTF-8" />
 </footer>
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
-<script>
-    window.onload = function() {
-        var topButton = document.querySelector('.topButton');
-        if (topButton) {
-            topButton.addEventListener('click', function () {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-        }
-    };
-</script>
 </body>
 </html>

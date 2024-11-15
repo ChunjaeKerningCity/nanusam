@@ -101,22 +101,4 @@
     SET status = #{status}
     WHERE idx = #{idx};
   </update>
-
-  <select id="mainViewGoodsList">
-    SELECT
-      idx,
-      name,
-      memberId,
-      price,
-      quality,
-      status,
-      regDate,
-      modifyDate,
-      readCnt,
-      category,
-      content,
-      reservationId
-    FROM
-      tbl_goods;
-  </select>
 </mapper>
