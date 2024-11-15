@@ -7,7 +7,7 @@
         values (#{fileName},#{filePath},#{fileSize},#{fileExt},#{bbsCode},#{refIdx},#{fileContentType},#{orgFileName})
     </insert>
     <select id="listByBbsCodeAndRefIdx" resultType="net.fullstack7.nanusam.domain.FileVO">
-        select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName
+        select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName, fileData
         from tbl_file
         where bbsCode=#{bbsCode} and refIdx=#{refIdx}
         order by fileName
@@ -19,7 +19,7 @@
         delete from tbl_file where fileName=#{fileName}
     </delete>
     <select id="view" resultType="net.fullstack7.nanusam.domain.FileVO">
-        select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName
+        select idx, fileName, filePath, fileSize, fileExt, bbsCode, refIdx, fileContentType, orgFileName, fileData
         from tbl_file
         where idx=#{idx}
     </select>

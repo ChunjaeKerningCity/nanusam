@@ -19,42 +19,58 @@
 
 
 <%--    상품 목록--%>
+        <table>
+            <tr>
+                <th>상품이미지</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>상세보기</th>
+                <th>관리</th>
+                <th>결제정보</th>
 
+            </tr>
         <c:forEach items="${pageinfo.dtoList}" var="item">
-            <table>
+
                 <tr>
                     <td>
-                        <img src="/resources/image/goods_${item.idx}_0.png" class="card-img-top"
-                             alt="/resources/image/goods_${item.idx}_0.jpg">
+                        <img src="/resources/image/${item.mainImageName}" class="card-img-top"
+                             alt="상품이미지">
                     </td>
-                    <td>
-                            ${item.name} - ${item.price}
-                    </td>
+                    <td>${item.name}</td>
+                    <td>${item.price}</td>
                     <td>
                         <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a>
                     </td>
                     <td>
                         <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
-                            <button onclick="/payment/deliveryStart.do?idx=${item.idx}">배송시작</button>
+                            <button onclick="location.href='/payment/deliveryStart.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
                         </c:if>
                         <c:if test="${item.status eq 'R'}">
-                            <button onclick="/goods/direct.do?idx=${item.idx}">직거래</button>
-                            <button onclick="/goods/cancel.do?idx=${item.idx}">예약취소</button>
+                            예약자-${item.reservationId}
+                            <button onclick="location.href='/goods/direct.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">직거래</button>
+                            <button onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
                         </c:if>
                         <c:if test="${item.status eq 'Y'}">
-                            <button onclick="/goods/delete.do?idx=${item.idx}">상품 삭제</button>
+                            <button onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
                         </c:if>
                     </td>
                     <td>
-                        <c:if test="${item.status eq 'N' and not empty item.payInfo.buyer}">
-                            <button onclick="/payment/view.do?goodsIdx=${item.payInfo.idx}">결제정보</button>
+                        <c:if test="${item.status eq 'N'}">
+                            <c:choose>
+                                <c:when test="${not empty item.payInfo.buyer}">
+                                    <button onclick="location.href='/payment/view.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">결제정보</button>
+                                </c:when>
+                                <c:otherwise>
+                                    직거래
+                                </c:otherwise>
+                            </c:choose>
                         </c:if>
                     </td>
                 </tr>
+
+
+            </c:forEach>
             </table>
-
-        </c:forEach>
-
     <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
         <div class="col">
             <div class="alert alert-secondary" role="alert">
@@ -78,7 +94,7 @@
                 </c:forEach>
                 <c:if test="${pageinfo.next_page_flag}">
                     <li class="page-item">
-                        <a class="page-link" href="/goods/mygoods.do.do?page_no=${pageinfo.page_block_end + 1}" aria-label="Next">
+                        <a class="page-link" href="/goods/mygoods.do?page_no=${pageinfo.page_block_end + 1}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

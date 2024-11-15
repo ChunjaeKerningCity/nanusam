@@ -4,6 +4,7 @@ import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,4 +19,5 @@ public interface GoodsMapper {
     String getSellerId(int idx);
     int modifyStatus(GoodsVO goodsVO);
     List<GoodsDTO> listWithPayment(PageRequestDTO requestDTO);
+    int modifyMainImage(@Param("mainImageName") String mainImageName, @Param("idx") int idx);
 }
