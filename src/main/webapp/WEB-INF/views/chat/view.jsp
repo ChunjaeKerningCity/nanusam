@@ -143,6 +143,7 @@
     </div>
     <div class="col">
       채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
+      상품 : ${chatGroupDTO.goodsName}
     </div>
     <div class="col">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
