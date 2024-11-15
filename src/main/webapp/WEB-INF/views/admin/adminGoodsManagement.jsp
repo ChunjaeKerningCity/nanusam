@@ -290,7 +290,7 @@
                   <th>Quality</th>
                   <th>RegDate</th>
                   <th>Status</th>
-                  <th>Delete</th>
+<%--                  <th>Delete</th>--%>
                 </tr>
                 </thead>
                 <tbody>
@@ -338,12 +338,12 @@
                         </c:otherwise>
                       </c:choose>
                     </td>
-                    <td>
-                      <form action="/admin/deleteGoods.do" method="post" style="display: inline;">
-                        <input type="hidden" name="idx" value="${goods.idx}" />
-                        <button type="submit" onclick="return confirmDelete();" class="defaultA">삭제</button>
-                      </form>
-                    </td>
+<%--                    <td>--%>
+<%--                      <form action="/admin/deleteGoods.do" method="post" style="display: inline;">--%>
+<%--                        <input type="hidden" name="idx" value="${goods.idx}" />--%>
+<%--                        <button type="submit" onclick="return confirmDelete();" class="defaultA">삭제</button>--%>
+<%--                      </form>--%>
+<%--                    </td>--%>
                   </tr>
                 </c:forEach>
                 </tbody>
