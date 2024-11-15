@@ -62,7 +62,7 @@
                 <div class="row row-cols-auto">
                     <c:forEach items="${pageinfo.dtoList}" var="item">
                         <div class="col card-section">
-                            <div class="card" style="width: 15rem;">
+                            <div class="card" style="width: 265px;">
                                 <img src="/resources/image/goods_${item.idx}_0.png" class="card-img-top" alt="/resources/image/goods_${item.idx}_0.jpg">
                                 <div class="card-body">
                                     <h5 class="card-title">${categories[item.category].value}</h5>
