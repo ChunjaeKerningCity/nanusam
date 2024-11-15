@@ -57,7 +57,10 @@
   <button class="button confirmBtn" style="background-color: #833ab4">바꾸셈</button>
 
 <div>
-  input
+  input 예쁜거 쓸거면 쓰셈
+  <div style="width: 200px">
+  <input class="inputCustom"/>
+  </div>
 </div>
 </main>
 
