@@ -112,7 +112,7 @@
                 <c:forEach items="${mainViewGoodsList}" var="item">
                     <a href="/goods/view.do?idx=${item.idx}" class="card">
                         <img
-                            src="/resources/image/goods_${item.idx}_0.png"
+                            src="/resources/image/${item.mainImageName}"
                             class="cardImage"
                             alt="cardImage"
                         />
