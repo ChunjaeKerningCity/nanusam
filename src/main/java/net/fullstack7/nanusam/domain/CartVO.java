@@ -13,6 +13,5 @@ public class CartVO {
     private int idx;
     private String memberId;
     private int goodsIdx;
-    private int goodsIdx2; //G.idx
     private String name;    //G.name
 }

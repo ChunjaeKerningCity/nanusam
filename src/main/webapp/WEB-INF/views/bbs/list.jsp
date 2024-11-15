@@ -152,7 +152,46 @@
                     </c:if>
                 </ul>
             </nav>
-        </div>
+<%--    <nav aria-label="Page navigation example">--%>
+<%--        <ul class="pagination">--%>
+<%--            <li class="page-item">--%>
+<%--                <a class="page-link" href="<c:choose>--%>
+<%--                        <c:when test="${bbsList.page_no == 1}">#</c:when>--%>
+<%--                        <c:otherwise>?page_no=1&${queryString}</c:otherwise>--%>
+<%--                        </c:choose>" aria-label="첫페이지">--%>
+<%--                    <span aria-hidden="true">&langle;&langle;</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--            <li class="page-item">--%>
+<%--                <a class="page-link" href="<c:choose>--%>
+<%--                                                <c:when test="${bbsList.prev_page_flag}">?page_no=${bbsList.page_block_start-1}&${queryString}</c:when>--%>
+<%--                                                <c:otherwise>#</c:otherwise>--%>
+<%--                                                </c:choose>" aria-label="이전">--%>
+<%--                    <span aria-hidden="true">&langle;</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--            <c:forEach begin="${bbsList.page_block_start}" end="${bbsList.page_block_end}" var="page_num">--%>
+<%--                <li class="page-item ${bbsList.page_no == page_num? "active":""}"><a class="page-link" href="?page_no=${page_num}&${queryString}">${page_num}</a></li>--%>
+<%--            </c:forEach>--%>
+<%--            <li class="page-item">--%>
+<%--                <a class="page-link" href="<c:choose>--%>
+<%--                                               <c:when test="${bbsList.next_page_flag}">?page_no=${bbsList.page_block_end+1}&${queryString}</c:when>--%>
+<%--                                               <c:otherwise>#</c:otherwise>--%>
+<%--                                                </c:choose>" aria-label="다음">--%>
+<%--                    <span aria-hidden="true">&rangle;</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--            <li class="page-item">--%>
+<%--                <a class="page-link" href="<c:choose>--%>
+<%--                        <c:when test="${bbsList.page_no == bbsList.total_page}">#</c:when>--%>
+<%--                        <c:otherwise>?page_no=${bbsList.total_page}&${queryString}</c:otherwise>--%>
+<%--                        </c:choose>" aria-label="마지막 페이지">--%>
+<%--                    <span aria-hidden="true">&rangle;&rangle;</span>--%>
+<%--                </a>--%>
+<%--            </li>--%>
+<%--        </ul>--%>
+<%--    </nav>--%>
+<%--        </div>--%>
 
         <!-- 글 작성 버튼/ 관리자 게시판에서만 활성화 -->
 <%--        <div>--%>

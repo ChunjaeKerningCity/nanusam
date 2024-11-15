@@ -121,7 +121,7 @@
                                 <td>
                                     <a href="/goods/view.do?idx=${list.goodsIdx}" class="aHref"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
                                 </td>
-                            <td><button type="button" name="btnPayment" id="btnPayment" class="button confirmBtn" onclick="javascript:location.href='#'">결제</button>
+                            <td><button type="button" name="btnPayment" id="btnPayment" class="button confirmBtn" onclick="javascript:location.href='/payment/regist.do?goodsIdx=${list.goodsIdx}'">결제</button>
                             <form action="/cart/delete.do" method="get" id="deleteForm_1" style="display:inline;">
                                 <input type="hidden" name="idx" value="${list.idx}"/>
                                 <button type="button" name="btnDelete" id="btnDelete" class="button cancelBtn" onclick="confirmDelete('deleteForm_1')" >삭제</button>

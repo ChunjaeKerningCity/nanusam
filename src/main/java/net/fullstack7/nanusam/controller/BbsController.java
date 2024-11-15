@@ -40,6 +40,7 @@ public class BbsController {
         if (bindingResult.hasErrors()){
             log.info("BbsController >> list ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/bbs/list.do";
         }
 
         PageResponseDTO pageResponseDTO = bbsService.listByPage(pageRequestDTO);
