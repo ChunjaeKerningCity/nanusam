@@ -105,22 +105,13 @@
                 <input style="width: 80%" type="text" class="form-control" name="title" aria-describedby="basic-addon1" required>
             </div>
 
-            <!-- 카테고리 입력 -->
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="bbsCode">Category</span>
-                </div>
-                <input type="text" class="form-control" name="bbsCode" aria-describedby="basic-addon1" value="01" readonly>
-            </div>
-
             <!-- 아이디 입력 -->
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="memberId">아이디</span>
+                    <span class="input-group-text" id="memberId">작성자</span>
                 </div>
-                <input style="width: 80%" type="text" class="form-control" name="memberId" aria-describedby="basic-addon1" required>
+                <input style="width: 80%" type="text" class="form-control" name="memberId" aria-describedby="basic-addon1" value="${memberId}" readonly>
             </div>
-
             <!-- 내용 입력 -->
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
@@ -141,6 +132,7 @@
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
 </footer>
+
 
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 </body>

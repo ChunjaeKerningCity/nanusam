@@ -2,12 +2,9 @@ package net.fullstack7.nanusam.dto;
 
 import lombok.*;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.core.config.plugins.validation.constraints.Required;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 @Log4j2
@@ -25,12 +22,12 @@ public class ReviewDTO {
     @Size(min = 1, max = 20, message = "잘못된판매자정보")
     private String seller;
     @NotBlank(message="내용이없음")
-    @Size(min = 20, max = 200, message="내용이 너무 길거나 짧음")
+    @Size(min = 5, max = 200, message="내용이 너무 길거나 짧음")
     private String content;
-    @Required(message="평점이 입력되지 않음")
+    @NotNull(message="1 이상 5 이하 정수만 입력")
     @Min(value=1, message="1 이상 5 이하 정수만 입력")
     @Max(value=5, message="1 이상 5 이하 정수만 입력")
-    private int score;
+    private Integer score;
     private String status;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;

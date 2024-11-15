@@ -11,5 +11,6 @@ public interface PaymentMapper {
     int deleteByIdx(int idx);
 
     List<PaymentDTO> listWithGoodsByBuyer(PageRequestDTO pageRequestDTO);
+    PaymentDTO viewWithGoods(int idx);
     int total_count(PageRequestDTO pageRequestDTO);
 }
