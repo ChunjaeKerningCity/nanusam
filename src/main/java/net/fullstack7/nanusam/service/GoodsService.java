@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface GoodsService {
     PageResponseDTO<GoodsDTO> listByPage(PageRequestDTO requestDTO);
+    PageResponseDTO<GoodsDTO> listWithPayInfo(PageRequestDTO requestDTO);
     int totalCount();
     String regist(GoodsDTO goodsDTO);
     String fileupload(FileDTO file);

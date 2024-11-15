@@ -74,7 +74,7 @@
             and reservationId = #{reservationId}
         </if>
     </select>
-    <resultMap id="paymentWithGoodsResultMap" type="net.fullstack7.nanusam.dto.PaymentDTO">
+    <resultMap id="GoodsWithPaymentResultMap" type="net.fullstack7.nanusam.dto.PaymentDTO">
         <id property="idx" column="goods_idx"/>
         <result property="name" column="goods_name"/>
         <result property="memberId" column="memberId"/>
@@ -142,8 +142,11 @@
         FROM goods g
         left outer join payment p ON g.idx = p.goodsIdx
         WHERE idx > 0
-        <if test="status != null and status != ''">
-            AND g.status = #{status}
+        <if test="status != null and status.size() > 0">
+            and status in
+            <foreach collection="status" item="statusItem" open="(" separator="," close=")">
+                #{statusItem}
+            </foreach>
         </if>
         <if test='memberId != null and memberId != ""'>
             and g.memberId = #{memberId}
