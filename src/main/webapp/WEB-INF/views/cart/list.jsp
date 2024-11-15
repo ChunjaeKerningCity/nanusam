@@ -122,7 +122,7 @@
                             <td><button type="button" name="btnPayment" id="btnPayment" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
                             <form action="/cart/delete.do" method="get" id="deleteForm_1" style="display:inline;">
                                 <input type="hidden" name="idx" value="${list.idx}"/>
-                                <button type="submit" name="btnDelete" id="btnDelete" class="btn btn-secondary mx-2" >삭제</button>
+                                <button type="button" name="btnDelete" id="btnDelete" class="btn btn-secondary mx-2" onclick="confirmDelete('deleteForm_1')" >삭제</button>
                             </form>
                             </td>
                         </tr>
@@ -188,12 +188,12 @@
 <%--        }--%>
 <%--    });--%>
 <%--</script>--%>
-<%--<script>--%>
-<%--    function btnDelete(idx){--%>
-<%--        if(confirm("삭제하시겠습니까?")===false){return;}--%>
-
-<%--        document.getElementById('deleteForm_'+idx).submit();--%>
-<%--    }--%>
-<%--</script>--%>
+<script type="text/javascript">
+    function confirmDelete(formId){
+        if(confirm("삭제하시겠습니까?")){
+            document.getElementById(formId).submit();
+        }
+    }
+</script>
 </body>
 </html>

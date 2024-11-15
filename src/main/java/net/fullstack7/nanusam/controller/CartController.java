@@ -76,8 +76,14 @@ public class CartController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/cart/add.do";
         }
-        cartService.add(dto);
 
+        if(cartService.existCart(dto)){
+            redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 해당 상품이 존재합니다.");
+            log.info("이미 장바구니에 존재");
+            return "redirect:/goods/list.do";
+        }
+
+        cartService.add(dto);
         log.info("dto: "+dto);
         log.info("===========================");
 
@@ -95,6 +101,7 @@ public class CartController {
         log.info("delete");
         log.info("idx : " + idx);
         log.info("===========================");
+        redirectAttributes.addFlashAttribute("alertMessage", "상품이 삭제되었습니다.");
         return "redirect:/cart/list.do";
     }
 }
