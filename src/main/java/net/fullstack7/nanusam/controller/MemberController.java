@@ -44,7 +44,7 @@ public class MemberController {
             return "redirect:/member/view.do";
         } else {
             model.addAttribute("errors", "비밀번호가 일치하지 않습니다.");
-            return "/pwdCheck";
+            return "redirect:/myPage/pwdCheck";
         }
     }
 
