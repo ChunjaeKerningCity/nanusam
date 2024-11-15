@@ -30,7 +30,7 @@
     <div style="width: 70%; margin: auto; padding: 5rem">
 
 
-    <form action="/goods/regist.do" method="post" name="frmGoodsRegist" id="frmGoodsRegist" enctype="multipart/form-data">
+    <form action="/goods/regist.do" method="post" name="frmGoodsRegist" id="frmGoodsRegist" enctype="multipart/form-data" autocomplete="off">
         <div class="row">
             <div class="col">
                 <label for="category" class="form-label">카테고리</label>
@@ -97,13 +97,13 @@
         <div class="row">
             <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                    <input type="submit" id="btnSubmit" class="btn btn-primary" value="등록" />
+                    <input type="submit" id="btnSubmit" class="button confirmBtn" value="등록" />
                 </div>
                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                    <input type="reset" id="btnReset" class="btn btn-secondary" value="초기화"/>
+                    <input type="reset" id="btnReset" class="button cancelBtn" value="초기화"/>
                 </div>
                 <div class="btn-group" role="group" aria-label="Third group">
-                    <button type="button" class="btn btn-info">상품 목록</button>
+                    <button type="button" class="button confirmBtn" style="background-color: #F0F0F0">상품 목록</button>
                 </div>
             </div>
         </div>

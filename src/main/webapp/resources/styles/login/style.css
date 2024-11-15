@@ -1,7 +1,8 @@
 /* 기본 폼 스타일 */
-
+.pwd-form,
 .login-form,
-.regist-form{
+.regist-form,
+.frm-view{
     width: 300px;
     padding: 30px;
     margin: 0 auto;
@@ -16,7 +17,12 @@
 .regist-form input[type="text"],
 .regist-form input[type="email"],
 .regist-form input[type="date"],
-.regist-form input[type="password"]{
+.regist-form input[type="password"],
+.pwd-form input[type="password"],
+.frm-view input[type="text"],
+.frm-view input[type="email"],
+.frm-view input[type="date"],
+.frm-view input[type="password"]{
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -39,6 +45,7 @@
     box-sizing: border-box;
 }
 .btn-Regist{
+    background-color: #FFF1AA;
     border-radius: 5px;
     height: 41px;
     border: none;
