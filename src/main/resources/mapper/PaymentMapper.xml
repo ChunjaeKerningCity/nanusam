@@ -38,6 +38,7 @@
         <result property="readCnt" column="readCnt"/>
         <result property="category" column="category"/>
         <result property="reservationId" column="reservationId"/>
+        <result property="mainImageName" column="mainImageName"/>
     </resultMap>
 
     <select id="listWithGoodsByBuyer" resultMap="paymentWithGoodsResultMap">
@@ -70,7 +71,8 @@
             g.modifyDate,
             g.readCnt,
             g.category,
-            g.reservationId
+            g.reservationId,
+            g.mainImageName
         FROM tbl_payment p
         inner join tbl_goods g ON p.goodsIdx = g.idx
         WHERE p.idx > 0
@@ -134,7 +136,8 @@
             g.modifyDate,
             g.readCnt,
             g.category,
-            g.reservationId
+            g.reservationId,
+            g.mainImageName
         FROM tbl_payment p
         left outer join tbl_goods g ON p.goodsIdx = g.idx
         WHERE p.idx = #{idx}

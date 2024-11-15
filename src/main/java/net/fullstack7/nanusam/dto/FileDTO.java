@@ -14,4 +14,5 @@ public class FileDTO {
     private int refIdx;
     private String fileContentType;
     private String orgFileName;
+    private byte[] fileData;
 }

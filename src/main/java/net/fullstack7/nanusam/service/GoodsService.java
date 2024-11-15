@@ -17,4 +17,7 @@ public interface GoodsService {
     String deleteFileByName(String name);
     String modifyGoodsInfo(GoodsDTO goodsDTO);
     int modifyStatus(GoodsDTO goodsDTO);
+    String deleteGoods(GoodsDTO goodsDTO);
+    String direct(GoodsDTO goodsDTO);
+    String cancelReservation(GoodsDTO goodsDTO);
 }

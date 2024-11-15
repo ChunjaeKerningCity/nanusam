@@ -33,6 +33,7 @@ public class GoodsDTO {
     private String readCnt;
     private String category;
     private String reservationId;
+    private String mainImageName;
 
     private List<FileDTO> images;
     private PaymentDTO payInfo;

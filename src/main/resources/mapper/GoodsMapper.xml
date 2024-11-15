@@ -4,7 +4,7 @@
 <mapper namespace="net.fullstack7.nanusam.mapper.GoodsMapper">
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.GoodsVO">
         select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category, content,
-        reservationId
+        reservationId, mainImageName
         from tbl_goods
         where idx > 0
         <if test="status != null and status.size() > 0">
@@ -47,7 +47,9 @@
                modifyDate,
                readCnt,
                category,
-               content
+               content,
+               reservationId,
+               mainImageName
         from tbl_goods
         where idx = #{idx}
     </select>
@@ -87,6 +89,7 @@
         <result property="readCnt" column="readCnt"/>
         <result property="category" column="category"/>
         <result property="reservationId" column="reservationId"/>
+        <result property="mainImageName" column="mainImageName"/>
         <!-- payment (조인된 데이터) -->
         <association property="payInfo" column="goods_idx"
                      javaType="net.fullstack7.nanusam.dto.PaymentDTO" resultMap="paymentResultMap"/>
@@ -124,6 +127,7 @@
         g.readCnt,
         g.category,
         g.reservationId,
+        g.mainImageName,
         p.idx AS payment_idx,
         p.seller,
         p.buyer,
@@ -177,6 +181,13 @@
         values (#{name}, #{memberId}, #{price}, #{quality}, #{status}, #{category}, #{content})
     </insert>
 
+    <update id="modifyMainImage">
+        update tbl_goods
+        set mainImageName=#{mainImageName},
+            modifyDate=now()
+        where idx = #{idx}
+    </update>
+
     <update id="modifyGoodsInfo">
         update tbl_goods
         set price=#{price},
@@ -184,6 +195,7 @@
             category=#{category},
             content=#{content},
             name=#{name},
+            mainImageName=#{mainImageName},
             modifyDate=now()
         where idx = #{idx}
           and memberId = #{memberId}

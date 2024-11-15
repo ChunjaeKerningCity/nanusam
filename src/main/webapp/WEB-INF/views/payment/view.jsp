@@ -10,12 +10,17 @@
 <html>
 <head>
     <title>payment-view</title>
+    <style>
+        img {
+            height: 200px;
+        }
+    </style>
 </head>
 <%--상품정보--%>
 <h3>상품정보</h3>
 <table>
     <tr>
-        <td rowspan="4"><img src="/resources/image/goods_${item.goodsInfo.idx}_0.png"></td>
+        <td rowspan="4"><img src="/resources/image/${item.goodsInfo.mainImageName}"></td>
         <th>판매자</th>
         <td>${item.seller}</td>
     </tr>

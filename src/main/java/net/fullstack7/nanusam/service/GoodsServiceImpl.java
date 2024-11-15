@@ -68,6 +68,9 @@ public class GoodsServiceImpl implements GoodsService {
         if(result < 1) {
             return "다시 시도해주세요.";
         }
+
+        if(fileDTO.getFileName().replace("goods_"+fileDTO.getRefIdx()+"_","").startsWith("0"))
+            goodsMapper.modifyMainImage(fileDTO.getFileName(), fileDTO.getRefIdx());
         return null;
     }
 
@@ -110,5 +113,99 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public int modifyStatus(GoodsDTO goodsDTO) {
         return goodsMapper.modifyStatus(modelMapper.map(goodsDTO, GoodsVO.class));
+    }
+
+    @Override
+    public String deleteGoods(GoodsDTO goodsDTO) {
+        GoodsVO view = goodsMapper.view(goodsDTO.getIdx());
+
+        if(view == null) {
+            return "존재하지 않는 상품입니다.";
+        }
+
+        if(!view.getMemberId().equals(goodsDTO.getMemberId())) {
+            return "삭제 권한이 없습니다.";
+        }
+
+        if(!view.getStatus().equals("Y")) {
+            return "삭제 불가한 상품입니다.(예약 또는 결제완료 상품)";
+        }
+
+        goodsDTO.setStatus("D");
+        int result = goodsMapper.modifyStatus(modelMapper.map(goodsDTO, GoodsVO.class));
+
+        if(result < 1) {
+            return "다시 시도해주세요.";
+        }
+
+        return "삭제되었습니다.";
+    }
+
+    @Override
+    public String direct(GoodsDTO goodsDTO) {
+        GoodsVO view = goodsMapper.view(goodsDTO.getIdx());
+
+        if(view == null) {
+            return "존재하지 않는 상품입니다.";
+        }
+
+        if(!view.getMemberId().equals(goodsDTO.getMemberId())) {
+            return "판매 권한이 없습니다.";
+        }
+
+        if(view.getStatus().equals("Y")) {
+            return "예약 상품만 직거래 가능합니다.";
+        }
+
+        if(view.getStatus().equals("N")) {
+            return "이미 결제된 상품입니다.";
+        }
+
+        if(view.getStatus().equals("D")) {
+            return "판매할 수 없는 상품입니다.";
+        }
+
+        goodsDTO.setReservationId(view.getReservationId());
+        goodsDTO.setStatus("N");
+
+        int result = goodsMapper.modifyStatus(modelMapper.map(goodsDTO, GoodsVO.class));
+
+        if(result < 1) {
+            return "다시 시도해주세요.";
+        }
+
+        return "직거래 완료";
+    }
+
+    @Override
+    public String cancelReservation(GoodsDTO goodsDTO) {
+        GoodsVO view = goodsMapper.view(goodsDTO.getIdx());
+
+        if(view == null) {
+            return "존재하지 않는 상품입니다.";
+        }
+
+        if(!view.getMemberId().equals(goodsDTO.getMemberId())) {
+            return "판매 권한이 없습니다.";
+        }
+
+        if(view.getStatus().equals("N")) {
+            return "이미 결제된 상품입니다.";
+        }
+
+        if(view.getStatus().equals("D")) {
+            return "판매할 수 없는 상품입니다.";
+        }
+
+        goodsDTO.setReservationId(null);
+        goodsDTO.setStatus("Y");
+
+        int result = goodsMapper.modifyStatus(modelMapper.map(goodsDTO, GoodsVO.class));
+
+        if(result < 1) {
+            return "다시 시도해주세요.";
+        }
+
+        return "예약이 취소되었습니다.";
     }
 }

@@ -11,6 +11,11 @@
 <head>
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        img {
+            height: 200px;
+        }
+    </style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
@@ -31,7 +36,7 @@
     <c:forEach items="${pageinfo.dtoList}" var="item">
         <tr>
             <td><a href="/payment/view.do?idx=${item.idx}">${item.payDateStr}</a></td>
-            <td><img src="/resources/image/goods_${item.goodsInfo.idx}_0.png" alt="/resources/image/goods_${item.goodsInfo.name}_0.jpg"></td>
+            <td><img src="/resources/image/${item.goodsInfo.mainImageName}" alt="상품이미지"></td>
             <td>${item.seller}</td>
             <td>${item.buyer}</td>
             <td>${item.goodsInfo.name}</td>
