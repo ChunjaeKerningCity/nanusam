@@ -196,7 +196,7 @@ public class GoodsServiceImpl implements GoodsService {
         if(view.getStatus().equals("D")) {
             return "판매할 수 없는 상품입니다.";
         }
-
+        String buyer = goodsDTO.getReservationId();
         goodsDTO.setReservationId(null);
         goodsDTO.setStatus("Y");
 
@@ -206,6 +206,6 @@ public class GoodsServiceImpl implements GoodsService {
             return "다시 시도해주세요.";
         }
 
-        return "예약이 취소되었습니다.";
+        return "예약이 취소되었습니다.::"+buyer+"::"+goodsDTO.getName();
     }
 }

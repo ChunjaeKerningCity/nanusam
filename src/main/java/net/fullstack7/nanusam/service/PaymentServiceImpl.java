@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.domain.PaymentVO;
+import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.dto.PaymentDTO;
@@ -33,6 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         dto.setSeller(item.getMemberId());
+
         PaymentVO paymentVO = modelMapper.map(dto, PaymentVO.class);
         paymentMapper.regist(paymentVO);
 
@@ -46,6 +48,8 @@ public class PaymentServiceImpl implements PaymentService {
             paymentMapper.deleteByIdx(paymentVO.getIdx());
             return "결제 실패";
         }
+
+        dto.setGoodsInfo(modelMapper.map(item, GoodsDTO.class));
 
         return null;
     }
@@ -88,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).seller(seller).deliveryStatus("1").build());
 
-        return "배송 시작";
+        return "배송 시작::"+dto.getBuyer()+"::"+dto.getName();
     }
 
     @Override
@@ -112,7 +116,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).buyer(buyer).deliveryStatus("2").build());
 
-        return "배송 완료";
+        return "배송 완료::"+dto.getBuyer()+"::"+dto.getName();
     }
 
 }

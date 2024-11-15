@@ -26,7 +26,7 @@
     <select id="unreadCount" resultType="Integer">
         SELECT COUNT(*)
         FROM tbl_alert
-        WHERE memberId=#{memberId} AND (readChk &lt; 2)
+        WHERE memberId=#{memberId} AND (readChk &lt; 1)
     </select>
     <update id="modifyStatus">
         UPDATE tbl_alert
