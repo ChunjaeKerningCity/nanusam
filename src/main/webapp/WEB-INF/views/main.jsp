@@ -124,7 +124,6 @@
                     </a>
                 </c:forEach>
             </div>
-            <div class="line" style="margin: 20px 0 10px 0"></div>
         </div>
     </div>
 </main>

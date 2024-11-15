@@ -51,4 +51,20 @@ public class MainController {
     public String cpInfo(){
         return "navigation/cpInfo";
     }
+
+
+    @GetMapping("/main/commonArea.do")
+    public String commonArea(){
+        return "commonArea";
+    }
+
+    @GetMapping("/main/commonArea2.do")
+    public String commonArea2(){
+        return "commonArea2";
+    }
+
+    @GetMapping("/main/commonClass.do")
+    public String commonClass(){
+        return "commonClass";
+    }
 }
