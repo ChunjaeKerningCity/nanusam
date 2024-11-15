@@ -25,7 +25,7 @@
       <form class="login-form" action="/login/login.do" method="post" autocomplete="off">
         <h1>로그인</h1>
         <input type="text" id="memberId" name="memberId" required placeholder="아이디" ><br><br>
-        <input type="password" id="pwd" name="pwd" required   placeholder="비밀번호" ><br><br>
+        <input type="password" id="pwd" name="pwd" required placeholder="비밀번호" ><br><br>
         <c:if test="${not empty errors}">
           <p style="color:red;">${errors}</p>
         </c:if>

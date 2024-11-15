@@ -78,10 +78,10 @@ public class LoginController {
         return "redirect:/";
     }
 
-    @GetMapping("/list.do")
-    public String list() {
-        return "member/list";
-    }
+//    @GetMapping("/list.do")
+//    public String list() {
+//        return "member/list";
+//    }
     // 가입전 약관동의
     @GetMapping("/registCheck.do")
     public String registCheck(
@@ -110,7 +110,7 @@ public class LoginController {
     public String registCheck(@RequestParam(value = "termsAgreement", defaultValue = "false") boolean termsAgreement, HttpSession session, Model model) {
         if (termsAgreement) {
             session.setAttribute("termsAgree", true);
-            return "login/regist";
+            return "redirect:/login/regist.do";
         } else {
             model.addAttribute("errors", "약관동의 후 회원가입이 가능합니다");
             return "login/registCheck";

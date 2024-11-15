@@ -25,12 +25,12 @@
         <div class="cardContainerTop">
             <form id="registerForm" class="regist-form" method="post" action="/login/regist.do" autocomplete="off">
                 <h2>회원가입</h2>
-                <div class="form-row">
+<%--                <div class="form-row">--%>
                     <input type="text" id="memberId" name="memberId" maxlength="15" minlength="5" value="${memberDTO.memberId}" placeholder="아이디" required>
                     <span class="message"></span>
                     <span class="error-memberId"></span>
-                    <button type="button"  onclick="checkId()" disabled class="btn-Regist"> 중복 확인 </button>
-                </div>
+                    <button type="button"  onclick="checkId()" disabled class="button confirmBtn"> 중복 확인 </button>
+<%--                </div>--%>
                 <span id="idCheckResult"></span>
                 <div id="div_err_memberId" style="display: none;"></div>
                 <input type="password" id="pwd" name="pwd" maxlength="20" minlength="8" value="${memberDTO.pwd}" placeholder="비밀번호" required>
@@ -43,11 +43,12 @@
                 <span class="error-name"></span>
                 <div id="div_err_name" style="display: none;"></div>
                 <br>
-                <div class="form-row">
+<%--                <div class="form-row">--%>
                     <input type="text" id="zipCode" name="zipCode" value="${memberDTO.zipCode}" readonly placeholder="우편번호" required>
+                     <span class="message"></span>
                     <div id="div_err_zipCode" style="display: none;"></div>
-                    <input class="btn-Regist" type="button" onclick="goZip()" value="우편번호 찾기" />
-                </div>
+                    <input class="button confirmBtn" type="button" onclick="goZip()" value="우편번호 찾기" />
+<%--                </div>--%>
                 <input type="text" id="addr1" name="addr1" value="${memberDTO.addr1}" readonly placeholder="주소" required>
                 <div id="div_err_addr1" style="display: none;"></div>
                 <br>

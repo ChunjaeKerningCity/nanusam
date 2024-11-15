@@ -1,23 +1,42 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: full5-9
-  Date: 2024-11-13
-  Time: 오후 8:11
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NanuSam</title>
+
+    <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
+    <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
 </head>
 <body>
-<form action="/member/pwdCheck.do" method="post" autocomplete="off">
-    <label for="pwd">비밀번호: </label>
-    <input type="password" id="pwd" name="pwd" required><br><br>
-    <button type="submit">비밀번호확인</button>
-</form>
-<c:if test="${not empty errors}">
-    <p style="color:red;">${errors}</p>
-</c:if>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
+<header class="center">
+    <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
+    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
+    <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
+</header>
+
+<link rel="stylesheet" href="/resources/styles/login/style.css" />
+<main class="center">
+    <div class="mainContent">
+            <form class="pwd-form" action="/member/pwdCheck.do" method="post" autocomplete="off">
+                <h3>비밀번호 확인</h3>
+                <input type="password" id="pwd" name="pwd" required placeholder="비밀번호"><br><br>
+                <button class="button confirmBtn" type="submit">비밀번호확인</button>
+            </form>
+            <c:if test="${not empty errors}">
+                <p style="color:red;">${errors}</p>
+            </c:if>
+        </div>
+</main>
+
+<footer class="footerContainer">
+    <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
+</footer>
+
+<c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 </body>
 </html>

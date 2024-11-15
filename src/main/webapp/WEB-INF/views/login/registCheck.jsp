@@ -75,9 +75,6 @@
 
 </style>
 <main class="center">
-
-
-    
     <div class="mainContent">
         <div class="center">
             <form class="frm">
