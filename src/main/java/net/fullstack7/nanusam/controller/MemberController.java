@@ -44,7 +44,7 @@ public class MemberController {
             return "redirect:/member/view.do";
         } else {
             model.addAttribute("errors", "비밀번호가 일치하지 않습니다.");
-            return "redirect:/myPage/pwdCheck";
+            return "redirect:/myPage/pwdCheck.do";
         }
     }
 
@@ -55,6 +55,7 @@ public class MemberController {
             model.addAttribute("errors", "비밀번호 확인이 필요합니다.");
             return "myPage/pwdCheck";
         }
+//        session.removeAttribute("isPwdChecked");
         String memberId = (String) session.getAttribute("memberId");
         MemberDTO memberDTO = memberService.viewMember(memberId);
 //        log.info("회원정보확인"+ memberDTO);
@@ -66,10 +67,7 @@ public class MemberController {
         }
         return "myPage/view";
     }
-    //    @GetMapping("/modify.do")
-//    public String modifyGet(){
-//        return "member/modify";
-//    }
+
     @PostMapping("/modify.do")
     public String modifyPost(@Valid MemberModifyDTO memberModifyDTO
             , BindingResult bindingResult

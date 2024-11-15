@@ -26,26 +26,18 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/login.do")
-    public String login(HttpSession session, HttpServletResponse res) throws IOException {
+    public String login(HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
         if(session.getAttribute("memberId") != null){
-            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
-            String redirectUrl = "/";
-            res.setCharacterEncoding("UTF-8");
-            res.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('" + alertMessage + "');");
-            out.println("window.location.href = '" + redirectUrl + "';");
-            out.println("</script>");
-            out.flush();
-            return null;
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
+            return "redirect:/";
         }
         return "login/login";
     }
+
     @PostMapping("/login.do")
     public String login(@RequestParam("memberId") String memberId,
                         @RequestParam("pwd") String pwd,
-                        HttpSession session, Model model,RedirectAttributes redirectAttributes) {
+                        HttpSession session, Model model) {
         MemberDTO memberDTO = memberService.login(memberId, pwd);
 
         if (memberDTO != null) {
@@ -86,20 +78,11 @@ public class LoginController {
     @GetMapping("/registCheck.do")
     public String registCheck(
             HttpServletResponse res,
-            HttpSession session) throws IOException {
+            HttpSession session, RedirectAttributes redirectAttributes) {
         String loginCheck = (String) session.getAttribute("memberId");
         if (loginCheck != null) {
-            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
-            String redirectUrl = "/";
-            res.setCharacterEncoding("UTF-8");
-            res.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('" + alertMessage + "');");
-            out.println("window.location.href = '" + redirectUrl + "';");
-            out.println("</script>");
-            out.flush();
-            return null;
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
+            return "redirect:/";
         }
         session.removeAttribute("termsAgree");
 
@@ -120,26 +103,18 @@ public class LoginController {
     @GetMapping("/regist.do")
     public String registGet(HttpSession session,
                             HttpServletResponse res,
-                            Model model) throws IOException {
+                            Model model,RedirectAttributes redirectAttributes) throws IOException {
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
         String loginCheck = (String) session.getAttribute("memberId");
         if(loginCheck != null){
-            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
-            String redirectUrl = "/";
-            res.setCharacterEncoding("UTF-8");
-            res.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('" + alertMessage + "');");
-            out.println("window.location.href = '" + redirectUrl + "';");
-            out.println("</script>");
-            out.flush();
-            return null;
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
+            return "redirect:/";
         }
         if (termsAgree == null || !termsAgree) {
             model.addAttribute("errors", "약관에 동의한 후 회원가입이 가능합니다.");
             return "forward:/login/registCheck.do";
         }
+        session.removeAttribute("termsAgree");
         return "login/regist";
     }
 
@@ -166,6 +141,7 @@ public class LoginController {
         }
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
+            redirectAttributes.addFlashAttribute("errors","회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
             return "redirect:/login/login.do";
         } else {
             model.addAttribute("errors", "회원가입에 실패했습니다.");

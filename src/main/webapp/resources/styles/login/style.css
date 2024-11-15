@@ -1,9 +1,10 @@
+/*로그인, 회원가입, 정보확인,비밀번호확인*/
 /* 기본 폼 스타일 */
 .pwd-form,
 .login-form,
 .regist-form,
 .frm-view{
-    width: 310px;
+    width: 320px;
     padding: 30px;
     margin: 0 auto;
     border-radius: 10px;
@@ -37,12 +38,11 @@
 .button2
 {
     width: 100%;
-    padding: 12px;
-    margin-top: 8px;
+    padding: 10px 20px;
+    margin: 10px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    box-sizing: border-box;
+    font-size: 16px;
 }
 .btn-Regist{
     background-color: #FFF1AA;
@@ -85,4 +85,59 @@
 .message{
     font-size: 13px;
     text-align: left;
+}
+
+/*약관동의부분*/
+.checkbox-container {
+    margin-left: 75%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    display: inline-block;
+    position: relative;
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0px;
+    width: 6px;
+    height: 12px;
+    border: solid #555;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.checkbox-container input:checked + .checkmark::after {
+    display: block;
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.terms-content {
+    display: inline-block;
+    width: 800px;
+    height: 500px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
 }

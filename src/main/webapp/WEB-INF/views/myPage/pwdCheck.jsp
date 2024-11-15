@@ -27,9 +27,6 @@
                 <input type="password" id="pwd" name="pwd" required placeholder="비밀번호"><br><br>
                 <button class="button confirmBtn" type="submit">비밀번호확인</button>
             </form>
-            <c:if test="${not empty errors}">
-                <p style="color:red;">${errors}</p>
-            </c:if>
         </div>
 </main>
 
