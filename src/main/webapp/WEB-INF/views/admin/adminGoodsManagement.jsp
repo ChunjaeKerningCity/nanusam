@@ -407,10 +407,16 @@
 
   function confirmModify() {
     if (confirm('상품 정보를 변경하시겠습니까?')) {
-      let newStatus = prompt('변경할 새로운 상태 값을 입력하세요:');
+      let newStatus = prompt('변경할 새로운 상태 값을 입력하세요\n(Y:판매중,R:예약, N:거래완료, D:거래불가):');
       if (newStatus !== null && newStatus.trim() !== '') {
-        document.querySelector('input[name="status"]').value = newStatus;
-        return true;
+        newStatus = newStatus.trim().toUpperCase();
+        if (['Y', 'R', 'N', 'D'].includes(newStatus) && newStatus.length === 1) {
+          document.querySelector('input[name="status"]').value = newStatus;
+          return true;
+        } else {
+          alert('잘못된 입력입니다. Y, R, N, D 중 하나의 한 글자만 입력 가능합니다.');
+          return false;
+        }
       } else {
         alert('변경 값이 입력되지 않았거나 잘못되었습니다.');
         return false;
@@ -420,6 +426,7 @@
       return false;
     }
   }
+
 </script>
 
 </body>

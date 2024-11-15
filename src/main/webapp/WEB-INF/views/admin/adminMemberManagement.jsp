@@ -309,7 +309,7 @@
                     <td>
                       <c:choose>
                         <c:when test="${member.status == 'Y'}">
-                          <span class="badge badge-complete">생존</span>
+                          <span class="badge badge-complete">활성화</span>
                           <form action="/admin/updateMemberStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="memberId" value="${member.memberId}" />
                             <input type="hidden" name="status" value="N" />
@@ -317,7 +317,7 @@
                           </form>
                         </c:when>
                         <c:otherwise>
-                          <span class="badge badge-danger">탈퇴</span>
+                          <span class="badge badge-danger">비활성화</span>
                           <form action="/admin/updateMemberStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="memberId" value="${member.memberId}" />
                             <input type="hidden" name="status" value="Y" />
