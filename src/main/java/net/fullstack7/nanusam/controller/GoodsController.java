@@ -217,7 +217,7 @@ public class GoodsController {
         status.add("N");
         pageRequestDTO.setStatus(status);
 
-        model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
+        model.addAttribute("pageinfo", goodsService.listWithPayInfo(pageRequestDTO));
         model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/mygoods";
     }
