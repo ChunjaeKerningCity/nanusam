@@ -18,9 +18,10 @@
             <th>날짜</th>
         </tr>
         <c:forEach items="${pageDTO.dtoList}" var="alert" varStatus="loop">
-            <tr class="${alert.readChk ne 'Y'? 'newAlert' : ''}">
+            <tr class="${alert.readChk lt 2 ? 'newAlert' : ''}">
                 <td>${alert.content}</td>
                 <td>${alert.regDateStr}</td>
+                    ${alert.readChk lt 2 ? 'newAlert' : ''}
             </tr>
         </c:forEach>
     </table>

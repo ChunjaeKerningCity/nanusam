@@ -48,4 +48,9 @@ public class AlertServiceImpl implements AlertService {
     public Integer unreadCount(String memberId) {
         return alertMapper.unreadCount(memberId)==null?0:alertMapper.unreadCount(memberId);
     }
+
+    @Override
+    public int modifyStatus(String memberId) {
+        return alertMapper.modifyStatus(memberId);
+    }
 }

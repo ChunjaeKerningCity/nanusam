@@ -34,13 +34,19 @@ public class AlertController {
     }
     @GetMapping("/list.do")
     public String list(@RequestParam(required = false, defaultValue = "1") int pageNo, HttpSession session, HttpServletResponse res, Model model) {
+        log.info("list");
         String memberId = (String)session.getAttribute("memberId");
+        int readResult = alertService.modifyStatus(memberId);
+        if(readResult <= 0) {
+            log.info("읽기처리실패");
+        }
         int offset = (pageNo-1)*10;
         PageResponseDTO<AlertDTO> pageResponseDTO = alertService.listWithPage(memberId, PageRequestDTO.builder()
                 .page_no(pageNo)
                         .page_size(10)
                         .page_block_size(5)
                 .build());
+        log.info("list size : " + pageResponseDTO.getDtoList().size());
         model.addAttribute("pageDTO", pageResponseDTO);
         return "alert/list";
     }
