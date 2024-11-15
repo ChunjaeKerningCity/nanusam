@@ -116,14 +116,6 @@
             <ul class="pagination">
                 <li class="page-item">
                     <a class="page-link" href="<c:choose>
-                        <c:when test="${pageDTO.page_no == 1}">#</c:when>
-                        <c:otherwise>?page_no=1&${queryString}</c:otherwise>
-                        </c:choose>" aria-label="첫페이지">
-                        <span aria-hidden="true">&langle;&langle;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="<c:choose>
                                                 <c:when test="${pageDTO.prev_page_flag}">?page_no=${pageDTO.page_block_start-1}&${queryString}</c:when>
                                                 <c:otherwise>#</c:otherwise>
                                                 </c:choose>" aria-label="이전">
@@ -139,14 +131,6 @@
                                                <c:otherwise>#</c:otherwise>
                                                 </c:choose>" aria-label="다음">
                         <span aria-hidden="true">&rangle;</span>
-                    </a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="<c:choose>
-                        <c:when test="${pageDTO.page_no == pageDTO.total_page}">#</c:when>
-                        <c:otherwise>?page_no=${pageDTO.total_page}&${queryString}</c:otherwise>
-                        </c:choose>" aria-label="마지막 페이지">
-                        <span aria-hidden="true">&rangle;&rangle;</span>
                     </a>
                 </li>
             </ul>

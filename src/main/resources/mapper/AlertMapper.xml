@@ -11,7 +11,7 @@
         FROM tbl_alert
         WHERE memberId=#{memberId}
         ORDER BY regDate DESC
-        LIMIT #{offset}, #{pageSize}
+        LIMIT #{dto.page_skip_count}, #{dto.page_size}
     </select>
     <select id="totalCount">
         SELECT COUNT(*)
@@ -28,4 +28,9 @@
         FROM tbl_alert
         WHERE memberId=#{memberId} AND readChk='N'
     </select>
+    <update>
+        UPDATE tbl_alert
+        SET readChk='O'
+        WHERE memberId=#{memberId} AND readChk='N'
+    </update>
 </mapper>

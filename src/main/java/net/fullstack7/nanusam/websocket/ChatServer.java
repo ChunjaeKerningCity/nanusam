@@ -207,6 +207,7 @@ public class ChatServer {
                         .senderId("system")
                         .content(content)
                         .build());
+                
                 ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
                 if(messageDTO==null){
                     log.info("시스템메시지 등록 실패");

@@ -11,8 +11,9 @@ import java.util.List;
 @Mapper
 public interface AlertMapper {
     public int regist(AlertVO vo);
-    public List<AlertVO> listWithPage(@Param("memberId")String memberId, int offset, int pageSize);
+    public List<AlertVO> listWithPage(@Param("memberId")String memberId, @Param("dto")PageRequestDTO dto);
     int totalCount(@Param("memberId")String memberId);
     public int modify(AlertVO vo);
     public Integer unreadCount(@Param("memberId")String memberId);
+    public int modifyStatus(@Param("memberId")String memberId);
 }
