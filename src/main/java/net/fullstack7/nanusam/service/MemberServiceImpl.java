@@ -6,9 +6,11 @@ import net.fullstack7.nanusam.domain.MemberVO;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.dto.MemberModifyDTO;
 import net.fullstack7.nanusam.dto.SecessionMemberDTO;
+import net.fullstack7.nanusam.mapper.GoodsMapper;
 import net.fullstack7.nanusam.mapper.MemberMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 
@@ -54,7 +56,7 @@ public class MemberServiceImpl implements MemberService{
     public int registMember(MemberDTO memberDTO) {
 //        log.info("regist member");
         MemberVO memberVO = modelmapper.map(memberDTO, MemberVO.class);
-       //log.info("memberDTO: {}", memberDTO);
+        //log.info("memberDTO: {}", memberDTO);
         return memberXmlmapper.registMember(memberVO);
     }
 
@@ -73,43 +75,34 @@ public class MemberServiceImpl implements MemberService{
         return memberXmlmapper.modifyMember(memberVO);
     }
 
-
+    // 탈퇴 불가 사유 확인 ( 예약중 상품, 배송중상품)
     @Override
-    public boolean checkGoodsStatus(String memberId, String status) {
-        String result = memberXmlmapper.goodsStatusCheck(memberId, status);
-        return result != null && Integer.parseInt(result) < 0;
+    public boolean dontDelete(String memberId) {
+        int goodsCount = memberXmlmapper.goodsStatusCheck(memberId, "R");
+        int deliveryCount = memberXmlmapper.deliveryStatusCheck(memberId, "1");
+//        log.info("goodsCount: " + goodsCount);
+//        log.info("deliveryCount: " + deliveryCount);
+        return goodsCount > 0 || deliveryCount > 0;
     }
 
+    // 판매중인 상품확인
     @Override
-    public boolean checkDeliveryStatus(String memberId, String deliveryStatus) {
-        String result = memberXmlmapper.deliveryStatusCheck(memberId, deliveryStatus);
-        return result != null && Integer.parseInt(result) < 0;
+    public boolean goodsStatusY(String memberId){
+        int goodsYCount = memberXmlmapper.goodsStatusY(memberId, "Y");
+//        log.info("goodsYCount"+ goodsYCount);
+        return goodsYCount == 0;
     }
 
+    //탈퇴
     @Override
-    public boolean updateGoodsStatus(String memberId, String status) {
-        int result = memberXmlmapper.goodsStatusUpdate(memberId, status);
-        return result > 0;
+    @Transactional
+    public void goDelete(String memberId) {
+        memberXmlmapper.goodsStatusUpdate(memberId, "D");
+
+        memberXmlmapper.memberStatusUpdate(memberId);
+        memberXmlmapper.insertSecessionMember(memberId);
+
+        memberXmlmapper.deleteMember(memberId);
     }
 
-    @Override
-    public boolean updateMemberStatus(String memberId) {
-        int result = memberXmlmapper.memberStatusUpdate(memberId);
-        return result > 0;
-    }
-
-    @Override
-    public boolean moveToSecessionMember(
-            SecessionMemberDTO secessionMemberDTO) {
-        int result = memberXmlmapper.insertSecessionMember(secessionMemberDTO.getMemberId());
-        return result > 0;
-    }
-
-    @Override
-    public boolean deleteMemberInfo(String memberId) {
-        int result = memberXmlmapper.deleteMember(memberId);
-        return result > 0;
-    }
-
-        
 }
