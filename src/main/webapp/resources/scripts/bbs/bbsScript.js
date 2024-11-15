@@ -1,11 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const currentPageNo = parseInt(new URLSearchParams(window.location.search).get('page_no'), 10);
-  const pageLinks = document.querySelectorAll(".pageItem .page-link");
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentPage = urlParams.get('page_no');
 
-  pageLinks.forEach(link => {
-    const pageNo = parseInt(link.getAttribute('href').match(/page_no=(\d+)/)[1], 10);
-    if (pageNo === currentPageNo) {
-      link.classList.add('currentPage');
+  document.querySelectorAll('.pagination2 .page-link').forEach(link => {
+    if (link.textContent.replace(/[\[\]]/g, '') === currentPage) {
+      link.style.backgroundColor = '#fff1aa';
+      link.style.color = 'black';
+      link.style.borderColor = '#333';
     }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('#regDate').forEach(td => {
+    td.textContent = td.textContent.substring(0, 10);
   });
 });
