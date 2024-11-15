@@ -74,7 +74,7 @@
             and reservationId = #{reservationId}
         </if>
     </select>
-    <resultMap id="GoodsWithPaymentResultMap" type="net.fullstack7.nanusam.dto.PaymentDTO">
+    <resultMap id="GoodsWithPaymentResultMap" type="net.fullstack7.nanusam.dto.GoodsDTO">
         <id property="idx" column="goods_idx"/>
         <result property="name" column="goods_name"/>
         <result property="memberId" column="memberId"/>
@@ -88,7 +88,7 @@
         <result property="category" column="category"/>
         <result property="reservationId" column="reservationId"/>
         <!-- payment (조인된 데이터) -->
-        <association property="goodsInfo" column="goods_idx"
+        <association property="payInfo" column="goods_idx"
                      javaType="net.fullstack7.nanusam.dto.PaymentDTO" resultMap="paymentResultMap"/>
     </resultMap>
 
@@ -123,7 +123,7 @@
         g.modifyDate,
         g.readCnt,
         g.category,
-        g.reservationId
+        g.reservationId,
         p.idx AS payment_idx,
         p.seller,
         p.buyer,
@@ -138,15 +138,22 @@
         p.method,
         p.paymentCompany,
         p.paymentNo,
-        p.deliveryStatus,
-        FROM goods g
-        left outer join payment p ON g.idx = p.goodsIdx
-        WHERE idx > 0
+        p.deliveryStatus
+        FROM tbl_goods g
+        left outer join tbl_payment p ON g.idx = p.goodsIdx
+        WHERE g.idx > 0
         <if test="status != null and status.size() > 0">
-            and status in
+            and g.status in
             <foreach collection="status" item="statusItem" open="(" separator="," close=")">
                 #{statusItem}
             </foreach>
+        </if>
+
+        <if test='searchKeyword != null and searchKeyword != ""'>
+            and g.name like concat('%', #{searchKeyword}, '%')
+        </if>
+        <if test='searchCategory != null and searchCategory != ""'>
+            and g.category = #{searchCategory}
         </if>
         <if test='memberId != null and memberId != ""'>
             and g.memberId = #{memberId}
@@ -154,6 +161,15 @@
         <if test='reservationId != null and reservationId != ""'>
             and g.reservationId = #{reservationId}
         </if>
+        <choose>
+            <when test='orderBy != null and orderBy != ""'>
+                order by ${orderBy} ${orderByDir}
+            </when>
+            <otherwise>
+                order by g.regDate desc
+            </otherwise>
+        </choose>
+        limit #{page_skip_count}, #{page_size}
     </select>
 
     <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
