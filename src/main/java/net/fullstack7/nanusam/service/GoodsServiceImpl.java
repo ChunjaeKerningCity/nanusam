@@ -107,4 +107,8 @@ public class GoodsServiceImpl implements GoodsService {
 
         return null;
     }
+    @Override
+    public int modifyStatus(GoodsDTO goodsDTO) {
+        return goodsMapper.modifyStatus(modelMapper.map(goodsDTO, GoodsVO.class));
+    }
 }

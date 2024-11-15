@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.service;
 
+import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.dto.*;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface GoodsService {
     List<FileDTO> fileListByBbsCodeAndRefIdx(String bbsCode, int refIdx);
     String deleteFileByName(String name);
     String modifyGoodsInfo(GoodsDTO goodsDTO);
+    int modifyStatus(GoodsDTO goodsDTO);
 }
