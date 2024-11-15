@@ -21,13 +21,38 @@
 <%--    상품 목록--%>
 
         <c:forEach items="${pageinfo.dtoList}" var="item">
+            <table>
+                <tr>
+                    <td>
+                        <img src="/resources/image/goods_${item.idx}_0.png" class="card-img-top"
+                             alt="/resources/image/goods_${item.idx}_0.jpg">
+                    </td>
+                    <td>
+                            ${item.name} - ${item.price}
+                    </td>
+                    <td>
+                        <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a>
+                    </td>
+                    <td>
+                        <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
+                            <button onclick="/payment/deliveryStart.do?idx=${item.idx}">배송시작</button>
+                        </c:if>
+                        <c:if test="${item.status eq 'R'}">
+                            <button onclick="/goods/direct.do?idx=${item.idx}">직거래</button>
+                            <button onclick="/goods/cancel.do?idx=${item.idx}">예약취소</button>
+                        </c:if>
+                        <c:if test="${item.status eq 'Y'}">
+                            <button onclick="/goods/delete.do?idx=${item.idx}">상품 삭제</button>
+                        </c:if>
+                    </td>
+                    <td>
+                        <c:if test="${item.status eq 'N' and not empty item.payInfo.buyer}">
+                            <button onclick="/payment/view.do?goodsIdx=${item.payInfo.idx}">결제정보</button>
+                        </c:if>
+                    </td>
+                </tr>
+            </table>
 
-            <img src="/resources/image/goods_${item.idx}_0.png" class="card-img-top"
-                 alt="/resources/image/goods_${item.idx}_0.jpg">
-            ${categories[item.category].value}
-            <p class="card-text">${item.name} - ${item.price}</p>
-            <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a><a
-                href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}" class="btn btn-info">장바구니</a>
         </c:forEach>
 
     <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
