@@ -31,6 +31,12 @@
         VALUES(#{memberId}, #{goodsIdx})
     </insert>
 
+    <select id="exist" parameterType="net.fullstack7.nanusam.domain.CartVO" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_cart
+        WHERE memberId = #{memberId} AND goodsIdx = #{goodsIdx}
+    </select>
+
     <delete id="delete" parameterType="int">
         DELETE FROM tbl_cart WHERE idx=#{idx}
     </delete>
