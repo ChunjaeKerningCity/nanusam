@@ -119,10 +119,10 @@
                                 <td>
                                     <a href="/goods/view.do?idx=${list.goodsIdx}"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
                                 </td>
-                            <td><button type="button" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
-                            <form action="/cart/delete.do" method="get" style="display:inline;">
+                            <td><button type="button" name="btnPayment" id="btnPayment" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
+                            <form action="/cart/delete.do" method="get" id="deleteForm_1" style="display:inline;">
                                 <input type="hidden" name="idx" value="${list.idx}"/>
-                                <button type="submit" class="btn btn-secondary mx-2">삭제</button>
+                                <button type="submit" name="btnDelete" id="btnDelete" class="btn btn-secondary mx-2" >삭제</button>
                             </form>
                             </td>
                         </tr>
@@ -187,6 +187,13 @@
 <%--            checkbox.checked = this.checked;  // 전체 선택 체크박스 상태에 맞게 모든 체크박스 설정--%>
 <%--        }--%>
 <%--    });--%>
+<%--</script>--%>
+<%--<script>--%>
+<%--    function btnDelete(idx){--%>
+<%--        if(confirm("삭제하시겠습니까?")===false){return;}--%>
+
+<%--        document.getElementById('deleteForm_'+idx).submit();--%>
+<%--    }--%>
 <%--</script>--%>
 </body>
 </html>
