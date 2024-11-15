@@ -151,7 +151,7 @@
                 <ul class="pagination justify-content-center">
                     <c:if test="${cartList.prev_page_flag}">
                         <li class="page-item">
-                            <a class="page-link" href="/cart/list.do?page_no=${cartList.page_block_start - cartList.page_size}" aria-label="Previous">
+                            <a class="page-link" href="/cart/list.do?page_no=${cartList.page_block_start - 1}" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
