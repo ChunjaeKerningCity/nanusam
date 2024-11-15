@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function showMessage(field, isValid, message) {
         const messageEl = field.nextElementSibling;
+        // const messageEl = document.querySelector(".error .error-"+field.name);
         if (isValid) {
             messageEl.style.display = "none";
             field.classList.add("valid");
