@@ -26,8 +26,12 @@ public class AlertServiceImpl implements AlertService {
     }
 
     @Override
-    public List<AlertDTO> listWithPage(String memberId, int offset, int pageSize) {
-        return alertMapper.listWithPage(memberId,offset,pageSize).stream().map(vo->modelMapper.map(vo, AlertDTO.class)).collect(Collectors.toList());
+    public PageResponseDTO<AlertDTO> listWithPage(String memberId, PageRequestDTO dto) {
+        return PageResponseDTO.<AlertDTO>withAll()
+                .reqDTO(dto)
+                .dtoList(alertMapper.listWithPage(memberId,dto).stream().map(vo->modelMapper.map(vo, AlertDTO.class)).collect(Collectors.toList()))
+                .total_count(totalCount(memberId))
+                .build();
     }
 
     @Override

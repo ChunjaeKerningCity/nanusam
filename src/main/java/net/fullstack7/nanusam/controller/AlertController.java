@@ -2,17 +2,23 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.dto.AlertDTO;
+import net.fullstack7.nanusam.dto.PageRequestDTO;
+import net.fullstack7.nanusam.dto.PageResponseDTO;
 import net.fullstack7.nanusam.service.AlertService;
+import net.fullstack7.nanusam.util.JSFunc;
 import net.fullstack7.nanusam.util.RestUtil;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.net.MalformedURLException;
+import java.util.List;
 
 @Controller
 @Log4j2
@@ -26,18 +32,42 @@ public class AlertController {
         this.alertService = alertService;
         this.restUtil = new RestUtil();
     }
-
     @GetMapping("/list.do")
-    public String list() {
+    public String list(@RequestParam(required = false, defaultValue = "1") int pageNo, HttpSession session, HttpServletResponse res, Model model) {
+        String memberId = (String)session.getAttribute("memberId");
+        int offset = (pageNo-1)*10;
+        PageResponseDTO<AlertDTO> pageResponseDTO = alertService.listWithPage(memberId, PageRequestDTO.builder()
+                .page_no(pageNo)
+                        .page_size(10)
+                        .page_block_size(5)
+                .build());
+        model.addAttribute("pageDTO", pageResponseDTO);
         return "alert/list";
     }
+//    @GetMapping("/getList.do")
+//    @ResponseBody
+//    public String list(@RequestParam(required = false, defaultValue = "") String memberId) {
+//        List<AlertDTO> list = alertService.listWithPage(memberId, 0, 10);
+//        JSONArray jsonArray = new JSONArray();
+//        for (AlertDTO alert : list) {
+//            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("content", alert.getContent());
+//            jsonObject.put("readChk", alert.getReadChk());
+//            jsonObject.put("regDate",alert.getRegDateStr());
+//            jsonArray.put(jsonObject);
+//        }
+//
+//        JSONObject result = new JSONObject();
+//        result.put("list", jsonArray);
+//        return result.toString();
+//    }
+
     @GetMapping("/unreadCount.do")
-    public String unreadCount(@RequestParam String memberId, Model model) throws MalformedURLException {
-        String msg = restUtil.getAsynchroMsg("/alertRest/unreadCount.do");
-        if(msg.equals("error")){
-            msg = "";
-        }
-        model.addAttribute("msg", msg);
-        return "alert/unreadCount";
+    @ResponseBody
+    public String unreadCount(@RequestParam String memberId) {
+        int unreadCount = alertService.unreadCount(memberId);
+        JSONObject jsonResponse = new JSONObject();
+        jsonResponse.put("unreadCount", unreadCount);
+        return jsonResponse.toString();
     }
 }
