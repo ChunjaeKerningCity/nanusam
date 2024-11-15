@@ -31,7 +31,7 @@ public class ChatController {
             return "redirect:/";
         }
         String memberId = (String)session.getAttribute("memberId");
-        List<ChatGroupDTO> chatList = chatService.groupList((String)session.getAttribute("memberId"));
+        List<ChatGroupDTO> chatList = chatService.groupDTOList((String)session.getAttribute("memberId"));
         model.addAttribute("chatList", chatList);
         return "chat/list";
     }
@@ -54,20 +54,25 @@ public class ChatController {
             return "redirect:/chat/list.do";
         }
 
-        String memberId = (String)session.getAttribute("memberId");
-        int readResult = chatService.readMessages(groupIdx, memberId);
-        if(readResult <= 0) {
-            redirectAttributes.addFlashAttribute("errors","메시지 불러오기 실패.");
-            log.info("readMessages failed");
-            return "redirect:/chat/list.do";
-        }
-        ChatGroupDTO chatGroupDTO = chatService.getGroup(groupIdx);
+
+        ChatGroupDTO chatGroupDTO = chatService.getGroupDTO(groupIdx);
         if(chatGroupDTO == null) {
             redirectAttributes.addFlashAttribute("errors","채팅방 불러오기 실패.");
             log.info("chatGroupDTO is null");
             return "redirect:/chat/list.do";
         }
+        String memberId = (String) session.getAttribute("memberId");
+        if(chatGroupDTO.getUnreadCount()>0) {
+            int readResult = chatService.readMessages(groupIdx, memberId);
+            if (readResult <= 0) {
+                redirectAttributes.addFlashAttribute("errors", "메시지 불러오기 실패.");
+                log.info("readMessages failed");
+                return "redirect:/chat/list.do";
+            }
+        }
+
         List<ChatMessageDTO> chatMessageList = chatService.messageList(groupIdx);
+        model.addAttribute("chatGroupDTO", chatGroupDTO);
         model.addAttribute("other", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());
         model.addAttribute("seller", chatGroupDTO.getSeller());
         model.addAttribute("goodsIdx", chatGroupDTO.getGoodsIdx());

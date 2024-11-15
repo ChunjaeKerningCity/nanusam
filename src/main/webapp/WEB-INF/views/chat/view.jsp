@@ -142,7 +142,7 @@
       <button type="button" class="btn btn-secondary" onclick="location.href='/chat/list.do'">◀</button>
     </div>
     <div class="col">
-      채팅 상대 : ${other}
+      채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
     </div>
     <div class="col">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,7 +153,7 @@
         <c:if test="${loginId eq seller}">
           <li><a class="dropdown-item" onclick="reserve()">예약확정</a></li>
         </c:if>
-        <li><a class="dropdown-item" href="/goods/view.do?idx=${goodsIdx}">상품상세</a></li>
+        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/goods/view.do?idx=${goodsIdx}">상품상세</a></li>
       </ul>
     </div>
   </div>

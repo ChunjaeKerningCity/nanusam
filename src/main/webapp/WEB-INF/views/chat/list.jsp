@@ -28,7 +28,7 @@
 
         /* Table styles */
         table {
-            width: 500px;
+            width: 700px;
             margin: 0 auto;
             border-collapse: collapse;
             background-color: #ffffff;
@@ -72,15 +72,17 @@
             border-radius: 12px;
             margin-left: 8px;
         }
-
+        td{
+            font-size : 18px;
+        }
         /* Timestamp styling */
         td:last-child {
             text-align: right;
-            font-size: 12px;
+            font-size: 16px;
             color: #888;
         }
         .messageCont{
-            width : 75%;
+            width : 60%;
         }
     </style>
 </head>
@@ -88,17 +90,20 @@
     <h1>채팅 리스트</h1>
     <table>
         <tr>
+            <th class="goodsInfo">상품정보</th>
             <th class="messageCont">메시지</th>
             <th class="timeCont">보낸시간</th>
         </tr>
         <c:forEach items="${chatList}" var="chat">
             <c:set var="sender" value="${sessionScope.memberId ne chat.seller ? chat.seller : chat.customer}"/>
             <tr class="groupContainer">
-                <c:if test="${not empty chat.lastMessage.content}" var="lastMessage">
-                </c:if>
+                <c:if test="${not empty chat.lastMessage.content}" var="lastMessage"/>
 
+                <td>
+                    <div>${chat.goodsName}</div>
+                </td>
                 <td class="${(sender eq chat.lastMessage.senderId) and (chat.unreadCount gt 0) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
-                    <div>${sender}</div>
+                    <div>${sender eq chat.seller ? chat.sellerName : chat.customerName}</div>
                     <c:if test="${lastMessage}">
                         ${chat.lastMessage.content}
                         <c:if test="${chat.unreadCount gt 0}">

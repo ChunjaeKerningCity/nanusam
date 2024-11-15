@@ -52,6 +52,20 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public List<ChatGroupDTO> groupDTOList(String memberId) {
+        List<ChatGroupDTO> list = chatMapper.groupDTOList(memberId);
+        for(ChatGroupDTO dto : list){
+            ChatMessageVO chatMessageVO = chatMapper.getLastMessage(dto.getIdx());
+            if(chatMessageVO == null){
+                continue;
+            }
+            dto.setLastMessage(modelMapper.map(chatMessageVO,ChatMessageDTO.class));
+            dto.setUnreadCount(chatMapper.countUnreadMessages(dto.getIdx(),memberId));
+        }
+        return list;
+    }
+
+    @Override
     public List<ChatMessageDTO> messageList(int groupIdx) {
         return chatMapper.messageList(groupIdx).stream().map(vo->modelMapper.map(vo,ChatMessageDTO.class)).collect(Collectors.toList());
     }
@@ -75,6 +89,13 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public ChatGroupDTO getGroupDTO(int groupIdx) {
+        return chatMapper.getGroupDTO(groupIdx);
+    }
+
+
+
+    @Override
     public int deleteGroup(int groupIdx) {
         return chatMapper.deleteGroup(groupIdx);
     }
@@ -93,5 +114,7 @@ public class ChatServiceImpl implements ChatService {
     public int countUnreadMessages(int groupIdx, String memberId) {
         return chatMapper.countUnreadMessages(groupIdx, memberId);
     }
+
+
 
 }
