@@ -198,13 +198,49 @@ public class GoodsController {
     }
 
     @GetMapping("/delete.do")
-    public String deleteGet(@RequestParam(defaultValue = "0") int idx, RedirectAttributes redirectAttributes) {
+    public String deleteGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
+            , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
         if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
         }
-        
 
-        return "goods/delete";
+        String errors = goodsService.deleteGoods(GoodsDTO.builder().idx(idx).reservationId(null).memberId(session.getAttribute("memberId").toString()).build());
+
+        redirectAttributes.addFlashAttribute("errors", errors);
+
+        return "redirect:/goods/mygoods.do?page_no="+page_no;
+    }
+
+    @GetMapping("/direct.do")
+    public String directGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
+            , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
+
+        if(idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
+            return "redirect:/goods/mygoods.do?page_no="+page_no;
+        }
+
+        String errors = goodsService.direct(GoodsDTO.builder().idx(idx).memberId(session.getAttribute("memberId").toString()).build());
+
+        redirectAttributes.addFlashAttribute("errors", errors);
+
+        return "redirect:/goods/mygoods.do?page_no="+page_no;
+    }
+
+    @GetMapping("/cancel.do")
+    public String cancelGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
+            , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes){
+
+        if(idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
+            return "redirect:/goods/mygoods.do?page_no="+page_no;
+        }
+
+        String errors = goodsService.cancelReservation(GoodsDTO.builder().memberId(session.getAttribute("memberId").toString()).idx(idx).build());
+
+        redirectAttributes.addFlashAttribute("errors", errors);
+
+        return "redirect:/goods/mygoods.do?page_no="+page_no;
     }
 
     @GetMapping("/mygoods.do")
@@ -225,6 +261,23 @@ public class GoodsController {
         model.addAttribute("pageinfo", goodsService.listWithPayInfo(pageRequestDTO));
         model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/mygoods";
+    }
+
+    @GetMapping("/reservation.do")
+    public String reservationGet(HttpSession session, Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/goods/mygoods.do";
+        }
+
+        List<String> status = new ArrayList<>();
+        status.add("R");
+        pageRequestDTO.setStatus(status);
+
+        pageRequestDTO.setReservationId(session.getAttribute("memberId").toString());
+
+        model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
+        return "goods/reservation";
     }
 
     private String uploadFile(String orgName, String newName, byte[] fileData) throws Exception {
@@ -253,9 +306,12 @@ public class GoodsController {
                 dto.setFileExt(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
                 dto.setFileContentType(file.getContentType());
                 dto.setFileSize(file.getSize());
-//                dto.setFileData(mainImage.getBytes());
                 dto.setBbsCode("상품");
                 dto.setOrgFileName(file.getOriginalFilename());
+
+//                파일 데이터 db에 저장하는 코드
+//                dto.setFileData(file.getBytes());
+
                 message = goodsService.fileupload(dto);
             }
         } catch (Exception e) {

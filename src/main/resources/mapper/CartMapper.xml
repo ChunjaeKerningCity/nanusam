@@ -21,8 +21,10 @@
     </select>
 
     <select id="totalCount" resultType="int">
-        SELECT COUNT(*)
+        SELECT count(C.idx)
         FROM tbl_cart AS C
+                 LEFT JOIN tbl_goods G
+                           ON C.goodsIdx = G.idx
         WHERE C.memberId = #{memberId}
     </select>
 

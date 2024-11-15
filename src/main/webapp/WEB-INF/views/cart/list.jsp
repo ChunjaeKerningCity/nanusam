@@ -43,6 +43,7 @@
             padding: 10px;
         }
         .table th{
+            width: 100%;
             min-width: 200px;
         }
         .table td{
@@ -85,6 +86,7 @@
     </style>
 </head>
 <body>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
@@ -117,12 +119,12 @@
 <%--                                <input type="checkbox" name="select" id="select" value="${list.idx}">--%>
 <%--                            </td>--%>
                                 <td>
-                                    <a href="/goods/view.do?idx=${list.goodsIdx}"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
+                                    <a href="/goods/view.do?idx=${list.goodsIdx}" class="aHref"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
                                 </td>
-                            <td><button type="button" name="btnPayment" id="btnPayment" class="btn btn-primary mx-2" onclick="javascript:location.href='#'">결제</button>
+                            <td><button type="button" name="btnPayment" id="btnPayment" class="button confirmBtn" onclick="javascript:location.href='/payment/regist.do?goodsIdx=${list.goodsIdx}'">결제</button>
                             <form action="/cart/delete.do" method="get" id="deleteForm_1" style="display:inline;">
                                 <input type="hidden" name="idx" value="${list.idx}"/>
-                                <button type="button" name="btnDelete" id="btnDelete" class="btn btn-secondary mx-2" onclick="confirmDelete('deleteForm_1')" >삭제</button>
+                                <button type="button" name="btnDelete" id="btnDelete" class="button cancelBtn" onclick="confirmDelete('deleteForm_1')" >삭제</button>
                             </form>
                             </td>
                         </tr>
@@ -144,29 +146,29 @@
         </div>
 
         <!-- 페이징 영역 -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <a class="page-link" href="<c:choose>
-                                            <c:when test="${cartList.prev_page_flag}">?page_no=${cartList.page_block_start-1}</c:when>
-                                            <c:otherwise>#</c:otherwise>
-                                            </c:choose>" aria-label="이전">
-                        <span aria-hidden="true">&langle;</span>
-                    </a>
-                </li>
-                <c:forEach begin="${cartList.page_block_start}" end="${cartList.page_block_end}" var="page_num">
-                    <li class="page-item ${cartList.page_no == page_num? "active":""}"><a class="page-link" href="?page_no=${page_num}">${page_num}</a></li>
-                </c:forEach>
-                <li class="page-item">
-                    <a class="page-link" href="<c:choose>
-                                           <c:when test="${cartList.next_page_flag}">?page_no=${cartList.page_block_end+1}</c:when>
-                                           <c:otherwise>#</c:otherwise>
-                                            </c:choose>" aria-label="다음">
-                        <span aria-hidden="true">&rangle;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+        <div class="row" style="margin-top: 1rem; justify-content: center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <c:if test="${cartList.prev_page_flag}">
+                        <li class="page-item">
+                            <a class="page-link" href="/cart/list.do?page_no=${cartList.page_block_start - 1}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                    <c:forEach var="no" begin="${cartList.page_block_start}" end="${cartList.page_block_end}" step="1">
+                        <li class="page-item"><a class="page-link" href="/cart/list.do?page_no=${no}">${no}</a></li>
+                    </c:forEach>
+                    <c:if test="${cartList.next_page_flag}">
+                        <li class="page-item">
+                            <a class="page-link" href="/cart/list.do?page_no=${cartList.page_block_end + 1}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </c:if>
+                </ul>
+            </nav>
+        </div>
         <!--// 페이징 영역 -->
     </div>
 </main>

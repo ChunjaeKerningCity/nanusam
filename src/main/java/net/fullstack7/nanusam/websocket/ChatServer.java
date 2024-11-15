@@ -1,9 +1,11 @@
 package net.fullstack7.nanusam.websocket;
 
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.dto.AlertDTO;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
+import net.fullstack7.nanusam.service.AlertService;
 import net.fullstack7.nanusam.service.ChatService;
 import net.fullstack7.nanusam.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ import java.util.concurrent.Executors;
 public class ChatServer {
     private static ChatService chatService;// 정적 필드로 ChatService를 선언
     private static GoodsService goodsService;
+    private static AlertService alertService;
     private String errCode;
     //세션없음 001, 로그인아이디가없음 002, 채팅방없음 003, 접근권한없음 004, 메시지 형식오류 005, db등록실패 006
 
@@ -74,6 +77,10 @@ public class ChatServer {
     @Autowired
     public void setGoodsService(GoodsService goodsService) {
         ChatServer.goodsService = goodsService;
+    }
+    @Autowired
+    public void setAlertService(AlertService alertService) {
+        ChatServer.alertService = alertService;
     }
 
     @OnOpen
@@ -191,6 +198,10 @@ public class ChatServer {
                 log.info(reservationResult);
                 log.info("goodsIdx : " + goodsIdx);
                 log.info("reservationId : " + reservationMemberId);
+                alertService.regist(AlertDTO.builder()
+                        .memberId(customer)
+                        .content(goodsDTO.getName()+" 상품의 예약이 확정되었습니다.")
+                        .build());
                 int messageIdx = chatService.messageRegist(ChatMessageDTO.builder()
                         .groupIdx(groupIdx)
                         .senderId("system")
@@ -231,6 +242,10 @@ public class ChatServer {
                     log.info("시스템메시지 등록 실패");
                     return;
                 }
+                alertService.regist(AlertDTO.builder()
+                        .memberId(receiverId)
+                        .content(sender+" 님과의 채팅방에 새 메시지가 도착했습니다.")
+                        .build());
                 session.getOpenSessions().forEach(s -> {
                     if (receiverId.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
                         try {
@@ -271,6 +286,10 @@ public class ChatServer {
         if(messageDTO != null){
             // 수신자에게 메시지를 전송
             log.info("db등록성공");
+            alertService.regist(AlertDTO.builder()
+                    .memberId(receiver)
+                    .content(sender+" 님과의 채팅방에 새 메시지가 도착했습니다.")
+                    .build());
             session.getOpenSessions().forEach(s -> {
                 if (receiver.equals(s.getUserProperties().get("memberId"))||sender.equals(s.getUserProperties().get("memberId"))) {
                     try {

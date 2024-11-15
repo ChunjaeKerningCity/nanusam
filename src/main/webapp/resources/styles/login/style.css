@@ -1,8 +1,9 @@
 /* 기본 폼 스타일 */
 
-.login-form {
+.login-form,
+.regist-form{
     width: 300px;
-    padding: 50px;
+    padding: 30px;
     margin: 0 auto;
     border-radius: 10px;
     /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
@@ -11,7 +12,11 @@
 
 /* 입력 필드 스타일 */
 .login-form input[type="text"],
-.login-form input[type="password"] {
+.login-form input[type="password"],
+.regist-form input[type="text"],
+.regist-form input[type="email"],
+.regist-form input[type="date"],
+.regist-form input[type="password"]{
     width: 100%;
     padding: 12px;
     margin: 8px 0;
@@ -22,18 +27,25 @@
     background-color: #f0f0f0;
 }
 
-/* 로그인 및 회원가입 버튼 스타일 */
-.login-button,
-.signup-button {
+/*login.jsp 회원가입버튼*/
+.button2
+{
     width: 100%;
     padding: 12px;
     margin-top: 8px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
     box-sizing: border-box;
 }
+.btn-Regist{
+    border-radius: 5px;
+    height: 41px;
+    border: none;
+    padding: 12px;
+    margin: 8px 0;
+}
+
 
 .login-button {
     background-color: #FFF1AA;
@@ -41,11 +53,29 @@
 }
 
 .signup-button {
-    background-color: #e0e0e0; /* 회원가입 버튼 색상 */
+    background-color: #e0e0e0;
     color: #333;
 }
 
-.login-button:hover,
-.signup-button:hover {
-    opacity: 0.9;
+.loginArea {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px; /* 간격 설정 */
+}
+
+.form-row input[type="text"] {
+    flex: 3; /* 입력 필드: 70-80% */
+}
+
+.form-row button {
+    flex: 1; /* 버튼: 20-30% */
+}
+.message{
+    font-size: 13px;
+    text-align: left;
 }

@@ -23,4 +23,5 @@ public class GoodsVO {
     private String readCnt;
     private String category;
     private String reservationId;
+    private String mainImageName;
 }
