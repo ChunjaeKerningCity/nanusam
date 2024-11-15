@@ -35,6 +35,41 @@ function checkId() {
             isIdChecked = false;
         });
 }
+function showMessage(field, isValid, message) {
+    const messageEl = field.nextElementSibling;
+    // const messageEl = document.querySelector(".error .error-"+field.name);
+    if (isValid) {
+        messageEl.style.display = "none";
+        field.classList.add("valid");
+        field.classList.remove("invalid");
+    } else {
+        messageEl.style.display = "block";
+        messageEl.innerText = message;
+        field.classList.add("invalid");
+        field.classList.remove("valid");
+    }
+}
+/*
+function showMessage2(field, isValid, message) {
+    // const messageEl = field.nextElementSibling;
+    console.log("field.name : "+ field.name);
+    alert("field.name : "+ field.name);
+    const messageEl = document.querySelector("#div_err_"+field.name);
+
+    if (isValid) {
+        messageEl.style.display = "none";
+        messageEl.innerText = "";
+        //field.classList.add("valid");
+        //field.classList.remove("invalid");
+    } else {
+        messageEl.style.display = "block";
+        messageEl.innerText = "<span style='color:red'>"+message+"</span>";
+        //field.classList.add("invalid");
+        //field.classList.remove("valid");
+    }
+}
+*/
+
 
 // 유효성검사 시작
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const checkIdButton = document.querySelector("button[onclick='checkId()']");
 
 
-    function showMessage(field, isValid, message) {
+    /*function showMessage(field, isValid, message) {
         const messageEl = field.nextElementSibling;
         // const messageEl = document.querySelector(".error .error-"+field.name);
         if (isValid) {
@@ -64,14 +99,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function showMessage2(field, isValid, message) {
+        // const messageEl = field.nextElementSibling;
+        console.log("field.name : "+ field.name);
+        alert("field.name : "+ field.name);
+        const messageEl = document.querySelector("#div_err_"+field.name);
+
+        if (isValid) {
+            messageEl.style.display = "none";
+            messageEl.innerText = "";
+            //field.classList.add("valid");
+            //field.classList.remove("invalid");
+        } else {
+            messageEl.style.display = "block";
+            messageEl.innerText = "<span style='color:red'>"+message+"</span>";
+            //field.classList.add("invalid");
+            //field.classList.remove("valid");
+        }
+    }*/
+
+
     memberIdInput.addEventListener("keyup", function () {
         const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,14}$/;
         if (idRegex.test(memberIdInput.value)) {
+            // showMessage2(memberIdInput, true, "");
+
             showMessage(memberIdInput, true, "");
+
             checkIdButton.classList.remove("disabled");
             checkIdButton.disabled = false;
         } else {
+            //showMessage2(memberIdInput, false, "dd");
             showMessage(memberIdInput, false, "아이디는 영문자로 시작하고 5~15자의 영문자와 숫자만 사용 가능합니다.");
+
             checkIdButton.classList.add("disabled");
             checkIdButton.disabled = true;
         }
