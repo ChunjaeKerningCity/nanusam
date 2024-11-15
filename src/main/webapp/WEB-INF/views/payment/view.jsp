@@ -16,6 +16,8 @@
         }
     </style>
 </head>
+<body>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <%--상품정보--%>
 <h3>상품정보</h3>
 <table>
@@ -91,8 +93,34 @@
     </tr>
     <tr>
         <th>배송상태</th>
-        <td>${item.deliveryStatus}</td>
+        <td>
+            <c:choose>
+                <c:when test="${item.deliveryStatus == '0'}">
+                    배송 전
+                </c:when>
+                <c:when test="${item.deliveryStatus == '1'}">
+                    배송 중
+                </c:when>
+                <c:otherwise>
+                    배송 완료
+                </c:otherwise>
+            </c:choose>
+
+
+        </td>
+    </tr>
+    <tr>
+        <th>
+
+        </th>
+        <td>
+            <c:if test="${item.deliveryStatus == '1'}">
+                <button onclick="location.href='/payment/deliveryEnd.do?idx=${item.idx}'">배송확인</button>
+            </c:if>
+        </td>
     </tr>
 </table>
+
+
 </body>
 </html>

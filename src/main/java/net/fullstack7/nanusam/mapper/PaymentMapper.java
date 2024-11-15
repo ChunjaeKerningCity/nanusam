@@ -13,4 +13,5 @@ public interface PaymentMapper {
     List<PaymentDTO> listWithGoodsByBuyer(PageRequestDTO pageRequestDTO);
     PaymentDTO viewWithGoods(int idx);
     int total_count(PageRequestDTO pageRequestDTO);
+    int modifyDeliveryStatus(PaymentVO payment);
 }

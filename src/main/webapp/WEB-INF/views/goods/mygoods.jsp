@@ -43,7 +43,7 @@
                     </td>
                     <td>
                         <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
-                            <button onclick="location.href='/payment/deliveryStart.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
+                            <button onclick="location.href='/payment/deliveryStart.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
                         </c:if>
                         <c:if test="${item.status eq 'R'}">
                             예약자-${item.reservationId}
