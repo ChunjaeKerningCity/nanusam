@@ -13,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -52,12 +53,20 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PageResponseDTO<PaymentDTO> listWithGoodsByBuyer(PageRequestDTO pageRequestDTO) {
         List<PaymentDTO> paymentlist = paymentMapper.listWithGoodsByBuyer(pageRequestDTO);
+
+//        paymentlist.stream().map(dto -> modelMapper.map(dto, PaymentDTO.class)).collect(Collectors.toList());
         PageResponseDTO<PaymentDTO> pageResponseDTO = PageResponseDTO.<PaymentDTO>withAll().
                 dtoList(paymentlist)
                 .reqDTO(pageRequestDTO)
                 .total_count(paymentMapper.total_count(pageRequestDTO))
                 .build();
+
         return pageResponseDTO;
+    }
+
+    @Override
+    public PaymentDTO view(int idx) {
+        return paymentMapper.viewWithGoods(idx);
     }
 
 }

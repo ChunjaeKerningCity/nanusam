@@ -72,7 +72,7 @@
             g.category,
             g.reservationId
         FROM tbl_payment p
-        inner join tbl_goods g ON p.goodsIdx = g.idx
+        left outer join tbl_goods g ON p.goodsIdx = g.idx
         WHERE p.idx > 0
         <choose>
             <when test="memberId != null and memberId != '' ">
@@ -104,7 +104,41 @@
             and deliveryStatus=#{searchCategory}
         </if>
     </select>
+    <select id="viewWithGoods" resultMap="paymentWithGoodsResultMap">
+        SELECT
+            p.idx AS payment_idx,
+            p.seller,
+            p.buyer,
+            p.goodsIdx,
+            p.payDate,
+            p.name,
+            p.email,
+            p.phone,
+            p.addr1,
+            p.addr2,
+            p.zipCode,
+            p.method,
+            p.paymentCompany,
+            p.paymentNo,
+            p.deliveryStatus,
 
+            -- GoodsDTO 관련 컬럼
+            g.idx AS goods_idx,
+            g.name AS goods_name,
+            g.memberId,
+            g.price,
+            g.quality,
+            g.status,
+            g.content,
+            g.regDate,
+            g.modifyDate,
+            g.readCnt,
+            g.category,
+            g.reservationId
+        FROM tbl_payment p
+        left outer join tbl_goods g ON p.goodsIdx = g.idx
+        WHERE p.idx = #{idx}
+    </select>
     <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
         insert into tbl_payment(seller, buyer, goodsIdx, name, email, phone, addr1, addr2, zipCode, method,
                                 paymentCompany, paymentNo)
