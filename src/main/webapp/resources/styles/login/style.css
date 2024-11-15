@@ -1,0 +1,51 @@
+/* 기본 폼 스타일 */
+
+.login-form {
+    width: 300px;
+    padding: 50px;
+    margin: 0 auto;
+    border-radius: 10px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    text-align: center;
+}
+
+/* 입력 필드 스타일 */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+}
+
+/* 로그인 및 회원가입 버튼 스타일 */
+.login-button,
+.signup-button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.login-button {
+    background-color: #FFF1AA;
+    color: #333;
+}
+
+.signup-button {
+    background-color: #e0e0e0; /* 회원가입 버튼 색상 */
+    color: #333;
+}
+
+.login-button:hover,
+.signup-button:hover {
+    opacity: 0.9;
+}
