@@ -150,7 +150,7 @@
         const windowHeight = window.innerHeight;
 
         // 스크롤이 페이지의 90% 이상 내려왔을 때 추가 로드
-        if (scrollTop + windowHeight >= documentHeight * 0.9) {
+        if (scrollTop + windowHeight >= documentHeight * 0.95) {
             loadMoreGoods();
         }
     });
