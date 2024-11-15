@@ -1,6 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<link rel="stylesheet" href="/resources/styles/style.css" />
 <div class="fixedSidebar">
   <div class="item">
     <a class="aHref" href="${pageContext.request.contextPath}/cart/list.do">찜한상품</a><br>
