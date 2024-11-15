@@ -31,6 +31,12 @@ body {
   align-content: center;
 }
 
+.commonContainer {
+  display: grid;
+  grid-template-columns: 360px 1200px 360px;
+  min-height: 300px;
+}
+
 .textCenter {
   text-align: center;
 }
@@ -198,6 +204,21 @@ body {
   font-size: 30px;
 }
 /* 슬라이더 영역 */
+
+.marginTop {
+  margin-top: 100px;
+}
+
+.inputCustom {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+}
 
 .mainContainer {
   display: flex;

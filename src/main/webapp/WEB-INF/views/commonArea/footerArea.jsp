@@ -4,8 +4,8 @@
   <div>
     <p class="footerLink">
       <a href="/main/cpInfo.do" style="padding-left: 0px">회사소개</a> |
-      <a href="#">회원약관</a> | <a href="#">개인정보처리방침</a> |
-      <a href="#">이메일수집거부</a> | <a href="#">고객센터</a> |
+      <a href="#">회원약관</a> | <a href="/main/commonClass.do">개인정보처리방침</a> |
+      <a href="/main/commonArea.do">이메일수집거부</a> | <a href="/main/commonArea2.do">고객센터</a> |
       <a
           href="https://github.com/ChunjaeKerningCity/nanusam"
           target="_blank"

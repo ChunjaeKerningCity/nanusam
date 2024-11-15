@@ -11,35 +11,6 @@
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
 </head>
 <body>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        let page = 1;
-        let isLoading = false;
-
-        const loadMoreItems = () => {
-            if (isLoading) return;
-            isLoading = true;
-
-            fetch(`/loadMoreGoods?page=${page}`)
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('.cardContainer').insertAdjacentHTML('beforeend', data);
-                page++;
-                isLoading = false;
-            })
-            .catch(error => {
-                console.error('Error loading more items:', error);
-                isLoading = false;
-            });
-        };
-
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
-                loadMoreItems();
-            }
-        });
-    });
-</script>
 
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
@@ -137,7 +108,7 @@
                 <a href="#">더보기 ▶</a>
             </div>
             <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
-            <div class="cardContainer">
+            <div class="cardContainer" id="cardContainer">
                 <c:forEach items="${mainViewGoodsList}" var="item">
                     <a href="/goods/view.do?idx=${item.idx}" class="card">
                         <img
@@ -153,7 +124,6 @@
                     </a>
                 </c:forEach>
             </div>
-            <div class="line" style="margin: 20px 0 10px 0"></div>
         </div>
     </div>
 </main>
@@ -162,5 +132,95 @@
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" charEncoding="UTF-8" />
 </footer>
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
+
+<script>
+    let currentPage = 1; // 현재 페이지 번호
+    const PAGE_SIZE = 5; // 한 페이지에 로드할 아이템 수
+    console.log(currentPage);
+    console.log(PAGE_SIZE);
+
+    // 스크롤 이벤트 리스너 등록
+    window.addEventListener('scroll', () => {
+        // 페이지의 총 높이
+        const documentHeight = document.documentElement.scrollHeight;
+        // 현재 스크롤 위치 (보이는 영역의 최상단)
+        const scrollTop = document.documentElement.scrollTop;
+        // 보이는 영역의 높이
+        const windowHeight = window.innerHeight;
+
+        // 스크롤이 페이지의 90% 이상 내려왔을 때 추가 로드
+        if (scrollTop + windowHeight >= documentHeight * 0.95) {
+            loadMoreGoods();
+        }
+    });
+
+    // 추가 데이터 로드 중인지 여부를 확인하기 위한 변수
+    let isLoading = false;
+
+    function loadMoreGoods() {
+        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
+        isLoading = true;
+        currentPage++;
+
+        fetch("/loadMoreGoods?page=" + currentPage)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.length > 0) {
+                appendGoods(data);
+                isLoading = false;
+            } else {
+                // 더 이상 로드할 데이터가 없으면 스크롤 이벤트 제거
+                window.removeEventListener('scroll', onScroll);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching more goods:', error);
+            isLoading = false;
+        });
+    }
+
+    function appendGoods(goodsList) {
+        const cardContainer = document.getElementById('cardContainer');
+        goodsList.forEach(item => {
+            const card = document.createElement('a');
+            card.href = `/goods/view.do?idx=${item.idx}`;
+            card.className = 'card';
+
+            const img = document.createElement('img');
+            img.src = `/resources/image/goods_${item.idx}_0.png`;
+            img.className = 'cardImage';
+            img.alt = 'cardImage';
+
+            const cardName = document.createElement('p');
+            cardName.className = 'cardName';
+            cardName.textContent = item.name;
+
+            const cardInfo = document.createElement('div');
+            cardInfo.className = 'cardInfo';
+
+            const cardPrice = document.createElement('p');
+            cardPrice.className = 'cardPrice';
+            cardPrice.textContent = item.price;
+
+            const regDate = document.createElement('p');
+            regDate.className = 'regDate';
+            regDate.textContent = item.regDateStr;
+
+            cardInfo.appendChild(cardPrice);
+            cardInfo.appendChild(regDate);
+
+            card.appendChild(img);
+            card.appendChild(cardName);
+            card.appendChild(cardInfo);
+
+            cardContainer.appendChild(card);
+            console.log("==========");
+            console.log(currentPage);
+            console.log(PAGE_SIZE);
+            console.log("==========");
+        });
+    }
+</script>
+
 </body>
 </html>

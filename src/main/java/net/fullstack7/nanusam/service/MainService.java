@@ -5,7 +5,5 @@ import net.fullstack7.nanusam.dto.GoodsDTO;
 
 public interface MainService {
   // main페이지 상품 리스트
-  List<GoodsDTO> mainViewGoodsList();
-  
-  // 무한스크롤
+  List<GoodsDTO> mainViewGoodsList(int page);
 }
