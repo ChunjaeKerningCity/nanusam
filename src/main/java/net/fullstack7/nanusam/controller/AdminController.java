@@ -150,5 +150,4 @@ public class AdminController {
         session.invalidate();
         return "redirect:/admin/memberMm.do";
     }
-
 }

@@ -29,3 +29,12 @@ document.querySelectorAll(".cardName").forEach(function (element) {
     element.textContent = element.textContent.substring(0, maxLength) + "...";
   }
 });
+
+window.onload = function() {
+  var topButton = document.querySelector('.topButton');
+  if (topButton) {
+    topButton.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+};
