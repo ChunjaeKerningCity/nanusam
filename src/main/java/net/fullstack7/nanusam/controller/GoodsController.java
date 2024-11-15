@@ -198,7 +198,12 @@ public class GoodsController {
     }
 
     @GetMapping("/delete.do")
-    public String deleteGet() {
+    public String deleteGet(@RequestParam(defaultValue = "0") int idx, RedirectAttributes redirectAttributes) {
+        if (idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
+        }
+        
+
         return "goods/delete";
     }
 
