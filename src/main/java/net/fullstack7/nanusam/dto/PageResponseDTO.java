@@ -30,6 +30,7 @@ public class PageResponseDTO<E> {
     private String orderDir;
     private String memberId;
     private String reservationId;
+    private List<String> status;
 
     public PageResponseDTO() {}
 
@@ -55,6 +56,7 @@ public class PageResponseDTO<E> {
         this.orderDir = reqDTO.getOrderDir();
         this.memberId = reqDTO.getMemberId();
         this.reservationId = reqDTO.getReservationId();
+        this.status = reqDTO.getStatus();
     }
 
     public int getTotal_page() {

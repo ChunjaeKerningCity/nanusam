@@ -35,6 +35,7 @@ public class GoodsDTO {
     private String reservationId;
 
     private List<FileDTO> images;
+    private PaymentDTO payInfo;
 
     // Formatter
     private String regDateStr;
