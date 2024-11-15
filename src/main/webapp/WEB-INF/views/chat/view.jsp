@@ -252,7 +252,7 @@
       chatWindow.scrollTop = chatWindow.scrollHeight;
     }else{
       if (content !== "") {
-        chatWindow.innerHTML += "<div class='myMsg'>" + sender + " : " + content + "</div>"
+        chatWindow.innerHTML += "<div class='myMsg'>" + content + "</div>"
                 +"<div class='myMsg timestamp'>"+regDate+"</div>";
       }
     }

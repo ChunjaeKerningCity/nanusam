@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
 import net.fullstack7.nanusam.service.ChatService;
+import net.fullstack7.nanusam.service.GoodsService;
 import net.fullstack7.nanusam.util.CommonUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatController {
     private final ChatService chatService;
+    private final GoodsService goodsService;
     @GetMapping("/list.do")
     public String chatList(HttpSession session, Model model, RedirectAttributes redirectAttributes) {
         log.info("chatList");
@@ -62,8 +64,9 @@ public class ChatController {
             return "redirect:/chat/list.do";
         }
         String memberId = (String) session.getAttribute("memberId");
-        log.info("unreadCount : " + chatGroupDTO.getUnreadCount());
-        if(chatGroupDTO.getUnreadCount()>0) {
+        int unreadCount = chatService.countUnreadMessages(chatGroupDTO.getIdx(),memberId);
+        log.info("unreadCount : " + unreadCount);
+        if(unreadCount>0) {
             int readResult = chatService.readMessages(groupIdx, memberId);
             if (readResult <= 0) {
                 redirectAttributes.addFlashAttribute("errors", "메시지 불러오기 실패.");
@@ -71,7 +74,7 @@ public class ChatController {
                 return "redirect:/chat/list.do";
             }
         }
-
+        log.info("goods : "+goodsService.view(chatGroupDTO.getGoodsIdx()));
         List<ChatMessageDTO> chatMessageList = chatService.messageList(groupIdx);
         model.addAttribute("chatGroupDTO", chatGroupDTO);
         model.addAttribute("other", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());

@@ -3,7 +3,9 @@ package net.fullstack7.nanusam.websocket;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
+import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.service.ChatService;
+import net.fullstack7.nanusam.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +24,12 @@ import java.util.concurrent.Executors;
 @Log4j2
 public class ChatServer {
     private static ChatService chatService;// 정적 필드로 ChatService를 선언
-
+    private static GoodsService goodsService;
     private String errCode;
     //세션없음 001, 로그인아이디가없음 002, 채팅방없음 003, 접근권한없음 004, 메시지 형식오류 005, db등록실패 006
 
     // ExecutorService 선언 및 초기화
-    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     // 에러 메시지 전송 메서드
     private void sendErrorMessage(Session session, String errCode) {
@@ -67,6 +69,11 @@ public class ChatServer {
     @Autowired
     public void setChatService(ChatService chatService) {
         ChatServer.chatService = chatService; // ChatService를 정적 필드에 주입
+    }
+
+    @Autowired
+    public void setGoodsService(GoodsService goodsService) {
+        ChatServer.goodsService = goodsService;
     }
 
     @OnOpen
@@ -155,10 +162,33 @@ public class ChatServer {
             if (messageArr[1].equals("reservation")) {
                 log.info("reservation");
                 String content = messageArr[2];
+                log.info("content : " + content);
                 String reservationMemberId = messageArr[3];
+                log.info("reservationMemberId : " + reservationMemberId);
                 int goodsIdx = groupDTO.getGoodsIdx();
+                log.info("goodsIdx : " + goodsIdx);
                 String customer = groupDTO.getCustomer();
-                log.info("예약 로직 수행");
+                log.info("customer : " + customer);
+                GoodsDTO goodsDTO = goodsService.view(goodsIdx);
+                log.info("goodsDTO : " + goodsDTO);
+                if(goodsDTO == null) {
+                    log.info("상품정보조회실패");
+                    this.errCode = "006";
+                    sendErrorMessage(session, this.errCode);
+                    return;
+                }
+                log.info("상품조회성공");
+                goodsDTO.setIdx(goodsIdx);
+                goodsDTO.setStatus("R");
+                goodsDTO.setReservationId(reservationMemberId);
+                int reservationResult = goodsService.modifyStatus(goodsDTO);
+                if(reservationResult <= 0) {
+                    log.info("예약정보변경실패");
+                    this.errCode = "006";
+                    sendErrorMessage(session, this.errCode);
+                    return;
+                }
+                log.info(reservationResult);
                 log.info("goodsIdx : " + goodsIdx);
                 log.info("reservationId : " + reservationMemberId);
                 int messageIdx = chatService.messageRegist(ChatMessageDTO.builder()
@@ -171,6 +201,7 @@ public class ChatServer {
                     log.info("시스템메시지 등록 실패");
                     return;
                 }
+                log.info("시스템메시지 등록 성공");
                 session.getOpenSessions().forEach(s -> {
                     if (customer.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
                         try {
