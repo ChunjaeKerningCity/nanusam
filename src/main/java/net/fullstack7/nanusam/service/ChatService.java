@@ -2,6 +2,7 @@ package net.fullstack7.nanusam.service;
 
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 public interface ChatService {
@@ -16,4 +17,6 @@ public interface ChatService {
     public int readMessages(int groupIdx, String memberId);
     public ChatMessageDTO getMessage(int idx);
     public int countUnreadMessages(int groupIdx, String memberId);
+    public ChatGroupDTO getGroupDTO(int groupIdx);
+    public List<ChatGroupDTO> groupDTOList(String memberId);
 }

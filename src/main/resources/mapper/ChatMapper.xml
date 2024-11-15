@@ -15,6 +15,14 @@
         FROM tbl_chat_group
         WHERE delChk='N' AND (seller=#{memberId} OR customer=#{memberId})
     </select>
+    <select id="groupDTOList" resultType="net.fullstack7.nanusam.dto.ChatGroupDTO">
+        SELECT tc.idx AS idx, tc.seller AS seller, tc.customer AS customer, tc.goodsIdx AS goodsIdx, tc.delChk AS delChk, tc.regDate AS regDate, tm.`name` AS sellerName, tm2.`name` AS customerName, tg.`name` AS goodsName
+        FROM tbl_chat_group AS tc
+                 INNER JOIN tbl_member AS tm ON tc.seller = tm.memberId
+                 INNER JOIN tbl_member AS tm2 ON tc.customer = tm2.memberId
+                 INNER JOIN tbl_goods AS tg ON tc.goodsIdx = tg.idx
+        WHERE tc.delChk='N' AND (tc.seller=#{memberId} OR tc.customer=#{memberId})
+    </select>
     <select id="messageList" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
         SELECT idx, groupIdx, senderId, content, regDate, delChk, readChk
         FROM tbl_chat_message
@@ -36,6 +44,14 @@
         SELECT idx, seller, customer, goodsIdx, delChk, regDate
         FROM tbl_chat_group
         WHERE idx=#{groupIdx}
+    </select>
+    <select id="getGroupDTO" resultType="net.fullstack7.nanusam.dto.ChatGroupDTO">
+        SELECT tc.idx AS idx, tc.seller AS seller, tc.customer AS customer, tc.goodsIdx AS goodsIdx, tc.delChk AS delChk, tc.regDate AS regDate, tm.`name` AS sellerName, tm2.`name` AS customerName, tg.`name` AS goodsName
+        FROM tbl_chat_group AS tc
+                 INNER JOIN tbl_member AS tm ON tc.seller = tm.memberId
+                 INNER JOIN tbl_member AS tm2 ON tc.customer = tm2.memberId
+                 INNER JOIN tbl_goods AS tg ON tc.goodsIdx = tg.idx
+        WHERE tc.idx=#{groupIdx}
     </select>
     <update id="deleteGroup">
         UPDATE tbl_chat_group

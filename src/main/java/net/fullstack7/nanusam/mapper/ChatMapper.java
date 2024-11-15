@@ -2,6 +2,7 @@ package net.fullstack7.nanusam.mapper;
 
 import net.fullstack7.nanusam.domain.ChatGroupVO;
 import net.fullstack7.nanusam.domain.ChatMessageVO;
+import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +21,6 @@ public interface ChatMapper {
     public int readMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
     public ChatMessageVO getMessage(@Param("idx")int idx);
     public int countUnreadMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
+    public ChatGroupDTO getGroupDTO(@Param("groupIdx")int groupIdx);
+    public List<ChatGroupDTO> groupDTOList(@Param("memberId")String memberId);
 }

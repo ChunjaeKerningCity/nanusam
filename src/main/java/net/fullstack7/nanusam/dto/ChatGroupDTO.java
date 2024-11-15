@@ -19,4 +19,7 @@ public class ChatGroupDTO {
     private LocalDateTime regDate;
     private ChatMessageDTO lastMessage;
     private int unreadCount;
+    private String sellerName;
+    private String customerName;
+    private String goodsName;
 }
