@@ -34,8 +34,10 @@
     </select>
 
     <insert id="regist">
-        INSERT INTO tbl_bbs(idx, memberId, title, content, bbsCode, displayDate)
-        VALUES (#{idx}, #{memberId}, #{title}, #{content}, #{bbsCode}, #{displayDate})
+        INSERT INTO tbl_bbs (idx, memberId, title, content, bbsCode, displayDate)
+        SELECT #{idx}, m.memberId, #{title}, #{content}, #{bbsCode}, #{displayDate}
+        FROM tbl_member AS m
+        WHERE m.memType = 'a';
     </insert>
 
     <update id="modify">

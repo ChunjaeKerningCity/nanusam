@@ -105,6 +105,12 @@
                 <input style="width: 80%" type="text" class="form-control" name="title" aria-describedby="basic-addon1" required>
             </div>
 
+            <div class="input-group mb-3" style="display:none">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="bbsCode">Category</span>
+                </div>
+                <input type="text" class="form-control" name="bbsCode" aria-describedby="basic-addon1" value="01" readonly>
+            </div>
             <!-- 아이디 입력 -->
             <div class="input-group mb-3">
                 <div class="input-group-prepend">

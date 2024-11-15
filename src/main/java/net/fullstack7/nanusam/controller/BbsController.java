@@ -11,10 +11,7 @@ import net.fullstack7.nanusam.service.ReadCntService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -59,9 +56,16 @@ public class BbsController {
     @GetMapping("/regist.do")
     public String registGet(
             Model model
+            , RedirectAttributes redirectAttributes
+            , @SessionAttribute(name = "memType", required = false) String memType
     ){
         BbsDTO dto = BbsDTO.builder().build();
         model.addAttribute("dto", dto);
+//        if (memType == null || !memType.equals("a")) {
+//            log.info("잘못된 접근: memType이 'a'가 아닙니다.");
+//            redirectAttributes.addFlashAttribute("errorMessage", "잘못된 접근입니다. 관리자에게 문의하세요.");
+//            return "redirect:/bbs/list.do"; // 리스트 페이지로 리디렉션
+//        }
         log.info("===========================");
         log.info("regist");
         log.info("===========================");
@@ -72,9 +76,16 @@ public class BbsController {
             @Valid BbsDTO dto
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
+            , @SessionAttribute(name = "memType", required = false) String memType
     ){
         log.info("===========================");
         log.info("registPOST");
+
+        if (memType == null || !memType.equals("a")) {
+            log.info("잘못된 접근: memType이 'a'가 아닙니다.");
+            redirectAttributes.addFlashAttribute("errorMessage", "잘못된 접근입니다. 관리자에게 문의하세요.");
+            return "redirect:/bbs/list.do"; // 리스트 페이지로 리디렉션
+        }
 
         if(bindingResult.hasErrors()) {
             log.info("hasErrors");
@@ -137,9 +148,17 @@ public class BbsController {
     @GetMapping("/modify.do")
     public String modifyGet(
             @RequestParam int idx, Model model
+            , RedirectAttributes redirectAttributes
+//            , @SessionAttribute(name = "memType", required = false) String memType
     ){
         BbsDTO dto = bbsService.view(idx);
         model.addAttribute("dto", dto);
+
+//        if (memType == null || !memType.equals("a")) {
+//            log.info("잘못된 접근: memType이 'a'가 아닙니다.");
+//            redirectAttributes.addFlashAttribute("errorMessage", "잘못된 접근입니다. 관리자에게 문의하세요.");
+//            return "redirect:/bbs/list.do"; // 리스트 페이지로 리디렉션
+//        }
 
 //        log.info("===========================");
 //        log.info("modifyGET");
