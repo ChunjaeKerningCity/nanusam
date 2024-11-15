@@ -77,6 +77,7 @@ public class CartController {
             return "redirect:/cart/add.do";
         }
         cartService.add(dto);
+
         log.info("dto: "+dto);
         log.info("===========================");
 
