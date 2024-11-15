@@ -49,4 +49,7 @@ public interface AdminMapper {
 
   // admin페이지 상품 상태 변경 <- 이건 나중에 합쳐보자 위랑
   int updateGoodsStatus(@Param("idx") int idx, @Param("status") String status);
+
+  // main페이지 상품 출력
+  List<GoodsVO> mainViewGoodsList();
 }
