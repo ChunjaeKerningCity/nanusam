@@ -11,6 +11,6 @@
       <a href="/main/directions.do">오시는 길</a>
       <a href="/bbs/list.do">공지사항</a>
       <a href="/goods/list.do">상품</a>
-      <a href="#">내 상품</a>
+      <a href="/goods/mygoods.do">내 상품</a>
       <a href="/chat/list.do">셀파톡</a>
     </div>

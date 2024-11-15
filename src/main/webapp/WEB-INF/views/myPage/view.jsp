@@ -50,7 +50,7 @@
       <input type="date" id="birthday" name="birthday" value="${memberDTO.birthday}" readonly required>
       <div id="div_err_birthday" style="display: none;"></div>
       <br>
-      <button type="button" class="button confirmBtn" id="editBtn" onclick="enableEdit()">수정하기</button>
+      <button type="button" class="button confirmBtn" id="editBtn" onclick="enableEdit()" style="width: 100%">수정하기</button>
       <button type="submit" class="button confirmBtn" id="saveBtn" style="display: none;">저장하기</button>
       <button type="button" class="button2" id="deleteBtn" onclick="deleteGo()">회원 탈퇴</button>
     </form>

@@ -33,6 +33,7 @@
         </div>
 </main>
 
+
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
 </footer>
