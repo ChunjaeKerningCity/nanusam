@@ -143,6 +143,7 @@
     </div>
     <div class="col">
       채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
+      <br>
       상품 : ${chatGroupDTO.goodsName}
     </div>
     <div class="col">

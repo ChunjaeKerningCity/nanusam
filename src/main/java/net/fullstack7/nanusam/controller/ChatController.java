@@ -62,6 +62,7 @@ public class ChatController {
             return "redirect:/chat/list.do";
         }
         String memberId = (String) session.getAttribute("memberId");
+        log.info("unreadCount : " + chatGroupDTO.getUnreadCount());
         if(chatGroupDTO.getUnreadCount()>0) {
             int readResult = chatService.readMessages(groupIdx, memberId);
             if (readResult <= 0) {
