@@ -72,30 +72,7 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="../../../resources/scripts/myPage/view.js"></script>
 <script>
-  function deleteGo() {
-    if (confirm("정말로 탈퇴하시겠습니까?")) {
-      const memberId = document.getElementById("memberId").value;
 
-      fetch(`/member/checkGoodsStatusY?memberId=${memberId}`)
-              .then(response => response.json())
-              .then(data => {
-                if (data.hasGoods) {
-                  if (confirm("현재 판매 중인 상품이 있습니다. 해당 상품들을 모두 판매불가로 전환하시겠습니까?")) {
-                    document.getElementById("modifyForm").action = "/member/delete.do";
-                    document.getElementById("modifyForm").submit();
-                  }
-                } else {
-                  // 판매 중인 상품이 없는 경우 바로 탈퇴 처리
-                  document.getElementById("modifyForm").action = "/member/delete.do";
-                  document.getElementById("modifyForm").submit();
-                }
-              })
-              .catch(error => {
-                console.error("탈퇴 요청 중 오류가 발생했습니다.", error);
-                alert("탈퇴 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
-              });
-    }
-  }
   // 백엔드 오류메세지
   const svrValidateResult = {};
   <c:forEach items="${errors2}" var="err">
