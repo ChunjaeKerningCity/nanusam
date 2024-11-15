@@ -26,11 +26,11 @@
     <select id="unreadCount" resultType="Integer">
         SELECT COUNT(*)
         FROM tbl_alert
-        WHERE memberId=#{memberId} AND readChk='N'
+        WHERE memberId=#{memberId} AND (readChk &lt; 2)
     </select>
-    <update>
+    <update id="modifyStatus">
         UPDATE tbl_alert
-        SET readChk='O'
-        WHERE memberId=#{memberId} AND readChk='N'
+        SET readChk=readChk+1
+        WHERE memberId=#{memberId} AND (readChk &lt; 2)
     </update>
 </mapper>

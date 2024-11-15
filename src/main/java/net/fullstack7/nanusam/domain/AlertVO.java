@@ -14,6 +14,6 @@ public class AlertVO {
     private int idx;
     private String memberId;
     private String content;
-    private String readChk;
+    private int readChk;
     private LocalDateTime regDate;
 }

@@ -16,7 +16,7 @@ public class AlertDTO {
     private int idx;
     private String memberId;
     private String content;
-    private String readChk;
+    private int readChk;
     private LocalDateTime regDate;
     @Builder.Default
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
