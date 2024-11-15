@@ -2,13 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.MainMapper">
-  <select id="mainViewGoodsList">
+  <select id="mainViewGoodsList" resultType="net.fullstack7.nanusam.domain.GoodsVO">
     SELECT
       idx,
       name,
       price,
       regDate
     FROM
-      tbl_goods;
+      tbl_goods
+    ORDER BY regDate DESC
+      LIMIT #{offset}, #{limit}
   </select>
 </mapper>

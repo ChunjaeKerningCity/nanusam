@@ -16,13 +16,15 @@ import org.springframework.stereotype.Service;
 public class MainServiceImpl implements MainService {
   private final MainMapper mainXmlMapper;
   private final ModelMapper modelmapper;
+  private static final int PAGE_SIZE = 10;
 
   // 메인 페이지 상품 리스트
   @Override
-  public List<GoodsDTO> mainViewGoodsList() {
-    List<GoodsVO> voList = mainXmlMapper.mainViewGoodsList();
-    return voList.stream().map(vo -> modelmapper.map(vo, GoodsDTO.class)).collect(Collectors.toList());
+  public List<GoodsDTO> mainViewGoodsList(int page) {
+    int offset = (page - 1) * PAGE_SIZE;
+    List<GoodsVO> voList = mainXmlMapper.mainViewGoodsList(offset, PAGE_SIZE);
+    return voList.stream()
+        .map(vo -> modelmapper.map(vo, GoodsDTO.class))
+        .collect(Collectors.toList());
   }
-
-  // 무한스크롤
 }
