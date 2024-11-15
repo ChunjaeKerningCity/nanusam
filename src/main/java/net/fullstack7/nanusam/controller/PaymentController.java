@@ -114,4 +114,34 @@ public class PaymentController {
 
         return "payment/view";
     }
+
+    @GetMapping("/deliveryStart.do")
+    public String deliveryStartGet(@RequestParam(defaultValue = "0") int idx, RedirectAttributes redirectAttributes, HttpSession session, @RequestParam(defaultValue = "1") int page_no) {
+
+        if(idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "결제 정보가 없습니다.");
+            return "redirect:/goods/mygoods.do?page_no=" + page_no;
+        }
+
+        String errors = paymentService.deliveryStart(idx, session.getAttribute("memberId").toString());
+
+        redirectAttributes.addFlashAttribute("errors", errors);
+
+        return "redirect:/goods/mygoods.do?page_no=" + page_no;
+    }
+
+    @GetMapping("/deliveryEnd.do")
+    public String deliveryEndGet(@RequestParam(defaultValue = "0") int idx, RedirectAttributes redirectAttributes, HttpSession session) {
+
+        if(idx == 0) {
+            redirectAttributes.addFlashAttribute("errors", "결제 정보가 없습니다.");
+            return "redirect:/payment/list.do?";
+        }
+
+        String errors = paymentService.deliveryEnd(idx, session.getAttribute("memberId").toString());
+
+        redirectAttributes.addFlashAttribute("errors", errors);
+
+        return "redirect:/payment/view.do?idx=" + idx;
+    }
 }

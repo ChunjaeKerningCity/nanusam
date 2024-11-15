@@ -106,6 +106,7 @@
             and deliveryStatus=#{searchCategory}
         </if>
     </select>
+
     <select id="viewWithGoods" resultMap="paymentWithGoodsResultMap">
         SELECT
             p.idx AS payment_idx,
@@ -151,4 +152,14 @@
     <delete id="deleteByIdx">
         delete from tbl_payment where idx=#{idx}
     </delete>
+
+    <update id="modifyDeliveryStatus">
+        update tbl_payment set deliveryStatus = #{deliveryStatus} where idx=#{idx}
+        <if test="buyer != null and buyer != ''">
+            and buyer = #{buyer}
+        </if>
+        <if test="seller != null and seller != ''">
+            and seller = #{seller}
+        </if>
+    </update>
 </mapper>

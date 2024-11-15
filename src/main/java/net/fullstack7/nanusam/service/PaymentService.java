@@ -8,4 +8,6 @@ public interface PaymentService {
     String regist(PaymentDTO dto);
     PageResponseDTO<PaymentDTO> listWithGoodsByBuyer(PageRequestDTO pageRequestDTO);
     PaymentDTO view(int idx);
+    String deliveryStart(int idx, String seller);
+    String deliveryEnd(int idx, String buyer);
 }

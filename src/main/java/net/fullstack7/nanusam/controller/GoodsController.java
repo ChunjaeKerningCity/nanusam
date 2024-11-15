@@ -126,8 +126,7 @@ public class GoodsController {
 
         model.addAttribute("categories", goodsService.codeList("goods"));
         model.addAttribute("item", goodsDTO);
-        List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("상품", idx);
-
+        List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("07", idx);
 
         model.addAttribute("orgMainImage", list.remove(0));
         model.addAttribute("images", list);
@@ -306,8 +305,8 @@ public class GoodsController {
                 dto.setFileExt(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
                 dto.setFileContentType(file.getContentType());
                 dto.setFileSize(file.getSize());
-                dto.setBbsCode("상품");
                 dto.setOrgFileName(file.getOriginalFilename());
+                dto.setBbsCode("07");
 
 //                파일 데이터 db에 저장하는 코드
 //                dto.setFileData(file.getBytes());

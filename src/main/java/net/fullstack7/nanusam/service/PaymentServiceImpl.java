@@ -69,4 +69,50 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentMapper.viewWithGoods(idx);
     }
 
+    @Override
+    public String deliveryStart(int idx, String seller) {
+
+        PaymentDTO dto = paymentMapper.viewWithGoods(idx);
+
+        if(dto == null) {
+            return "결제 정보가 없습니다.";
+        }
+
+        if(!dto.getSeller().equals(seller)) {
+            return "상품 판매자만 접근 가능합니다.";
+        }
+
+        if(!dto.getDeliveryStatus().equals("0")) {
+            return "이미 배송한 상품입니다.";
+        }
+
+        paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).seller(seller).deliveryStatus("1").build());
+
+        return "배송 시작";
+    }
+
+    @Override
+    public String deliveryEnd(int idx, String buyer) {
+        PaymentDTO dto = paymentMapper.viewWithGoods(idx);
+
+        if(dto == null) {
+            return "결제 정보가 없습니다.";
+        }
+
+        if(!dto.getBuyer().equals(buyer)) {
+            return "상품 구매자만 접근 가능합니다.";
+        }
+
+        if(dto.getDeliveryStatus().equals("2")) {
+            return "이미 배송 완료된 상품입니다.";
+        }
+        if(dto.getDeliveryStatus().equals("0")) {
+            return "아직 배송되지 않은 상품입니다.";
+        }
+
+        paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).buyer(buyer).deliveryStatus("2").build());
+
+        return "배송 완료";
+    }
+
 }
