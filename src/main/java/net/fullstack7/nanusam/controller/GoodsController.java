@@ -22,6 +22,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -40,6 +41,11 @@ public class GoodsController {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/goods/list.do";
         }
+        List<String> status = new ArrayList<>();
+        status.add("Y");
+        status.add("R");
+        pageRequestDTO.setStatus(status);
+
         model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
         model.addAttribute("categories", goodsService.codeList("goods"));
         return "goods/list";
@@ -191,9 +197,29 @@ public class GoodsController {
         return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
     }
 
-    @GetMapping("delete.do")
+    @GetMapping("/delete.do")
     public String deleteGet() {
         return "goods/delete";
+    }
+
+    @GetMapping("/mygoods.do")
+    public String mygoods(HttpSession session, Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            return "redirect:/goods/mygoods.do";
+        }
+
+        pageRequestDTO.setMemberId(session.getAttribute("memberId").toString());
+
+        List<String> status = new ArrayList<>();
+        status.add("Y");
+        status.add("R");
+        status.add("N");
+        pageRequestDTO.setStatus(status);
+
+        model.addAttribute("pageinfo", goodsService.listByPage(pageRequestDTO));
+        model.addAttribute("categories", goodsService.codeList("goods"));
+        return "goods/mygoods";
     }
 
     private String uploadFile(String orgName, String newName, byte[] fileData) throws Exception {

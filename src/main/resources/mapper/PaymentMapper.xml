@@ -72,7 +72,7 @@
             g.category,
             g.reservationId
         FROM tbl_payment p
-        left outer join tbl_goods g ON p.goodsIdx = g.idx
+        inner join tbl_goods g ON p.goodsIdx = g.idx
         WHERE p.idx > 0
         <choose>
             <when test="memberId != null and memberId != '' ">
