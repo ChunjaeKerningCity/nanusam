@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.controller;
 
+import java.lang.reflect.Member;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.service.AdminService;
 import net.fullstack7.nanusam.service.BbsService;
+import net.fullstack7.nanusam.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/admin")
 public class AdminController {
     private final AdminService adminService;
+    private final MemberService memberService;
     private final BbsService bbsService;
 
     @GetMapping("/login.do")
@@ -82,22 +85,22 @@ public class AdminController {
         return "redirect:/admin/memberMm.do";
     }
 
-    @PostMapping("/deleteMember.do")
-    public String deleteMember(@RequestParam("memberId") String memberId,
-        RedirectAttributes redirectAttributes) {
-        boolean insertedToSecession = adminService.insertSecessionMember(memberId);
-        if (insertedToSecession) {
-            boolean deleted = adminService.deleteMember(memberId);
-            if (deleted) {
-                redirectAttributes.addFlashAttribute("errors", "회원이 성공적으로 삭제되었습니다.");
-            } else {
-                redirectAttributes.addFlashAttribute("errors", "회원 삭제에 실패했습니다.");
-            }
-        } else {
-            redirectAttributes.addFlashAttribute("errors", "회원 정보를 탈퇴 테이블에 삽입하는 데 실패했습니다.");
-        }
-        return "redirect:/admin/memberMm.do";
-    }
+//    @PostMapping("/deleteMember.do")
+//    public String deleteMember(@RequestParam("memberId") String memberId,
+//        RedirectAttributes redirectAttributes) {
+//        boolean insertedToSecession = adminService.insertSecessionMember(memberId);
+//        if (insertedToSecession) {
+//            boolean deleted = adminService.deleteMember(memberId);
+//            if (deleted) {
+//                redirectAttributes.addFlashAttribute("errors", "회원이 성공적으로 삭제되었습니다.");
+//            } else {
+//                redirectAttributes.addFlashAttribute("errors", "회원 삭제에 실패했습니다.");
+//            }
+//        } else {
+//            redirectAttributes.addFlashAttribute("errors", "회원 정보를 탈퇴 테이블에 삽입하는 데 실패했습니다.");
+//        }
+//        return "redirect:/admin/memberMm.do";
+//    }
 
     @GetMapping("/noticeMm.do")
     public String noticeList(Model model) {
@@ -134,4 +137,18 @@ public class AdminController {
         }
         return "redirect:/admin/goodsMm.do";
     }
+
+    @PostMapping("/deleteMember.do")
+    public String deleteMember(@RequestParam String memberId, RedirectAttributes redirectAttributes, HttpSession session) {
+        if (memberService.dontDelete(memberId)) {
+            redirectAttributes.addFlashAttribute("errors", "탈퇴가 불가합니다. 현재 예약 중이거나 배송 중인 상품이 있습니다.");
+            return "redirect:/admin/memberMm.do"; // 관리자 전용 페이지로 리디렉션
+        }
+
+        memberService.goDelete(memberId);
+        redirectAttributes.addFlashAttribute("errors", "탈퇴가 완료되었습니다.");
+        session.invalidate();
+        return "redirect:/admin/memberMm.do";
+    }
+
 }
