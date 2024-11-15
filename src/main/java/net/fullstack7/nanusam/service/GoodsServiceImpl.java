@@ -35,6 +35,18 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public PageResponseDTO<GoodsDTO> listWithPayInfo(PageRequestDTO requestDTO) {
+        List<GoodsDTO> list = goodsMapper.listWithPayment(requestDTO)
+                .stream().map(vo -> modelMapper.map(vo, GoodsDTO.class)).collect(Collectors.toList());
+        PageResponseDTO<GoodsDTO> responseDTO = PageResponseDTO.<GoodsDTO>withAll()
+                .dtoList(list)
+                .reqDTO(requestDTO)
+                .total_count(goodsMapper.totalCount(requestDTO))
+                .build();
+        return responseDTO;
+    }
+
+    @Override
     public int totalCount() {
         return 0;
     }
