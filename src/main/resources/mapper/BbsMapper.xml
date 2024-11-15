@@ -9,6 +9,7 @@
     <select id="totalCount" resultType="int">
         SELECT COUNT(*) AS total_count
         FROM tbl_bbs
+        where idx > 0
     </select>
 
     <select id="list" resultType="net.fullstack7.nanusam.domain.BbsVO">
@@ -21,6 +22,7 @@
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.BbsVO">
         SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
         FROM tbl_bbs
+        where idx > 0
         ORDER BY idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>

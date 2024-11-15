@@ -66,27 +66,31 @@ public class CartController {
             @Valid CartDTO dto
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
-            , Model model
+            , @RequestParam("goodsIdx") int goodsIdx
+            , @RequestParam("memberId") String memberId
     ){
         log.info("============================");
         log.info("addPost");
+        dto.setMemberId(memberId);
+        dto.setGoodsIdx(goodsIdx);
 
         if(bindingResult.hasErrors()) {
-            log.info("addPost ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            log.info("addPost ERROR");
             return "redirect:/cart/add.do";
         }
 
         if(cartService.existCart(dto)){
-            redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 해당 상품이 존재합니다.");
-            log.info("이미 장바구니에 존재");
+            redirectAttributes.addFlashAttribute("errors", "장바구니에 해당 상품이 존재합니다.");
+            log.info("Alert Message: " + redirectAttributes.getFlashAttributes().get("alertMessage"));
             return "redirect:/goods/list.do";
         }
-
+        else{
         cartService.add(dto);
+        redirectAttributes.addFlashAttribute("errors", "장바구니에 담았습니다.");
         log.info("dto: "+dto);
         log.info("===========================");
-
+        }
         return "redirect:/cart/list.do";
     }
 

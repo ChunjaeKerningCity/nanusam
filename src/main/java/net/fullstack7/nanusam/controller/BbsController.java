@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,9 +43,14 @@ public class BbsController {
         }
 
         PageResponseDTO pageResponseDTO = bbsService.listByPage(pageRequestDTO);
+        log.info("pageResponseDTO"+pageResponseDTO);
         model.addAttribute("bbsList", pageResponseDTO);
 
-//        log.info("bbsList : "+ pageResponseDTO);
+        if (pageResponseDTO == null) {
+            log.info("pageResponseDTO is null");
+        } else {
+            log.info("bbsListStart : " + pageResponseDTO.getPage_no());
+        }
 //        log.info("BbsController >> list END");
 //        log.info("===========================");
         return "bbs/list";
