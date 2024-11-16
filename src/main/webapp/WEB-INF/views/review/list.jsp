@@ -233,9 +233,8 @@
 </script>
 <c:if test="${buyer}">
    <script>
-       let childWindow;
         function modify(idx){
-            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
+            window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
         }
    </script>
 </c:if>
