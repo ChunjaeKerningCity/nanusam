@@ -1,3 +1,19 @@
+function showMessage(field, isValid, message) {
+    const errorDiv = document.getElementById(`div_err_${field.id}`);
+    if (isValid) {
+        errorDiv.style.display = "none";
+        errorDiv.innerText = "";
+        field.classList.add("valid");
+        field.classList.remove("invalid");
+    } else {
+        errorDiv.style.display = "block";
+        errorDiv.innerText = message;
+        field.classList.add("invalid");
+        field.classList.remove("valid");
+    }
+}
+
+
 // 유효성검사 시작
 document.addEventListener("DOMContentLoaded", function () {
     const phoneInput = document.getElementById("phone");
@@ -5,21 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const zipCodeInput = document.getElementById("zipCode");
     const addr1Input = document.getElementById("addr1");
     const addr2Input = document.getElementById("addr2");
-
-
-    function showMessage(field, isValid, message) {
-        const messageEl = field.nextElementSibling;
-        if (isValid) {
-            messageEl.style.display = "none";
-            field.classList.add("valid");
-            field.classList.remove("invalid");
-        } else {
-            messageEl.style.display = "block";
-            messageEl.innerText = message;
-            field.classList.add("invalid");
-            field.classList.remove("valid");
-        }
-    }
 
     phoneInput.addEventListener("keyup", function () {
         const phoneRegex = /^[0-9]{11}$/;
@@ -95,11 +96,9 @@ function enforceReadOnly(field) {
 
 document.addEventListener("DOMContentLoaded", () => {
     const memberIdField = document.getElementById("memberId");
-    const nameField = document.getElementById("name");
     const zipCodeField = document.getElementById("zipCode");
     const addr1Field = document.getElementById("addr1");
     enforceReadOnly(memberIdField);
-    enforceReadOnly(nameField);
     enforceReadOnly(zipCodeField);
     enforceReadOnly(addr1Field);
 });
@@ -118,8 +117,7 @@ function enableEdit() {
 //삭제
 function deleteGo() {
     if (confirm("정말로 탈퇴하시겠습니까?")) {
-
-        fetch(`/member/checkGoodsStatusY?memberId=${memberId}`)
+        fetch(`/member/checkGoodsStatusY.do`)
             .then(response => response.json())
             .then(data => {
                 if (data.hasGoods) {
@@ -134,7 +132,7 @@ function deleteGo() {
                 }
             })
             .catch(error => {
-                console.error("탈퇴 요청 중 오류가 발생했습니다.", error);
+                console.error(`탈퇴 처리 중 문제가 발생했습니다: ${error.message}`);
                 alert("탈퇴 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
             });
     }

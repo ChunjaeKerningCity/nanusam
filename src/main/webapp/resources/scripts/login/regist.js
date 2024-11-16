@@ -17,59 +17,42 @@ function checkId() {
     })
         .then(response => response.json())
         .then(data => {
-            const idCheckResult = document.getElementById("idCheckResult");
+            const errorDiv = document.getElementById("div_err_memberId");
             if (data.available) {
-                idCheckResult.textContent = "사용 가능한 아이디입니다.";
-                idCheckResult.style.color = "green";
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "사용 가능한 아이디입니다.";
+                errorDiv.style.color = "green";
                 isIdChecked = true;
             } else {
-                idCheckResult.textContent = "이미 사용 중인 아이디입니다.";
-                idCheckResult.style.color = "red";
+                errorDiv.style.display = "block";
+                errorDiv.textContent = "이미 사용 중인 아이디입니다.";
+                errorDiv.style.color = "red";
                 isIdChecked = false;
             }
         })
         .catch(error => {
-            const idCheckResult = document.getElementById("idCheckResult");
-            idCheckResult.textContent = "중복 확인에 실패했습니다.";
-            idCheckResult.style.color = "red";
+            const errorDiv = document.getElementById("div_err_memberId");
+            errorDiv.textContent = "중복 확인에 실패했습니다.";
+            errorDiv.style.color = "red";
             isIdChecked = false;
         });
 }
+
 function showMessage(field, isValid, message) {
-    const messageEl = field.nextElementSibling;
+    const errorDiv = document.getElementById(`div_err_${field.id}`);
     // const messageEl = document.querySelector(".error .error-"+field.name);
     if (isValid) {
-        messageEl.style.display = "none";
+        errorDiv.style.display = "none";
+        errorDiv.innerText = "";
         field.classList.add("valid");
         field.classList.remove("invalid");
     } else {
-        messageEl.style.display = "block";
-        messageEl.innerText = message;
+        errorDiv.style.display = "block";
+        errorDiv.innerText = message;
         field.classList.add("invalid");
         field.classList.remove("valid");
     }
 }
-/*
-function showMessage2(field, isValid, message) {
-    // const messageEl = field.nextElementSibling;
-    console.log("field.name : "+ field.name);
-    alert("field.name : "+ field.name);
-    const messageEl = document.querySelector("#div_err_"+field.name);
-
-    if (isValid) {
-        messageEl.style.display = "none";
-        messageEl.innerText = "";
-        //field.classList.add("valid");
-        //field.classList.remove("invalid");
-    } else {
-        messageEl.style.display = "block";
-        messageEl.innerText = "<span style='color:red'>"+message+"</span>";
-        //field.classList.add("invalid");
-        //field.classList.remove("valid");
-    }
-}
-*/
-
 
 // 유효성검사 시작
 document.addEventListener("DOMContentLoaded", function () {
@@ -83,42 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addr2Input = document.getElementById("addr2");
     const checkIdButton = document.querySelector("button[onclick='checkId()']");
 
-
-    /*function showMessage(field, isValid, message) {
-        const messageEl = field.nextElementSibling;
-        // const messageEl = document.querySelector(".error .error-"+field.name);
-        if (isValid) {
-            messageEl.style.display = "none";
-            field.classList.add("valid");
-            field.classList.remove("invalid");
-        } else {
-            messageEl.style.display = "block";
-            messageEl.innerText = message;
-            field.classList.add("invalid");
-            field.classList.remove("valid");
-        }
-    }
-
-    function showMessage2(field, isValid, message) {
-        // const messageEl = field.nextElementSibling;
-        console.log("field.name : "+ field.name);
-        alert("field.name : "+ field.name);
-        const messageEl = document.querySelector("#div_err_"+field.name);
-
-        if (isValid) {
-            messageEl.style.display = "none";
-            messageEl.innerText = "";
-            //field.classList.add("valid");
-            //field.classList.remove("invalid");
-        } else {
-            messageEl.style.display = "block";
-            messageEl.innerText = "<span style='color:red'>"+message+"</span>";
-            //field.classList.add("invalid");
-            //field.classList.remove("valid");
-        }
-    }*/
-
-
     memberIdInput.addEventListener("keyup", function () {
         const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,14}$/;
         if (idRegex.test(memberIdInput.value)) {
@@ -128,12 +75,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
             checkIdButton.classList.remove("disabled");
             checkIdButton.disabled = false;
+            checkIdButton.style.backgroundColor = "#fff1aa";
         } else {
             //showMessage2(memberIdInput, false, "dd");
             showMessage(memberIdInput, false, "아이디는 영문자로 시작하고 5~15자의 영문자와 숫자만 사용 가능합니다.");
 
             checkIdButton.classList.add("disabled");
             checkIdButton.disabled = true;
+            checkIdButton.style.backgroundColor = "#f0f0f0";
         }
     });
 

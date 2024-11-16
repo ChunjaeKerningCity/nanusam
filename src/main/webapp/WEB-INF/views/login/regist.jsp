@@ -30,47 +30,31 @@
         <div class="cardContainerTop">
             <form id="registerForm" class="regist-form" method="post" action="/login/regist.do" autocomplete="off">
                 <h2>회원가입</h2>
-<%--                <div class="form-row">--%>
+                <div class="form-row">
                     <input type="text" id="memberId" name="memberId" maxlength="15" minlength="5" value="${memberDTO.memberId}" placeholder="아이디" required>
-                    <span class="message"></span>
-                    <span class="error-memberId"></span>
-                    <button type="button"  onclick="checkId()" disabled class="button confirmBtn" style="width: 100%"> 중복 확인 </button>
-<%--                </div>--%>
-                <span id="idCheckResult"></span>
-                <div id="div_err_memberId" style="display: none;"></div>
+                    <button type="button"  onclick="checkId()" disabled class="button confirmBtn" style="width: 100%; background-color: #F0F0F0"> 중복 확인 </button>
+                </div>
+                <div id="div_err_memberId" class="div_err"></div>
                 <input type="password" id="pwd" name="pwd" maxlength="20" minlength="8" value="${memberDTO.pwd}" placeholder="비밀번호" required>
-                <span class="message"></span>
-                <span class="error-pwd"></span>
-                <div id="div_err_pwd" style="display: none;"></div>
-                <br>
+                <div id="div_err_pwd" class="div_err"></div>
                 <input type="text" id="name" name="name" maxlength="10" minlength="2" value="${memberDTO.name}" placeholder="이름" required>
-                <span class="message"></span>
                 <span class="error-name"></span>
-                <div id="div_err_name" style="display: none;"></div>
-                <br>
-<%--                <div class="form-row">--%>
+                <div id="div_err_name" class="div_err"></div>
+                <div class="form-row">
                     <input type="text" id="zipCode" name="zipCode" value="${memberDTO.zipCode}" readonly placeholder="우편번호" required>
-                     <span class="message"></span>
-                    <div id="div_err_zipCode" style="display: none;"></div>
+                    <div id="div_err_zipCode" ></div>
                     <input class="button confirmBtn" type="button" onclick="goZip()" value="우편번호 찾기" style="width: 100%" />
-<%--                </div>--%>
+                </div>
                 <input type="text" id="addr1" name="addr1" value="${memberDTO.addr1}" readonly placeholder="주소" required>
-                <div id="div_err_addr1" style="display: none;"></div>
-                <br>
+                <div id="div_err_addr1" class="div_err"></div>
                 <input type="text" id="addr2" name="addr2" value="${memberDTO.addr2}" placeholder="상세 주소" required>
-                <div id="div_err_addr2" style="display: none;"></div>
-                <br>
+                <div id="div_err_addr2"class="div_err" ></div>
                 <input type="text" id="phone" name="phone" maxlength="11" minlength="11" value="${memberDTO.phone}" placeholder="휴대폰 번호" required>
-                <span class="message"></span>
-                <div id="div_err_phone" style="display: none;"></div>
-                <br>
+                <div id="div_err_phone" class="div_err"></div>
                 <input type="email" id="email" name="email" value="${memberDTO.email}" placeholder="이메일" required>
-                <span class="message"></span>
-                <div id="div_err_email" style="display: none;"></div>
-                <br>
+                <div id="div_err_email" class="div_err"></div>
                 <input type="date" id="birthday" name="birthday" value="${memberDTO.birthday}" placeholder="생일" required>
-                <div id="div_err_birthday" style="display: none;"></div>
-                <br>
+                <div id="div_err_birthday" class="div_err"></div>
                 <button type="submit" class="button confirmBtn" style="width: 100%">회원가입</button>
             </form>
         </div>
