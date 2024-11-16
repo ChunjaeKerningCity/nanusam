@@ -103,7 +103,7 @@
                     <input type="reset" id="btnReset" class="button cancelBtn" value="초기화"/>
                 </div>
                 <div class="btn-group" role="group" aria-label="Third group">
-                    <button type="button" class="button confirmBtn" style="background-color: #F0F0F0">상품 목록</button>
+                    <button onclick="location.href='/goods/list.do'" type="button" class="button confirmBtn" style="background-color: #F0F0F0">상품 목록</button>
                 </div>
             </div>
         </div>
