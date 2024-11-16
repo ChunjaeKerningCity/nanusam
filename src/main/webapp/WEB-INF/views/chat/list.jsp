@@ -84,6 +84,17 @@
         .messageCont{
             width : 60%;
         }
+        .goods_img img {
+            width: 80px; /* 이미지 너비 조정 */
+            height: auto; /* 비율에 맞게 높이 자동 조정 */
+            border-radius: 5px; /* 이미지를 둥글게 처리 (선택사항) */
+        }
+
+        .chat_goods {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px; /* 상품명 아래 여백 추가 */
+        }
     </style>
 </head>
 <body>
@@ -100,7 +111,8 @@
                 <c:if test="${not empty chat.lastMessage.content}" var="lastMessage"/>
 
                 <td>
-                    <div>${chat.goodsName}</div>
+                    <div class="chat_goods">${chat.goodsName}</div>
+                    <div class="goods_img"><img src="/resources/image/goods_${chat.goodsIdx}_0.png" alt=""></div>
                 </td>
                 <td class="${(sender eq chat.lastMessage.senderId) and (chat.unreadCount gt 0) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
                     <div>${sender eq chat.seller ? chat.sellerName : chat.customerName}</div>

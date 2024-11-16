@@ -2,9 +2,11 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.dto.AlertDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PaymentDTO;
+import net.fullstack7.nanusam.service.AlertService;
 import net.fullstack7.nanusam.service.GoodsService;
 import net.fullstack7.nanusam.service.PaymentService;
 import org.springframework.stereotype.Controller;
@@ -27,7 +29,7 @@ import javax.validation.Valid;
 public class PaymentController {
     private final PaymentService paymentService;
     private final GoodsService goodsService;
-
+    private final AlertService alertService;
     @GetMapping("list.do")
     public String list(HttpSession session, Model model, @Valid PageRequestDTO pageRequestDTO) {
 
@@ -88,6 +90,10 @@ public class PaymentController {
             return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
         }
 
+        alertService.regist(AlertDTO.builder()
+                        .memberId(paymentDTO.getSeller())
+                        .content(paymentDTO.getGoodsInfo().getName()+"상품이 결제되었습니다.")
+                .build());
         return "redirect:/payment/list.do";
     }
 
@@ -124,9 +130,12 @@ public class PaymentController {
         }
 
         String errors = paymentService.deliveryStart(idx, session.getAttribute("memberId").toString());
-
-        redirectAttributes.addFlashAttribute("errors", errors);
-
+        String[] result = errors.split("::");
+        redirectAttributes.addFlashAttribute("errors", result[0]);
+        alertService.regist(AlertDTO.builder()
+                        .memberId(result[1])
+                        .content(result[2]+"상품의 배송이 시작되었습니다.")
+                .build());
         return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
 
@@ -139,9 +148,12 @@ public class PaymentController {
         }
 
         String errors = paymentService.deliveryEnd(idx, session.getAttribute("memberId").toString());
-
-        redirectAttributes.addFlashAttribute("errors", errors);
-
+        String[] result = errors.split("::");
+        redirectAttributes.addFlashAttribute("errors", result[0]);
+        alertService.regist(AlertDTO.builder()
+                .memberId(result[1])
+                .content(result[2]+"상품의 배송이 시작되었습니다.")
+                .build());
         return "redirect:/payment/view.do?idx=" + idx;
     }
 }

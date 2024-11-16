@@ -2,13 +2,14 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.dto.AlertDTO;
 import net.fullstack7.nanusam.dto.FileDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
+import net.fullstack7.nanusam.service.AlertService;
 import net.fullstack7.nanusam.service.GoodsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.File;
@@ -33,6 +33,7 @@ import java.util.UUID;
 @RequestMapping("/goods")
 public class GoodsController {
     private final GoodsService goodsService;
+    private final AlertService alertService;
     private final String uploadDir = "D:\\java7\\nanusam\\src\\main\\webapp\\resources\\image";
 
     @GetMapping("/list.do")
@@ -236,9 +237,12 @@ public class GoodsController {
         }
 
         String errors = goodsService.cancelReservation(GoodsDTO.builder().memberId(session.getAttribute("memberId").toString()).idx(idx).build());
-
-        redirectAttributes.addFlashAttribute("errors", errors);
-
+        String[] result = errors.split("::");
+        redirectAttributes.addFlashAttribute("errors", result[0]);
+        alertService.regist(AlertDTO.builder()
+                .memberId(result[1])
+                .content(result[2]+" 상품의 예약이 취소되었습니다.")
+                .build());
         return "redirect:/goods/mygoods.do?page_no="+page_no;
     }
 

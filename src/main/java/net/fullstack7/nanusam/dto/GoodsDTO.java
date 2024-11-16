@@ -41,21 +41,24 @@ public class GoodsDTO {
     // Formatter
     private String regDateStr;
     @Builder.Default
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public void setRegDate(LocalDateTime regDate) {
         this.regDate = regDate;
         regDateStr = formatter.format(regDate);
     }
-
     private String modifyDateStr;
-    @Builder.Default
-    private DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public void setModifyDate(LocalDateTime modifyDate) {
         this.modifyDate = modifyDate;
         if(modifyDate == null) {
             modifyDateStr = "변경 X";
             return;
         }
-        modifyDateStr = formatter2.format(modifyDate);
+        modifyDateStr = formatter.format(modifyDate);
+    }
+
+    //setIdx 할때 setMainImageName 하는거
+    public void setIdx(int idx) {
+        this.idx = idx;
+        setMainImageName("goods_"+this.idx+"_0.png");
     }
 }

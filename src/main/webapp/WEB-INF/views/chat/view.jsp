@@ -16,13 +16,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
       /* General styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f7f9;
-      color: #333;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7f9;
+        color: #333;
+      }
     div {
       margin-bottom: 10px;
     }
@@ -130,21 +130,55 @@
       margin-top: -8px;
       margin-bottom: 8px;
     }
-  </style>
+
+      /* Chat header styling */
+      .chat_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chat_other {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .chat_goods {
+        display: flex;
+        align-items: center; /* 세로 정렬 */
+        font-size: 14px;
+      }
+
+      .goods_img {
+        width: 50px; /* 이미지 크기 조정 */
+        height: 50px;
+        margin-right: 10px; /* 이미지와 텍스트 사이 간격 */
+        object-fit: cover; /* 이미지 비율을 유지하면서 크기 맞추기 */
+      }
+
+      .goods_name {
+        font-weight: bold;
+        white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
+      }
+
   </style>
 </head>
 <body>
 <c:set var="loginId" value="${sessionScope.memberId}"/>
 <input type="hidden" id="chatId" value="${other}"/>
 <div id="chat_title" class="container text-center">
-  <div class="row">
+  <div class="row chat_header">
     <div class="col">
       <button type="button" class="btn btn-secondary" onclick="location.href='/chat/list.do'">◀</button>
     </div>
     <div class="col">
+      <div class="chat_other">
       채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
-      <br>
-      상품 : ${chatGroupDTO.goodsName}
+      </div>
+      <div class="chat_goods">
+        <img class="goods_img" src="/resources/image/goods_${goodsIdx}_0.png" alt="">
+        <span class="goods_name">상품 : ${chatGroupDTO.goodsName}</span>
+      </div>
     </div>
     <div class="col">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -225,11 +259,11 @@
 
   webSocket.onopen = function(event){
     // 웹소켓 초기화
-    chatWindow.innerHTML += "웹소켓 서버에 연결되었습니다.</br>";
+    chatWindow.innerHTML += "채팅방 입장</br>";
   };
 
   webSocket.onclose = function(event){
-    chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다</br>"
+    chatWindow.innerHTML += "채팅방 종료</br>"
   };
 
   webSocket.onerror = function(event){
