@@ -11,7 +11,7 @@ public interface CartService {
     public List<CartDTO> list();
     public List<CartDTO> list(String memberId);
     public PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO);
-    void add(CartDTO dto);
+    String add(CartDTO dto);
 
     boolean existCart(CartDTO dto);
 
