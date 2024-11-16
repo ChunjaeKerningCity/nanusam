@@ -23,7 +23,16 @@ public class LoginFilter  implements Filter {
 
         if(request.getSession().getAttribute("memberId") == null){
             // 문제 있으면 이 부분 지우셈...
-            String originalURL = request.getRequestURI();
+            //String originalURL = request.getRequestURI();
+            String originalURL = request.getHeader("Referer");
+
+//            if (originalURL == null || originalURL.isEmpty()) {
+//                originalURL = request.getRequestURI();
+//                if (request.getQueryString() != null) {
+//                    originalURL += "?" + request.getQueryString();
+//                }
+//            }
+
             if (request.getQueryString() != null) {
                 originalURL += "?" + request.getQueryString();
             }

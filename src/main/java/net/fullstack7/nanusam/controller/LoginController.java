@@ -28,7 +28,7 @@ public class LoginController {
     @GetMapping("/login.do")
     public String login(HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
         if(session.getAttribute("memberId") != null){
-            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 해당 페이지에 접근할 수 없습니다.");
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
             return "redirect:/";
         }
         return "login/login";
@@ -81,7 +81,7 @@ public class LoginController {
             HttpSession session, RedirectAttributes redirectAttributes) {
         String loginCheck = (String) session.getAttribute("memberId");
         if (loginCheck != null) {
-            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 해당 페이지에 접근할 수 없습니다.");
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
             return "redirect:/";
         }
         session.removeAttribute("termsAgree");
@@ -107,7 +107,7 @@ public class LoginController {
         Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
         String loginCheck = (String) session.getAttribute("memberId");
         if(loginCheck != null){
-            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 해당 페이지에 접근할 수 없습니다.");
+            redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
             return "redirect:/";
         }
         if (termsAgree == null || !termsAgree) {
