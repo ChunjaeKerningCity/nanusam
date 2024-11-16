@@ -62,7 +62,7 @@
                                 <h6 class="card-subtitle mb-2 text-body-secondary">${item.price} - ${item.quality}</h6>
                                 <p class="card-text">${item.content}</p>
                                 <a href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}" class="aHref" >찜</a>
-                                <a href="#" class="aHref" >바로구매</a>
+                                <a href="/payment/regist.do?goodsIdx=${item.idx}" class="aHref" >바로구매</a>
                                 <a href="/chat/fromGoods.do?seller=${item.memberId}&goodsIdx=${item.idx}" class="aHref" >셀파톡</a>
                             </div>
                         </div>

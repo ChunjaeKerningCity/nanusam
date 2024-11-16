@@ -8,14 +8,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>goods modify</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NanuSam</title>
+    <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
+    <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 </head>
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
-<div style="width: 70%; margin: auto; padding: 5rem">
+<header class="center">
+    <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
+    <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
+</header>
+
+<main>
+    <div style="width: 70%; margin: auto; padding: 5rem">
 
 
     <form action="/goods/modify.do?idx=${item.idx}" method="post" name="frmGoodsRegist" id="frmGoodsRegist" enctype="multipart/form-data">
@@ -100,18 +112,19 @@
         <div class="row">
             <div class="btn-toolbar justify-content-center" role="toolbar" aria-label="Toolbar with button groups">
                 <div class="btn-group me-2" role="group" aria-label="First group">
-                    <input type="submit" id="btnSubmit" class="btn btn-primary" value="등록" />
+                    <input type="submit" id="btnSubmit" class="button confirmBtn" value="등록" />
                 </div>
                 <div class="btn-group me-2" role="group" aria-label="Second group">
-                    <input type="reset" id="btnReset" class="btn btn-secondary" value="초기화"/>
+                    <input type="reset" id="btnReset" class="button cancelBtn" value="초기화"/>
                 </div>
                 <div class="btn-group" role="group" aria-label="Third group">
-                    <button type="button" class="btn btn-info">상품 목록</button>
+                    <button onclick="location.href='/goods/list.do'" type="button" class="button confirmBtn" style="background-color: #F0F0F0">상품 목록</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     function toggleDelete(no) {
