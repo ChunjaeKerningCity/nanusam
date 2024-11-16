@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 
-@WebFilter(urlPatterns = {"/member/*", "/payment/*","/review/*","/cart/*","/chat/*","/bbs/view.do","/goods/regist.do","/goods/modify.do","/goods/delete.do"})
+@WebFilter(urlPatterns = {"/member/*", "/payment/*","/review/*","/cart/*","/chat/*","/bbs/view.do","/goods/regist.do","/goods/modify.do","/goods/delete.do","/goods/direct.do", "/goods/cancel.do", "/goods/mygoods.do", "/goods/reservation.do"})
 public class LoginFilter  implements Filter {
 
     @Override
