@@ -9,6 +9,7 @@
     <title>NanuSam</title>
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
+    <link href="/resources/styles/bbs/listStyle.css" rel="stylesheet" />
 </head>
 <body>
 <header class="center">
@@ -20,14 +21,13 @@
 
 <main>
     <div>
-        <!-- 상세 내용 -->
         <div>
             <div>
                 <!-- 제목 및 작성자 정보 -->
                 <h2>${dto.title}</h2>
                 <div>
                     <span><strong>작성자:</strong> ${dto.memberId}</span>
-                    <span><strong>작성일:</strong> ${dto.regDate}</span>
+                    <span><strong>작성일:</strong> ${dto.regDateStr}</span>
                     <span><strong>조회수:</strong> ${dto.readCnt}</span>
                 </div>
                 <!-- 본문 내용 -->
@@ -36,16 +36,6 @@
                 </div>
 
                 <a href="/bbs/list.do" class="btn-back">목록보기</a>
-
-                <c:if test="">
-
-                </c:if>
-                <div class="form-group row justify-content-center mt-3">
-                    <div class="col">
-                        <button type="button" class="btnModify" onclick="javascript:location.href='/bbs/modify.do?idx=${dto.idx}'">수정</button>
-                        <button type="button" class="btnDelete" onclick="javascript:location.href='/bbs/delete.do?idx=${dto.idx}'">삭제</button>
-                    </div>
-                </div>
             </div>
         </div>
         <!--// 상세 내용 -->

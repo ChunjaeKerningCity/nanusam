@@ -101,4 +101,11 @@
     SET status = #{status}
     WHERE idx = #{idx};
   </update>
+
+<!--  관리자인지 확인 Filter-->
+  <select id="getMemType" resultType="string" parameterType="string">
+    SELECT memType
+    FROM tbl_member
+    WHERE memberId = #{memberId}
+  </select>
 </mapper>

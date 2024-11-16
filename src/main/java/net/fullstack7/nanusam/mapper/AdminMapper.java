@@ -52,4 +52,7 @@ public interface AdminMapper {
 
   // main페이지 상품 출력
   List<GoodsVO> mainViewGoodsList();
+  
+  // admin 필터용
+  String getMemType(String memberId);
 }

@@ -44,4 +44,7 @@ public interface AdminService {
 
    // 상품 상태 변경
    boolean updateGoodsStatus(int idx, String status);
+
+   // memType 확인
+   boolean isAdmin(String memberId);
 }

@@ -92,8 +92,6 @@
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
 </footer>
 
-<c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
-
 <script src="/resources/scripts/bbs/bbsScript.js"></script>
 </body>
 </html>
