@@ -15,7 +15,7 @@ import net.fullstack7.nanusam.service.AdminService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-@WebFilter(urlPatterns = {"/admin/logout.do", "/admin/main.do", "/admin/memberMm.do", "/admin/updateMemberStatus.do", "/admin/noticeMm.do", "/admin/goodsMm.do", "/admin/deleteGoods.do", "/admin/updateGoodsStatus.do", "/admin/deleteMember.do"})
+@WebFilter(urlPatterns = {"/admin/logout.do", "/admin/main.do", "/admin/memberMm.do", "/admin/updateMemberStatus.do", "/admin/noticeMm.do", "/admin/goodsMm.do", "/admin/deleteGoods.do", "/admin/updateGoodsStatus.do", "/admin/deleteMember.do", "/bbs/regist.do", "/bbs/modify.do", "/bbs/delete.do"})
 public class AdminFilter implements Filter {
 
     private AdminService adminService;
