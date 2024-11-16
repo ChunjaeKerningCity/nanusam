@@ -10,7 +10,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--    상품 목록--%>
         <table>
-            <tr>
+            <tr class="mygoods_th">
                 <th>상품이미지</th>
                 <th>상품명</th>
                 <th>가격</th>
@@ -28,26 +28,26 @@
                     <td>${item.name}</td>
                     <td>${item.price}</td>
                     <td>
-                        <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a>
+                        <a href="/goods/view.do?idx=${item.idx}" class="button confirmBtn" style="text-decoration: none;">상세보기</a>
                     </td>
                     <td>
                         <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
-                            <button onclick="location.href='/payment/deliveryStart.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
+                            <button class="button confirmBtn" onclick="location.href='/payment/deliveryStart.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
                         </c:if>
                         <c:if test="${item.status eq 'R'}">
                             예약자-${item.reservationId}
-                            <button onclick="location.href='/goods/direct.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">직거래</button>
-                            <button onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
+                            <button class="button confirmBtn" onclick="location.href='/goods/direct.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">직거래</button>
+                            <button class="button confirmBtn" onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
                         </c:if>
                         <c:if test="${item.status eq 'Y'}">
-                            <button onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
+                            <button class="button confirmBtn" onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
                         </c:if>
                     </td>
                     <td>
                         <c:if test="${item.status eq 'N'}">
                             <c:choose>
                                 <c:when test="${not empty item.payInfo.buyer}">
-                                    <button onclick="location.href='/payment/view.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">결제정보</button>
+                                    <button class="button confirmBtn" onclick="location.href='/payment/view.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">결제정보</button>
                                 </c:when>
                                 <c:otherwise>
                                     직거래

@@ -19,4 +19,5 @@ public interface ChatService {
     public int countUnreadMessages(int groupIdx, String memberId);
     public ChatGroupDTO getGroupDTO(int groupIdx);
     public List<ChatGroupDTO> groupDTOList(String memberId);
+    public int updateRecentDate(int idx);
 }

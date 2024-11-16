@@ -134,7 +134,7 @@ public class PaymentController {
         redirectAttributes.addFlashAttribute("errors", result[0]);
         alertService.regist(AlertDTO.builder()
                         .memberId(result[1])
-                        .content(result[2]+"상품의 배송이 시작되었습니다.")
+                        .content("구매하신 "+result[2]+" 상품의 배송이 시작되었습니다.")
                 .build());
         return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
@@ -152,7 +152,7 @@ public class PaymentController {
         redirectAttributes.addFlashAttribute("errors", result[0]);
         alertService.regist(AlertDTO.builder()
                 .memberId(result[1])
-                .content(result[2]+"상품의 배송이 시작되었습니다.")
+                .content("판매하신 "+result[2]+" 상품의 배송이 완료되었습니다.")
                 .build());
         return "redirect:/payment/view.do?idx=" + idx;
     }

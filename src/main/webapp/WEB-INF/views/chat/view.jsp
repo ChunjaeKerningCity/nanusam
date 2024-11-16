@@ -233,6 +233,7 @@
     chatWindow = document.getElementById("chatWindow");
     chatMessage = document.getElementById("chatMessage");
     chatId = document.getElementById("chatId").value;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   function sendMessage(){
@@ -283,13 +284,13 @@
       if (content !== "") {
         chatWindow.innerHTML += "<div class='otherMsg'>" + sender + " : " + content + "</div><div class='otherMsg timestamp'>" + regDate + "</div>";
       }
-      chatWindow.scrollTop = chatWindow.scrollHeight;
     }else{
       if (content !== "") {
         chatWindow.innerHTML += "<div class='myMsg'>" + content + "</div>"
                 +"<div class='myMsg timestamp'>"+regDate+"</div>";
       }
     }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

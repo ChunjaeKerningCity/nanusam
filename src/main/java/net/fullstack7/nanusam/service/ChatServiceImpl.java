@@ -66,6 +66,11 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
+    public int updateRecentDate(int idx) {
+        return chatMapper.updateRecentDate(idx);
+    }
+
+    @Override
     public List<ChatMessageDTO> messageList(int groupIdx) {
         return chatMapper.messageList(groupIdx).stream().map(vo->modelMapper.map(vo,ChatMessageDTO.class)).collect(Collectors.toList());
     }

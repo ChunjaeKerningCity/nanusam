@@ -45,9 +45,11 @@
   function openAlertList(){
     childWindow = window.open("/alert/list.do","_blank","width=800,height=600,resizable=no");
   }
-
-
-
+  window.addEventListener("message",(e)=>{
+    if(e.data==='childClosed'){
+      getUnreadCount();
+    }
+  })
   function getAlertList(){
     fetch("/alert/getList.do", {
       method: "GET",
