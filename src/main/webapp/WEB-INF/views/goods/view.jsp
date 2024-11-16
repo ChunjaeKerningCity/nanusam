@@ -17,11 +17,12 @@
             height: 850px;
             display: flex;
             align-items: center;
+            /*justify-content: center;*/
             padding: 0;
             background-color: #f1f1f1;
         }
         .c-img-size {
-            margin: 0;
+            margin: 0 auto;
             max-width: 850px;
             max-height: 850px;
             object-fit: contain;
