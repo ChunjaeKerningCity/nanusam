@@ -33,6 +33,10 @@ public class PaymentServiceImpl implements PaymentService {
             return "구매 불가 상품입니다.";
         }
 
+        if(item.getMemberId().equals(dto.getBuyer())) {
+            return "내 상품은 구매할 수 없습니다.";
+        }
+
         dto.setSeller(item.getMemberId());
 
         PaymentVO paymentVO = modelMapper.map(dto, PaymentVO.class);

@@ -37,7 +37,7 @@
                 <select name="category" id="category" class="form-select" aria-label="Default select example" required>
                     <option disabled selected>선택</option>
                     <c:forEach items="${categories}" var="category">
-                        <option value="${category.code}">${category.value}</option>
+                        <option value="${category.code}" ${item.category==category.code ? 'selected':''}>${category.value}</option>
                     </c:forEach>
                 </select>
                 <div id="div_err_category"></div>
@@ -45,7 +45,7 @@
             <div class="col">
                 <div class="mb-3">
                     <label for="name" class="form-label">상품명</label>
-                    <input type="text" name="name" id="name" class="form-control" placeholder="상품명" required>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="상품명" value="${item.name}" required>
                     <div id="div_err_name"></div>
                 </div>
             </div>
@@ -56,9 +56,9 @@
                 <label for="quality" class="form-label">상품 상태</label>
                 <select name="quality" id="quality" class="form-select" aria-label="Default select example" required>
                     <option disabled selected>상품 상태</option>
-                    <option value="상">상</option>
-                    <option value="중">중</option>
-                    <option value="하">하</option>
+                    <option value="상" ${item.quality=='상'?'selected' :''}>상</option>
+                    <option value="중" ${item.quality=='중'?'selected' :''}>중</option>
+                    <option value="하" ${item.quality=='하'?'selected' :''}>하</option>
                 </select>
                 <div id="div_err_quality"></div>
             </div>
@@ -116,7 +116,7 @@
     <c:forEach items="${formerrors}" var="err">
     if(document.getElementById("div_err_${err.getField()}") != null) {
         console.log("1");
-        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color: red;'>"+"${err.getField()} 필드는 ${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color: red;'>${err.defaultMessage}</span>";
         document.getElementById("div_err_${err.getField()}").style.display = "block";
     }
     svrValidateResult['${err.getField()}'] = '${err.defaultMessage}';
@@ -132,6 +132,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
     // 파일이 선택될 때마다 실행되는 이벤트 리스너
+    const fileInput = document.getElementById("detailImage");
     fileInput.addEventListener('change', function() {
         // 선택된 파일의 개수
         const files = fileInput.files;

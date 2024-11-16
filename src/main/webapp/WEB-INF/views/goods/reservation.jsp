@@ -1,40 +1,51 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: full5-2
-  Date: 2024-11-15
-  Time: 오후 1:56
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>예약 상품 목록</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NanuSam</title>
+  <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
+  <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
+  <c:import url="/WEB-INF/views/goods/mygoodsstyle.jsp"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
 </head>
 <body>
+<c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
+<header class="center">
+  <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
+  <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
+  <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
+</header>
 
+<main class="marginTop">
+  <div class="commonContainer">
+    <div class="commonLeft"></div>
+    <div class="commonMain">
 <table>
-  <tr>
+  <tr style="text-align: center">
     <th>상품이미지</th>
     <th>상품명</th>
     <th>가격</th>
     <th>상세보기</th>
+    <th>바로결제</th>
   </tr>
 
   <c:forEach items="${pageinfo.dtoList}" var="item">
 
     <tr>
-      <td>
+      <td class="td-img">
         <img src="/resources/image/${item.mainImageName}" class="card-img-top"
              alt="상품이미지">
       </td>
       <td>${item.name}</td>
       <td>${item.price}</td>
       <td>
-        <a href="/goods/view.do?idx=${item.idx}" class="btn btn-info">상세보기</a>
+        <button onclick='location.href="/goods/view.do?idx=${item.idx}"' class="button confirmBtn">상세보기</button>
       </td>
+      <td><button onclick='location.href="/payment/regist.do?goodsIdx=${item.idx}"' class="button confirmBtn">바로결제</button></td>
     </tr>
 
   </c:forEach>
@@ -73,7 +84,15 @@
     </ul>
   </nav>
 </div>
+    </div>
+    <div class="commonRight"></div>
+  </div>
+</main>
 
+<footer class="footerContainer">
+  <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
+</footer>
 
+<c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 </body>
 </html>
