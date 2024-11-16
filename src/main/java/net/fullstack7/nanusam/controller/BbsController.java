@@ -168,7 +168,7 @@ public class BbsController {
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("idx", dto.getIdx());
-            return "redirect:/bbs/modify.do";
+            return "redirect:/admin/noticeMm.do";
         }
         bbsService.modify(dto);
 
