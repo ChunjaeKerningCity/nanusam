@@ -82,9 +82,9 @@ public class GoodsController {
                 redirectAttributes.addFlashAttribute("errors", message);
             }
 
-            if(detailImage != null && detailImage.length > 0) {
+            if (detailImage != null && detailImage.length > 0) {
                 for (MultipartFile detail : detailImage) {
-                    if(detail.getSize() > 0) {
+                    if (detail.getSize() > 0) {
                         message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("errors", message);
@@ -129,9 +129,12 @@ public class GoodsController {
         model.addAttribute("item", goodsDTO);
         List<FileDTO> list = goodsService.fileListByBbsCodeAndRefIdx("07", idx);
 
-        model.addAttribute("orgMainImage", list.remove(0));
+        if(list.size() >= 1) {
+            model.addAttribute("orgMainImage", list.remove(0));
+        }
         model.addAttribute("images", list);
         return "goods/modify";
+
     }
 
     @PostMapping("/modify.do")
@@ -147,11 +150,7 @@ public class GoodsController {
         }
 
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
-        String message = goodsService.modifyGoodsInfo(goodsDTO);
-        if (message != null) {
-            redirectAttributes.addFlashAttribute("errors", message);
-            return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
-        }
+        String message = null;
 
 
         if (deleteFile != null && deleteFile.length > 0) {
@@ -163,37 +162,43 @@ public class GoodsController {
         }
 
 
-            try {
-                if(mainImage != null && mainImage.getSize() > 0) {
-                    message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
-                }
+        try {
+            if (mainImage != null && mainImage.getSize() > 0) {
+                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+            }
 
 
-                if (message != null) {
-                    redirectAttributes.addFlashAttribute("errors", message);
-                }
+            if (message != null) {
+                redirectAttributes.addFlashAttribute("errors", message);
+            }
 
-                if(detailImage != null && detailImage.length > 0) {
-                    for (MultipartFile detail : detailImage) {
-                        if(detail.getSize() > 0) {
-                            message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
-                            if (message != null) {
-                                redirectAttributes.addFlashAttribute("errors", message);
-                            }
+            if (detailImage != null && detailImage.length > 0) {
+                for (MultipartFile detail : detailImage) {
+                    if (detail.getSize() > 0) {
+                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                        if (message != null) {
+                            redirectAttributes.addFlashAttribute("errors", message);
                         }
                     }
                 }
-
-            } catch (Exception e) {
-                redirectAttributes.addFlashAttribute("errors", e.getMessage());
-                return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
             }
 
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errors", e.getMessage());
+            return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
+        }
 
         if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);
             return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
         }
+
+        message = goodsService.modifyGoodsInfo(goodsDTO);
+        if (message != null) {
+            redirectAttributes.addFlashAttribute("errors", message);
+            return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
+        }
+
         return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
     }
 
@@ -208,32 +213,32 @@ public class GoodsController {
 
         redirectAttributes.addFlashAttribute("errors", errors);
 
-        return "redirect:/goods/mygoods.do?page_no="+page_no;
+        return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
 
     @GetMapping("/direct.do")
     public String directGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
             , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
 
-        if(idx == 0) {
+        if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
-            return "redirect:/goods/mygoods.do?page_no="+page_no;
+            return "redirect:/goods/mygoods.do?page_no=" + page_no;
         }
 
         String errors = goodsService.direct(GoodsDTO.builder().idx(idx).memberId(session.getAttribute("memberId").toString()).build());
 
         redirectAttributes.addFlashAttribute("errors", errors);
 
-        return "redirect:/goods/mygoods.do?page_no="+page_no;
+        return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
 
     @GetMapping("/cancel.do")
     public String cancelGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
-            , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes){
+            , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
 
-        if(idx == 0) {
+        if (idx == 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
-            return "redirect:/goods/mygoods.do?page_no="+page_no;
+            return "redirect:/goods/mygoods.do?page_no=" + page_no;
         }
 
         String errors = goodsService.cancelReservation(GoodsDTO.builder().memberId(session.getAttribute("memberId").toString()).idx(idx).build());
@@ -241,9 +246,9 @@ public class GoodsController {
         redirectAttributes.addFlashAttribute("errors", result[0]);
         alertService.regist(AlertDTO.builder()
                 .memberId(result[1])
-                .content(result[2]+" 상품의 예약이 취소되었습니다.")
+                .content(result[2] + " 상품의 예약이 취소되었습니다.")
                 .build());
-        return "redirect:/goods/mygoods.do?page_no="+page_no;
+        return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
 
     @GetMapping("/mygoods.do")
