@@ -74,24 +74,28 @@ public class CartController {
         dto.setMemberId(memberId);
         dto.setGoodsIdx(goodsIdx);
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             log.info("addPost ERROR");
-            return "redirect:/cart/add.do";
+            return "redirect:/goods/add.do";
         }
 
-        if(cartService.existCart(dto)){
-            redirectAttributes.addFlashAttribute("errors", "장바구니에 해당 상품이 존재합니다.");
+        if (cartService.existCart(dto)) {
+            // 중복된 상품이 있을 경우, alertMessage만 설정
+            if (redirectAttributes.getFlashAttributes().get("alertMessage") == null) {
+                redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 해당 상품이 존재합니다.");
+            }
             log.info("Alert Message: " + redirectAttributes.getFlashAttributes().get("alertMessage"));
             return "redirect:/goods/list.do";
+        } else {
+            cartService.add(dto);
+            if (redirectAttributes.getFlashAttributes().get("alertMessage") == null) {
+                redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 담았습니다.");
+            }
+            log.info("dto: " + dto);
+            log.info("===========================");
         }
-        else{
-        cartService.add(dto);
-        redirectAttributes.addFlashAttribute("errors", "장바구니에 담았습니다.");
-        log.info("dto: "+dto);
-        log.info("===========================");
-        }
-        return "redirect:/cart/list.do";
+        return "redirect:/goods/list.do";
     }
 
     @GetMapping("delete.do")

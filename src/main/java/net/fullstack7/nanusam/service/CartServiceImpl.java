@@ -90,24 +90,26 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public void add(CartDTO dto) {
+    public String add(CartDTO dto) {
         CartVO vo = modelMapper.map(dto, CartVO.class);
+        cartMapper.add(vo);
 
         int count = cartMapper.exist(vo);
 
         if(count>0){
             log.info("이미 장바구니에 해당 상품 존재");
-            return;
+            return "이미 장바구니에 해당 상품 존재";
         }
-
-        cartMapper.add(vo);
 
         log.info("===================================");
         log.info("CartServiceImpl >> regist() START");
         log.info("vo = " + vo);
         log.info("CartServiceImpl >> regist() END");
         log.info("===================================");
+        dto.setIdx(vo.getIdx());
+        return null;
     }
+
 
     @Override
     public boolean existCart(CartDTO dto){
