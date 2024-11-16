@@ -149,4 +149,11 @@ public class AdminServiceImpl implements AdminService {
     int result = adminXmlmapper.updateGoodsStatus(idx, status);
     return result > 0;
   }
+
+  // admin인지 확인
+  @Override
+  public boolean isAdmin(String memberId) {
+    String memType = adminXmlmapper.getMemType(memberId);
+    return "a".equals(memType);
+  }
 }
