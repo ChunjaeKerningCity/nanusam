@@ -35,7 +35,7 @@
                     <th class="col-title">제목</th>
                     <th class="col-author">작성자</th>
                     <th class="col-views">조회수</th>
-                    <th class="col-date">등록일</th>
+                    <th class="col-date">작성날짜</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -69,9 +69,9 @@
                             </li>
                         </c:if>
                         <c:forEach var="no" begin="${bbsList.page_block_start}" end="${bbsList.page_block_end}" step="1">
-                            <li class="pageItem number">
-                                <a class="page-link" href="/bbs/list.do?page_no=${no}">[${no}]</a>
-                            </li>
+                            <div>
+                                <a class="page-link" href="/bbs/list.do?page_no=${no}">${no}</a>
+                            </div>
                         </c:forEach>
                         <c:if test="${bbsList.next_page_flag}">
                             <li class="pageItem next">

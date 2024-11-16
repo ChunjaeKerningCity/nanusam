@@ -124,7 +124,7 @@ public class AdminController {
         } else {
             redirectAttributes.addFlashAttribute("errors", "상품 삭제에 실패했습니다.");
         }
-        return "redirect:/admin/goodsMm.do"; // 상품 관리 페이지로 리디렉션
+        return "redirect:/admin/goodsMm.do";
     }
 
     @PostMapping("/updateGoodsStatus.do")
@@ -142,7 +142,7 @@ public class AdminController {
     public String deleteMember(@RequestParam String memberId, RedirectAttributes redirectAttributes, HttpSession session) {
         if (memberService.dontDelete(memberId)) {
             redirectAttributes.addFlashAttribute("errors", "탈퇴가 불가합니다. 현재 예약 중이거나 배송 중인 상품이 있습니다.");
-            return "redirect:/admin/memberMm.do"; // 관리자 전용 페이지로 리디렉션
+            return "redirect:/admin/memberMm.do";
         }
 
         memberService.goDelete(memberId);
