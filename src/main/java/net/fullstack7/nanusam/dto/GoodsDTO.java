@@ -55,10 +55,4 @@ public class GoodsDTO {
         }
         modifyDateStr = formatter.format(modifyDate);
     }
-
-    //setIdx 할때 setMainImageName 하는거
-    public void setIdx(int idx) {
-        this.idx = idx;
-        setMainImageName("goods_"+this.idx+"_0.png");
-    }
 }
