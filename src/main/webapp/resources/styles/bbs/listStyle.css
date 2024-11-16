@@ -44,7 +44,7 @@
   display: inline-flex;
   list-style: none;
   padding: 0;
-  gap: 5px;
+  gap: 15px;
 }
 
 .page-link {
