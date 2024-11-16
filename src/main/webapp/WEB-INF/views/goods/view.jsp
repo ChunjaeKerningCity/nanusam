@@ -63,7 +63,7 @@
                                 <p class="card-text">${item.content}</p>
                                 <a href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}" class="aHref" >찜</a>
                                 <a href="/payment/regist.do?goodsIdx=${item.idx}" class="aHref" >바로구매</a>
-                                <a href="/chat/fromGoods.do?seller=${item.memberId}&goodsIdx=${item.idx}" class="aHref" >셀파톡</a>
+                                <div class="aHref" onclick="openChat('${item.memberId}',${item.idx})">셀파톡</div>
                             </div>
                         </div>
                     </div>
@@ -78,7 +78,11 @@
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />
 </footer>
-
+<script>
+    function openChat(memberId,idx){
+        window.open("/chat/fromGoods.do?seller="+memberId+"&goodsIdx="+idx,"_blank","width=800,height=600,resizable=no");
+    }
+</script>
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 </body>
 </html>

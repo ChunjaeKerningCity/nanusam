@@ -49,25 +49,22 @@
         textarea{
             height : 200px;
         }
-        /* 버튼 스타일 */
-        input[type="submit"], input[type="button"] {
-            width: 100px;
-            padding: 8px 0;
-            margin: 8px 4px 0 0;
-            font-size: 14px;
-            color: white;
-            background-color: #007bff;
+        /* 공통 버튼 태그 + a 태그 */
+        .button {
             border: none;
-            border-radius: 4px;
+            padding: 10px 20px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-        input[type="button"] {
-            background-color: #007bff;
+        .confirmBtn {
+            background-color: #fff1aa;
+            color: black;
         }
 
-        input[type="submit"]:hover, input[type="button"]:hover {
-            opacity: 0.9;
+        .confirmBtn:hover {
+            background-color: #ffe97a;
         }
     </style>
 </head>
@@ -121,8 +118,9 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
-                <input type="submit" value="수정"/><input type="button" value="삭제" id="btnDelete"/>
+            <td></td>
+            <td style="display : flex; justify-content: flex-end">
+                <input class="button confirmBtn" style="width:100px;margin-right : 10px;" type="submit" value="수정"/><input style="width:100px;" class="button confirmBtn" type="button" value="삭제" id="btnDelete"/>
             </td>
         </tr>
         <input type="hidden" name="idx" value="${dto.idx}"/>

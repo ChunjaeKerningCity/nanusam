@@ -15,7 +15,6 @@
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
           rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -165,51 +164,10 @@
 
 <main>
     <div class="container-center">
-<%--        <div>--%>
-<%--            <hr/>--%>
-<%--            <h2 class="hd">--%>
-<%--                ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록--%>
-<%--            </h2>--%>
-<%--            <hr/>--%>
-<%--            <table class="table table-hover">--%>
-<%--                <thead>--%>
-<%--                <tr class="hd2">--%>
-<%--                    <th scope="col" style="width:10%;">번호</th>--%>
-<%--                    <th scope="col" style="width:10%;">평점</th>--%>
-<%--                    <th scope="col" style="text-align : left;">후기</th>--%>
-<%--                    <th scope="col" style="width:10%;">${memberType eq 'seller'? '작성자' : '판매자'}</th>--%>
-<%--                    <th scope="col" style="width:10%;">등록일</th>--%>
-<%--                    <c:if test="${memberType eq 'buyer'}" var="buyer">--%>
-<%--                        <th scope="col" style="width:10%;">수정/삭제</th>--%>
-<%--                    </c:if>--%>
-<%--                </tr>--%>
-<%--                </thead>--%>
-<%--                <tbody>--%>
-<%--                <c:if test="${not empty pageDTO && not empty pageDTO.dtoList}">--%>
-<%--                    <c:forEach items="${pageDTO.dtoList}" var="review" varStatus="loop">--%>
-<%--                        <tr>--%>
-<%--                            <td>${pageDTO.total_count-(pageDTO.page_no-1)*pageDTO.page_size-loop.count+1}</td>--%>
-<%--                            <td style="color : #555;"><img src="/resources/public/star.png" alt="star score" style="margin-bottom : 3px;width:18px; height:18px;"> (${review.score})</td>--%>
-<%--                            <td style="text-align : left;">${review.content}</td>--%>
-<%--                            <td>${memberType eq 'buyer'? review.seller : review.buyer}</td>--%>
-<%--                            <td>${review.regDateStr}</td>--%>
-<%--                            <c:if test="${buyer}">--%>
-<%--                                <td><button id="btnModify" onclick="modify(${review.idx})">수정/삭제</button>></td>--%>
-<%--                            </c:if>--%>
-<%--                        </tr>--%>
-<%--                    </c:forEach>--%>
-<%--                </c:if>--%>
-<%--                <c:if test="${empty pageDTO.dtoList}">--%>
-<%--                    <tr>--%>
-<%--                        <td colspan="7" class="text-center">후기가 존재하지 않습니다.</td>--%>
-<%--                    </tr>--%>
-<%--                </c:if>--%>
-<%--                </tbody>--%>
-<%--            </table>--%>
-<%--        </div>--%>
                 <h2 class="hd">
                     ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록
                 </h2>
+        <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
             <div class="line"></div>
             <div class="review-list">
                 <c:forEach items="${pageDTO.dtoList}" var="review">
@@ -223,8 +181,8 @@
                                     (${review.score})
                                     <!-- 수정/삭제 버튼 -->
                                 </div>
-                                <c:if test="${memberType eq 'buyer'}">
-                                    <button class="button confirmBtn" onclick="modify(${review.idx})">수정/삭제</button>
+                                <c:if test="${memberType eq 'buyer'}" var="buyer">
+                                    <button class="button confirmBtn" onclick="modify(${review.idx});">수정/삭제</button>
                                 </c:if>
                             </div>
                             <!-- 후기 내용 -->
@@ -277,9 +235,8 @@
    <script>
        let childWindow;
         function modify(idx){
-            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=600,height=400,resizable=no");
+            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
         }
-
    </script>
 </c:if>
 </body>

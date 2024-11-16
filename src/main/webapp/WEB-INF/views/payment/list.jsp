@@ -18,6 +18,7 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
+
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8"/>
     <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8"/>
@@ -44,7 +45,7 @@
                 <c:forEach items="${pageinfo.dtoList}" var="item">
                     <tr>
                         <td><a href="/payment/view.do?idx=${item.idx}">${item.payDateStr}</a></td>
-                        <td><img src="/resources/image/${item.goodsInfo.mainImageName}" alt="상품이미지"></td>
+                        <td class="td-img"><img src="/resources/image/${item.goodsInfo.mainImageName}" alt="상품이미지"></td>
                         <td>${item.seller}</td>
                         <td>${item.buyer}</td>
                         <td>${item.goodsInfo.name}</td>
@@ -57,7 +58,9 @@
                                     배송 중
                                 </c:when>
                                 <c:otherwise>
-                                    배송 완료
+                                    <span onclick="window.open('${pageContext.request.contextPath}/review/regist.do?seller=${item.seller}'
+                                            ,'_blank','width=800,height=600,resizable=no')">배송 완료 <br>
+                                    (구매후기작성하기)</span>
                                 </c:otherwise>
                             </c:choose>
                         </td>
