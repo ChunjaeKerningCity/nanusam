@@ -33,16 +33,15 @@ public class AlertController {
         this.restUtil = new RestUtil();
     }
     @GetMapping("/list.do")
-    public String list(@RequestParam(required = false, defaultValue = "1") int pageNo, HttpSession session, HttpServletResponse res, Model model) {
+    public String list(@RequestParam(required = false, defaultValue = "1") int page_no, HttpSession session, HttpServletResponse res, Model model) {
         log.info("list");
         String memberId = (String)session.getAttribute("memberId");
         int readResult = alertService.modifyStatus(memberId);
         if(readResult <= 0) {
             log.info("읽기처리실패");
         }
-        int offset = (pageNo-1)*10;
         PageResponseDTO<AlertDTO> pageResponseDTO = alertService.listWithPage(memberId, PageRequestDTO.builder()
-                .page_no(pageNo)
+                .page_no(page_no)
                         .page_size(10)
                         .page_block_size(5)
                 .build());
