@@ -10,6 +10,11 @@
         INSERT INTO tbl_chat_message(groupIdx, senderId, content)
         VALUES (#{groupIdx},#{senderId},#{content})
     </insert>
+    <update id="updateRecentDate">
+        UPDATE tbl_chat_group
+        SET regDate=NOW()
+        WHERE idx=#{idx}
+    </update>
     <select id="groupList" resultType="net.fullstack7.nanusam.domain.ChatGroupVO">
         SELECT idx, seller, customer, goodsIdx, delChk, regDate
         FROM tbl_chat_group
@@ -22,6 +27,7 @@
                  INNER JOIN tbl_member AS tm2 ON tc.customer = tm2.memberId
                  INNER JOIN tbl_goods AS tg ON tc.goodsIdx = tg.idx
         WHERE tc.delChk='N' AND (tc.seller=#{memberId} OR tc.customer=#{memberId})
+        ORDER BY regDate DESC
     </select>
     <select id="messageList" resultType="net.fullstack7.nanusam.domain.ChatMessageVO">
         SELECT idx, groupIdx, senderId, content, regDate, delChk, readChk

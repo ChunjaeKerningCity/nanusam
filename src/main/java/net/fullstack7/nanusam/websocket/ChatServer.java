@@ -207,13 +207,14 @@ public class ChatServer {
                         .senderId("system")
                         .content(content)
                         .build());
-                
+
                 ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
                 if(messageDTO==null){
                     log.info("시스템메시지 등록 실패");
                     return;
                 }
                 log.info("시스템메시지 등록 성공");
+                chatService.updateRecentDate(groupIdx);
                 session.getOpenSessions().forEach(s -> {
                     if (customer.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
                         try {
@@ -247,6 +248,7 @@ public class ChatServer {
                         .memberId(receiverId)
                         .content(sender+" 님과의 채팅방에 새 메시지가 도착했습니다.")
                         .build());
+                chatService.updateRecentDate(groupIdx);
                 session.getOpenSessions().forEach(s -> {
                     if (receiverId.equals(s.getUserProperties().get("memberId")) || sender.equals(s.getUserProperties().get("memberId"))) {
                         try {
@@ -291,6 +293,7 @@ public class ChatServer {
                     .memberId(receiver)
                     .content(sender+" 님과의 채팅방에 새 메시지가 도착했습니다.")
                     .build());
+            chatService.updateRecentDate(groupIdx);
             session.getOpenSessions().forEach(s -> {
                 if (receiver.equals(s.getUserProperties().get("memberId"))||sender.equals(s.getUserProperties().get("memberId"))) {
                     try {

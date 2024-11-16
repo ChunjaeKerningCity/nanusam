@@ -28,6 +28,7 @@
         font-weight: bold;
         font-size: 16px;
         border-bottom: 2px solid #dee2e6;
+        text-align : center;
     }
 
     td {

@@ -23,4 +23,5 @@ public interface ChatMapper {
     public int countUnreadMessages(@Param("groupIdx")int groupIdx, @Param("memberId") String memberId);
     public ChatGroupDTO getGroupDTO(@Param("groupIdx")int groupIdx);
     public List<ChatGroupDTO> groupDTOList(@Param("memberId")String memberId);
+    public int updateRecentDate(@Param("idx") int idx);
 }

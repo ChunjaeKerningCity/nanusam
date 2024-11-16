@@ -112,7 +112,6 @@
             <tr class="${alert.readChk lt 2 ? 'newAlert' : ''}">
                 <td class="leftTd">${alert.content}</td>
                 <td class="rightTd">${alert.regDateStr}</td>
-                    ${alert.readChk lt 2 ? 'newAlert' : ''}
             </tr>
         </c:forEach>
     </table>
@@ -144,5 +143,13 @@
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous">
     </script>
+    <script>
+        window.onbeforeunload = function(){
+            if(window.opener  && !window.opener.closed){
+                window.opener.postMessage("childClosed", "*");
+            }
+        }
+    </script>
+
 </body>
 </html>

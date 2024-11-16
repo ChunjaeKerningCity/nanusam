@@ -92,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).seller(seller).deliveryStatus("1").build());
 
-        return "배송 시작::"+dto.getBuyer()+"::"+dto.getName();
+        return "배송 시작::"+dto.getBuyer()+"::"+dto.getGoodsInfo().getName();
     }
 
     @Override
@@ -116,7 +116,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         paymentMapper.modifyDeliveryStatus(PaymentVO.builder().idx(idx).buyer(buyer).deliveryStatus("2").build());
 
-        return "배송 완료::"+dto.getBuyer()+"::"+dto.getName();
+        return "배송 완료::"+dto.getSeller()+"::"+dto.getGoodsInfo().getName();
     }
 
 }
