@@ -100,7 +100,7 @@
 
             <%--상품정보넣기--%>
 
-            <form method="post" id="frmPaymentRegist" action="/payment/regist.do?goodsIdx=${item.idx}">
+            <form method="post" id="frmPaymentRegist" action="/payment/regist.do?goodsIdx=${goodsInfo.idx}">
 
                 <!-- 주문자 정보 입력 -->
                 <fieldset>
