@@ -118,8 +118,9 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
-                <input class="button confirmBtn" style="margin-right : 10px;" type="submit" value="수정"/><input class="button confirmBtn" type="button" value="삭제" id="btnDelete"/>
+            <td></td>
+            <td style="display : flex; justify-content: flex-end">
+                <input class="button confirmBtn" style="width:100px;margin-right : 10px;" type="submit" value="수정"/><input style="width:100px;" class="button confirmBtn" type="button" value="삭제" id="btnDelete"/>
             </td>
         </tr>
         <input type="hidden" name="idx" value="${dto.idx}"/>

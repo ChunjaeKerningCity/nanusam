@@ -45,7 +45,7 @@
                 <c:forEach items="${pageinfo.dtoList}" var="item">
                     <tr>
                         <td><a href="/payment/view.do?idx=${item.idx}">${item.payDateStr}</a></td>
-                        <td><img src="/resources/image/${item.goodsInfo.mainImageName}" alt="상품이미지"></td>
+                        <td class="td-img"><img src="/resources/image/${item.goodsInfo.mainImageName}" alt="상품이미지"></td>
                         <td>${item.seller}</td>
                         <td>${item.buyer}</td>
                         <td>${item.goodsInfo.name}</td>

@@ -120,8 +120,9 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
-                    <input class="button confirmBtn" type="submit" value="등록">
+                <td></td>
+                <td style="display : flex; justify-content: flex-end">
+                    <input style="width : 100px;" class="button confirmBtn" type="submit" value="등록">
                 </td>
             </tr>
         </table>
