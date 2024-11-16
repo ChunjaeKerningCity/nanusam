@@ -64,6 +64,13 @@ public class GoodsController {
         if (bindingResult.hasErrors()) {
             log.info("registPost > bindingResult has errors");
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("item", goodsDTO);
+            return "redirect:/goods/regist.do";
+        }
+
+        if(mainImage.getSize() < 1) {
+            redirectAttributes.addFlashAttribute("errors", "대표 사진을 등록해주세요");
+            redirectAttributes.addFlashAttribute("item", goodsDTO);
             return "redirect:/goods/regist.do";
         }
 
@@ -72,6 +79,7 @@ public class GoodsController {
 
         if (message != null) {
             redirectAttributes.addFlashAttribute("errors", message);
+            redirectAttributes.addFlashAttribute("item", goodsDTO);
             return "redirect:/goods/regist.do";
         }
 
@@ -79,7 +87,9 @@ public class GoodsController {
             message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
 
             if (message != null) {
+                redirectAttributes.addFlashAttribute("item", goodsDTO);
                 redirectAttributes.addFlashAttribute("errors", message);
+                return "redirect:/goods/regist.do";
             }
 
             if (detailImage != null && detailImage.length > 0) {
@@ -87,13 +97,17 @@ public class GoodsController {
                     if (detail.getSize() > 0) {
                         message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
                         if (message != null) {
+                            redirectAttributes.addFlashAttribute("item", goodsDTO);
                             redirectAttributes.addFlashAttribute("errors", message);
+                            return "redirect:/goods/regist.do";
                         }
                     }
                 }
             }
         } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("item", goodsDTO);
             redirectAttributes.addFlashAttribute("errors", e.getMessage());
+            return "redirect:/goods/regist.do";
         }
 
 

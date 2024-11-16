@@ -100,7 +100,7 @@
 
             <%--상품정보넣기--%>
 
-            <form method="post" action="/payment/regist.do?goodsIdx=${item.idx}">
+            <form method="post" id="frmPaymentRegist" action="/payment/regist.do?goodsIdx=${item.idx}">
 
                 <!-- 주문자 정보 입력 -->
                 <fieldset>
@@ -118,23 +118,23 @@
                     <br>
 
                     <label for="email">이메일</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" value="${item.email}">
                     <div id="div_err_email" style="display: none;"></div>
                     <br>
 
                     <label for="zipCode">우편번호</label>
-                    <input type="text" id="zipCode" name="zipCode" readonly required>
+                    <input type="text" id="zipCode" name="zipCode" readonly required value="${item.zipCode}">
                     <div id="div_err_zipCode" style="display: none;"></div>
                     <button class="button confirmBtn" style="margin-bottom: 20px" onclick="goZip(); return false;">우편번호 찾기</button>
                     <br>
 
                     <label for="addr1">주소</label>
-                    <input type="text" id="addr1" name="addr1" readonly required>
+                    <input type="text" id="addr1" name="addr1" readonly required value="${item.addr1}">
                     <div id="div_err_addr1" style="display: none;"></div>
                     <br>
 
                     <label for="addr2">상세 주소</label>
-                    <input type="text" id="addr2" name="addr2" required>
+                    <input type="text" id="addr2" name="addr2" required value="${item.addr2}">
                     <div id="div_err_addr2" style="display: none;"></div>
                     <br>
                 </fieldset>
@@ -147,21 +147,21 @@
 
                     <label for="method">결제수단:</label>
                     <select id="method" name="method">
-                        <option value="creditCard">신용카드</option>
-                        <option value="debitCard">체크카드</option>
-                        <option value="paypal">페이팔</option>
-                        <option value="bankTransfer">은행이체</option>
+                        <option value="신용카드" ${item.method=='신용카드'?'selected':''}>신용카드</option>
+                        <option value="체크카드" ${item.method=='체크카드'?'selected':''}>체크카드</option>
+                        <option value="페이팔" ${item.method=='페이팔'?'selected':''}>페이팔</option>
+                        <option value="은행이체" ${item.method=='은행이체'?'selected':''}>은행이체</option>
                     </select>
                     <div id="div_err_method" style="display: none;"></div>
                     <br>
 
                     <label for="paymentCompany">결제회사:</label>
-                    <input type="text" id="paymentCompany" name="paymentCompany">
+                    <input type="text" id="paymentCompany" name="paymentCompany" value="${item.paymentCompany}">
                     <div id="div_err_paymentCompany" style="display: none;"></div>
                     <br>
 
                     <label for="paymentNo">결제번호:</label>
-                    <input type="text" id="paymentNo" name="paymentNo">
+                    <input type="text" id="paymentNo" name="paymentNo" value="${item.paymentNo}">
                     <div id="div_err_paymentNo" style="display: none;"></div>
                     <br>
                 </fieldset>
@@ -214,7 +214,7 @@
     <c:forEach items="${formerrors}" var="err">
     if (document.getElementById("div_err_${err.getField()}") != null) {
         console.log("1");
-        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color: red;'>" + "${err.getField()} 필드는 ${err.defaultMessage}</span>";
+        document.getElementById("div_err_${err.getField()}").innerHTML = "<span style='color: red;'>" + "${err.defaultMessage}</span>";
         document.getElementById("div_err_${err.getField()}").style.display = "block";
     }
     svrValidateResult['${err.getField()}'] = '${err.defaultMessage}';

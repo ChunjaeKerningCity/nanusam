@@ -16,14 +16,16 @@ import java.util.List;
 @Builder
 public class GoodsDTO {
     private int idx;
-    @NotNull
-    @NotBlank
+    @NotBlank(message = "필수 입력 항목입니다.")
+    @Size(min = 2, max = 50, message = "필수 입력 항목입니다. (2~50자)")
     private String name;
     private String memberId;
     @PositiveOrZero
     @Min(value=0)
+    @NotNull(message = "필수 입력 항목입니다. (0 이상)")
     private Integer price;
-    @NotNull
+    @NotBlank(message = "필수 입력 항목입니다.(상/중/하)")
+    @Pattern(regexp = "^[상중하]$", message = "필수 입력 항목입니다.(상/중/하)")
     private String quality;
     @Builder.Default
     private String status = "Y";
@@ -31,6 +33,8 @@ public class GoodsDTO {
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
     private String readCnt;
+    @NotBlank(message = "필수 입력 항목입니다.")
+    @Pattern(regexp = "^[0-9]{2}$", message = "정확한 카테고리를 선택하세요.")
     private String category;
     private String reservationId;
     private String mainImageName;

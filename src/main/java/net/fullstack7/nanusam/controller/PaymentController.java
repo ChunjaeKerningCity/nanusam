@@ -43,11 +43,6 @@ public class PaymentController {
     public String registGet(@RequestParam(defaultValue = "0") int goodsIdx, HttpSession session, RedirectAttributes redirectAttributes
             , HttpServletRequest request, Model model) {
 
-        String referer = "";
-        if (request.getHeader("Referer") != null) {
-            referer = request.getHeader("Referer");
-        }
-
         if (goodsIdx == 0) {
             redirectAttributes.addFlashAttribute("errors", "결제할 상품을 선택해주세요.");
             return "redirect:/goods/list.do";
@@ -59,6 +54,17 @@ public class PaymentController {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
+
+        if(item.getMemberId().equals(session.getAttribute("memberId").toString())) {
+            redirectAttributes.addFlashAttribute("errors", "내가 등록한 상품입니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        if(item.getStatus().equals("R") && !item.getReservationId().equals(session.getAttribute("memberId").toString())) {
+            redirectAttributes.addFlashAttribute("errors", "예약된 상품입니다.");
+            return "redirect:/goods/list.do";
+        }
+
         model.addAttribute("item", item);
 
         return "payment/regist";
@@ -78,6 +84,7 @@ public class PaymentController {
 
         if (bindingResult.hasErrors()) {
             log.info("bindingResult has errors");
+            redirectAttributes.addFlashAttribute("item", paymentDTO);
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
             return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
         }
@@ -87,6 +94,7 @@ public class PaymentController {
 
         if (message != null) {
             redirectAttributes.addFlashAttribute("message", message);
+            redirectAttributes.addFlashAttribute("item", paymentDTO);
             return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
         }
 
