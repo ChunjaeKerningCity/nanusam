@@ -15,6 +15,7 @@
                 <th>상품명</th>
                 <th>가격</th>
                 <th>상세보기</th>
+                <th>수정</th>
                 <th>관리</th>
                 <th>예약자ID</th>
                 <th>결제정보</th>
@@ -32,13 +33,16 @@
                         <a href="/goods/view.do?idx=${item.idx}" class="button confirmBtn" style="text-decoration: none;">상세보기</a>
                     </td>
                     <td>
+                        <a href="/goods/modify.do?idx=${item.idx}" class="button confirmBtn" style="text-decoration: none;">수정</a>
+                    </td>
+                    <td>
                         <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
                             <button class="button confirmBtn" onclick="location.href='/payment/deliveryStart.do?idx=${item.payInfo.idx}&page_no=${pageinfo.page_no}'">배송시작</button>
                         </c:if>
                         <c:if test="${item.status eq 'R'}">
                             <button class="button confirmBtn" onclick="location.href='/goods/direct.do?idx=${item.idx}&page_no=${pageinfo.page_no}'" style="margin-bottom: 10px">&nbsp;직거래&nbsp;</button>
                             <br>
-                            <button class="button confirmBtn" onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
+                            <button class="button cancelBtnBtn" onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
                         </c:if>
                         <c:if test="${item.status eq 'Y'}">
                             <button class="button cancelBtn" onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
