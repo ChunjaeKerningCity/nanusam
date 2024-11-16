@@ -5,7 +5,7 @@
 
     <!-- 일반 로그인 -->
     <select id="login" >
-        SELECT memberId, pwd, memType, status
+        SELECT memberId, name, pwd, memType, status
         FROM tbl_member
         WHERE memberId = #{memberId}
     </select>

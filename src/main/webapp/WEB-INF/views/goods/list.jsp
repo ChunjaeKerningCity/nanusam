@@ -86,7 +86,7 @@
                         <ul class="pagination justify-content-center">
                             <c:if test="${pageinfo.prev_page_flag}">
                                 <li class="page-item">
-                                    <a class="page-link" href="/goods/list.do?page_no=${pageinfo.page_block_start - pageinfo.page_size}&searchKeyword=${pageinfo.searchKeyword}&searchCategory=${pageinfo.searchCategory}" aria-label="Previous">
+                                    <a class="page-link" href="/goods/list.do?page_no=${pageinfo.page_block_start - 1}&searchKeyword=${pageinfo.searchKeyword}&searchCategory=${pageinfo.searchCategory}" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
                                 </li>
@@ -105,11 +105,7 @@
                     </nav>
                 </div>
             </div>
-            <c:if test="not empty alertMessage}">
-                <script type="text/javascript">
-                    alert("${alertMessage}");
-                </script>
-            </c:if></div>
+        </div>
         <div class="commonRight"></div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

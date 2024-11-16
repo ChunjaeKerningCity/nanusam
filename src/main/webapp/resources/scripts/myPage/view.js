@@ -113,6 +113,7 @@ function enableEdit() {
     document.getElementById("editBtn").style.display = "none";
     document.getElementById("saveBtn").style.display = "inline";
     document.getElementById("zipcodeBtn").style.display = "inline";
+}
     
 //삭제
 function deleteGo() {
@@ -137,6 +138,4 @@ function deleteGo() {
                 alert("탈퇴 처리 중 문제가 발생했습니다. 다시 시도해주세요.");
             });
     }
-}
-
 }

@@ -7,7 +7,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NanuSam</title>
-
+  <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
   <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
   <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
 </head>
@@ -26,9 +26,6 @@
         <h1>로그인</h1>
         <input type="text" id="memberId" name="memberId" required placeholder="아이디" ><br><br>
         <input type="password" id="pwd" name="pwd" required placeholder="비밀번호" ><br><br>
-        <c:if test="${not empty errors}">
-          <p style="color:red;">${errors}</p>
-        </c:if>
         <button class="button confirmBtn" type="submit" style="width: 100%">로그인</button>
         <button class="button2" type="button" onclick="goRegist()">회원가입</button>
       </form>

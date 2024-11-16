@@ -23,15 +23,13 @@
 <main class="center">
     <div class="mainContent">
             <form class="pwd-form" action="/member/pwdCheck.do" method="post" autocomplete="off">
-                <h3>비밀번호 확인</h3>
+                <h3>${memberName}님 비밀번호를 입력해주세요.</h3>
                 <input type="password" id="pwd" name="pwd" required placeholder="비밀번호"><br><br>
                 <button class="button confirmBtn" type="submit">비밀번호확인</button>
             </form>
-            <c:if test="${not empty errors}">
-                <p style="color:red;">${errors}</p>
-            </c:if>
         </div>
 </main>
+
 
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp" />

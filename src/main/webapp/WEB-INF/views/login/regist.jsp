@@ -3,6 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+    response.setHeader("Cache-Control", "no-store");
+    response.setHeader("Pragma", "no-cache");
+    response.setDateHeader("Expires", 0);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,7 +34,7 @@
                     <input type="text" id="memberId" name="memberId" maxlength="15" minlength="5" value="${memberDTO.memberId}" placeholder="아이디" required>
                     <span class="message"></span>
                     <span class="error-memberId"></span>
-                    <button type="button"  onclick="checkId()" disabled class="button confirmBtn"> 중복 확인 </button>
+                    <button type="button"  onclick="checkId()" disabled class="button confirmBtn" style="width: 100%"> 중복 확인 </button>
 <%--                </div>--%>
                 <span id="idCheckResult"></span>
                 <div id="div_err_memberId" style="display: none;"></div>
@@ -47,7 +52,7 @@
                     <input type="text" id="zipCode" name="zipCode" value="${memberDTO.zipCode}" readonly placeholder="우편번호" required>
                      <span class="message"></span>
                     <div id="div_err_zipCode" style="display: none;"></div>
-                    <input class="button confirmBtn" type="button" onclick="goZip()" value="우편번호 찾기" />
+                    <input class="button confirmBtn" type="button" onclick="goZip()" value="우편번호 찾기" style="width: 100%" />
 <%--                </div>--%>
                 <input type="text" id="addr1" name="addr1" value="${memberDTO.addr1}" readonly placeholder="주소" required>
                 <div id="div_err_addr1" style="display: none;"></div>

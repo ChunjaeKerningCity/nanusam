@@ -86,9 +86,6 @@
                     <span class="checkmark"></span>
                     이용 약관에 동의합니다.
                 </label>
-                <c:if test="${not empty errors}">
-                    <p style="color:red;">${errors}</p>
-                </c:if>
                 <br>
                 <button type="button" class="button confirmBtn" onclick="checkAgreement()" style="margin-left: 85%">회원가입</button>
             </form>
