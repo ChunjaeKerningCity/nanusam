@@ -65,7 +65,7 @@ public class PaymentController {
             return "redirect:/goods/list.do";
         }
 
-        model.addAttribute("item", item);
+        model.addAttribute("goodsInfo", item);
 
         return "payment/regist";
     }
@@ -86,7 +86,7 @@ public class PaymentController {
             log.info("bindingResult has errors");
             redirectAttributes.addFlashAttribute("item", paymentDTO);
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
-            return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
+            return "redirect:/payment/regist.do?goodsIdx=" + goodsIdx;
         }
 
         paymentDTO.setBuyer(session.getAttribute("memberId").toString());
@@ -95,7 +95,7 @@ public class PaymentController {
         if (message != null) {
             redirectAttributes.addFlashAttribute("message", message);
             redirectAttributes.addFlashAttribute("item", paymentDTO);
-            return "redirect:/payment/regist.do?goodsIdx=" + paymentDTO.getGoodsIdx();
+            return "redirect:/payment/regist.do?goodsIdx=" + goodsIdx;
         }
 
         alertService.regist(AlertDTO.builder()
