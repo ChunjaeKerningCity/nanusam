@@ -21,10 +21,9 @@
 
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8"/>
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8"/>
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8"/>
 </header>
-
+<div class="line"></div>
 <main class="marginTop">
     <div class="commonContainer">
         <div class="commonLeft"></div>
@@ -66,7 +65,13 @@
                         </td>
                     </tr>
                 </c:forEach>
-
+                <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
+                    <div class="col">
+                        <div class="alert alert-secondary center" role="alert">
+                            검색 결과 없음
+                        </div>
+                    </div>
+                </c:if>
 
                 </tbody>
             </table>

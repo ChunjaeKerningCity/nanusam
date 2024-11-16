@@ -16,10 +16,9 @@
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
   <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
-  <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
   <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
 </header>
-
+<div class="line"></div>
 <main class="marginTop">
   <div class="commonContainer">
     <div class="commonLeft"></div>
@@ -54,7 +53,7 @@
 
 <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
   <div class="col">
-    <div class="alert alert-secondary" role="alert">
+    <div class="alert alert-secondary center" role="alert">
       등록된 상품이 없습니다.
     </div>
   </div>

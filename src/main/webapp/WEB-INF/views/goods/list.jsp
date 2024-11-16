@@ -30,12 +30,12 @@
                 <div class="row justify-content-md-center">
                     <div class="col">
                         <div style="">
-                            <%@ include file="/WEB-INF/views/commonArea/headerSearchArea.jsp" %>
+                            <%@ include file="/WEB-INF/views/commonArea/headerSearchArea2.jsp" %>
                         </div>
                     </div>
                     <div class="col-md-auto">
                         <div class="btn-group me-2" role="group" aria-label="Second group">
-                            <button style="padding-top: 15px; padding-bottom: 15px" type="button"
+                            <button style="padding-top: 15px; padding-bottom: 15px; margin: 0" type="button"
                                     class="button confirmBtn" onclick="location.href='/goods/regist.do';return false;">
                                 상품 등록
                             </button>
@@ -43,10 +43,10 @@
                     </div>
                 </div>
                 <%--    상품 목록--%>
-                <div class="mainContent">
+                <div class="center">
                     <div class="cardContainer" id="cardContainer">
                         <c:forEach items="${pageinfo.dtoList}" var="item">
-                            <a href="/goods/view.do?idx=${item.idx}" class="card">
+                            <a href="/goods/view.do?idx=${item.idx}" class="card2">
                                 <img
                                         src="/resources/image/${item.mainImageName}"
                                         class="cardImage"
@@ -82,7 +82,7 @@
 <%--                </div>--%>
                 <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
                     <div class="col">
-                        <div class="alert alert-secondary" role="alert" style="wi">
+                        <div class="alert alert-secondary center" role="alert">
                             검색 결과 없음
                         </div>
                     </div>
