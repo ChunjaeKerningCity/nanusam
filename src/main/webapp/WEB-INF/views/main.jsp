@@ -15,10 +15,11 @@
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
 </header>
-
+<div style="width: 1100px; margin: 0 auto">
+<%@ include file="/WEB-INF/views/commonArea/headerSearchArea.jsp"%>
+</div>
 <main>
     <div class="sliderArea">
         <div class="swiper2 mySwiper underSlide">
