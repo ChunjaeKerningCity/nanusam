@@ -1,0 +1,16 @@
+.searchContainer2 {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.card2 {
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+    margin-top: 20px;
+}

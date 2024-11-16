@@ -18,6 +18,7 @@
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8"/>
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8"/>
 </header>
+<div class="line"></div>
 
 <main class="marginTop">
     <div class="commonContainer">
@@ -139,6 +140,11 @@
         <div class="commonRight"></div>
     </div>
 </main>
+<footer class="footerContainer marginTop">
+    <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
+</footer>
+
+<c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

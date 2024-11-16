@@ -9,9 +9,9 @@
     <title>NanuSam</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp"/>
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp"/>
+    <link rel="stylesheet" href="/resources/styles/style2.css" />
 </head>
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>

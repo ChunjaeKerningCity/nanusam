@@ -122,7 +122,7 @@
     </div>
 </main>
 
-<footer class="footerContainer">
+<footer class="footerContainer marginTop">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
 </footer>
 

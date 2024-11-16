@@ -22,8 +22,18 @@
             text-align: left;
         }
 
+        td[rowspan="4"] {
+            text-align: left;
+            width: 200px;
+            height: 200px;
+            padding: 0;
+        }
+
         td img {
-            object-fit: cover;
+            margin: 0;
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -41,7 +51,7 @@
             <h3>상품정보</h3>
             <table>
                 <tr>
-                    <td rowspan="4" style="width: 200px"><img src="/resources/image/${item.goodsInfo.mainImageName}">
+                    <td rowspan="4"><img src="/resources/image/${item.goodsInfo.mainImageName}">
                     </td>
                     <th>판매자</th>
                     <td>${item.seller}</td>

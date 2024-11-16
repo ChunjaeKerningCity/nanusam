@@ -11,6 +11,22 @@
 
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
+    <style>
+        .carousel-img-container {
+            width: 850px;
+            height: 850px;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            background-color: #f1f1f1;
+        }
+        .c-img-size {
+            margin: 0;
+            max-width: 850px;
+            max-height: 850px;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
@@ -28,11 +44,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-                            <div class="carousel-inner">
+                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="height: 850px">
+                            <div class="carousel-inner carousel-img-container">
                                 <c:forEach items="${item.images}" var="img" varStatus="s">
                                     <div class="carousel-item ${s.count==1?'active':''}">
-                                        <img src="/resources/image/${img.fileName}" class="d-block w-100" alt="...">
+                                        <img src="/resources/image/${img.fileName}" class="d-block c-img-size" alt="...">
                                     </div>
                                 </c:forEach>
                             </div>
@@ -46,8 +62,8 @@
                             </button>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card" style="width: 18rem;">
+                    <div class="col-md-auto">
+                        <div class="card" style="width: 300px;">
                             <div class="card-body">
                                 <h5 class="card-title">${item.name}&nbsp;
                                     <c:choose>
@@ -60,10 +76,17 @@
                                     </c:choose>
                                 </h5>
                                 <h6 class="card-subtitle mb-2 text-body-secondary">${item.price} - ${item.quality}</h6>
+                                <div class="row" style="margin-top: 20px;">
+                                    <div onclick='location.href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}"' class="col button confirmBtn" >찜</div>&nbsp;
+                                    <div onclick='location.href="/payment/regist.do?goodsIdx=${item.idx}"' class="col button confirmBtn" >바로구매</div>
+                                </div>
+
+                                <div class="row button confirmBtn center" style="margin-top: 20px" onclick="openChat('${item.memberId}',${item.idx})">셀파톡</div>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 300px;">
+                            <div class="card-body">
                                 <p class="card-text">${item.content}</p>
-                                <a href="/cart/add.do?goodsIdx=${item.idx}&memberId=${memberId}" class="aHref" >찜</a>
-                                <a href="/payment/regist.do?goodsIdx=${item.idx}" class="aHref" >바로구매</a>
-                                <div class="aHref" onclick="openChat('${item.memberId}',${item.idx})">셀파톡</div>
                             </div>
                         </div>
                     </div>
