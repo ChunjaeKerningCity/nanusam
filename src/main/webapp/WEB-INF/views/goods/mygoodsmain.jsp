@@ -41,7 +41,7 @@
                             <button class="button confirmBtn" onclick="location.href='/goods/cancel.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">예약취소</button>
                         </c:if>
                         <c:if test="${item.status eq 'Y'}">
-                            <button class="button confirmBtn" onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
+                            <button class="button cancelBtn" onclick="location.href='/goods/delete.do?idx=${item.idx}&page_no=${pageinfo.page_no}'">상품 삭제</button>
                         </c:if>
                     </td>
                     <td>${item.reservationId}</td>
