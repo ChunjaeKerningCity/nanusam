@@ -52,21 +52,22 @@
             resize: none;
         }
 
-        /* 버튼 스타일 */
-        input[type="submit"] {
-            width: 100px;
-            padding: 8px 0;
-            margin-top: 8px;
-            font-size: 14px;
-            color: white;
-            background-color: #007bff;
+        /* 공통 버튼 태그 + a 태그 */
+        .button {
             border: none;
-            border-radius: 4px;
+            padding: 10px 20px;
             cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
 
-        input[type="submit"]:hover {
-            opacity: 0.9;
+        .confirmBtn {
+            background-color: #fff1aa;
+            color: black;
+        }
+
+        .confirmBtn:hover {
+            background-color: #ffe97a;
         }
     </style>
 </head>
@@ -120,7 +121,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="등록">
+                    <input class="button confirmBtn" type="submit" value="등록">
                 </td>
             </tr>
         </table>

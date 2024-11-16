@@ -223,8 +223,8 @@
                                     (${review.score})
                                     <!-- 수정/삭제 버튼 -->
                                 </div>
-                                <c:if test="${memberType eq 'buyer'}">
-                                    <button class="button confirmBtn" onclick="modify(${review.idx})">수정/삭제</button>
+                                <c:if test="${memberType eq 'buyer'}" var="buyer">
+                                    <button class="button confirmBtn" onclick="modify(${review.idx});">수정/삭제</button>
                                 </c:if>
                             </div>
                             <!-- 후기 내용 -->
@@ -277,9 +277,8 @@
    <script>
        let childWindow;
         function modify(idx){
-            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=600,height=400,resizable=no");
+            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
         }
-
    </script>
 </c:if>
 </body>

@@ -246,7 +246,7 @@ public class ChatServer {
                 }
                 alertService.regist(AlertDTO.builder()
                         .memberId(receiverId)
-                        .content(sender+" 님과의 채팅방에 새 메시지가 도착했습니다.")
+                        .content(sender+" 님이 채팅방을 나갔습니다. 해당 채팅방은 사라집니다.")
                         .build());
                 chatService.updateRecentDate(groupIdx);
                 session.getOpenSessions().forEach(s -> {
