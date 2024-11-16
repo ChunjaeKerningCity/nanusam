@@ -53,9 +53,10 @@ public class MemberController {
         Boolean isPwdChecked = (Boolean) session.getAttribute("isPwdChecked");
         if (isPwdChecked == null || !isPwdChecked) {
             model.addAttribute("errors", "비밀번호 확인이 필요합니다.");
-            return "myPage/pwdCheck";
+            return "forward:/member/pwdCheck.do";
         }
-//        session.removeAttribute("isPwdChecked");
+        session.removeAttribute("isPwdChecked");
+
         String memberId = (String) session.getAttribute("memberId");
         MemberDTO memberDTO = memberService.viewMember(memberId);
 //        log.info("회원정보확인"+ memberDTO);
@@ -77,13 +78,21 @@ public class MemberController {
     ) {
 //        log.info("회원수정 컨트롤러 시작");
         if (bindingResult.hasErrors()) {
-            log.info("hasErrors");
+//            log.info("hasErrors");
+            session.setAttribute("isPwdChecked", true);
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("memberDTO", memberModifyDTO);
-            log.info("memberDTO: " + memberModifyDTO);
-            log.info("errors: " +bindingResult.getAllErrors());
+//            log.info("memberDTO: " + memberModifyDTO);
+//            log.info("errors: " +bindingResult.getAllErrors());
             return "redirect:/member/view.do";
         }
+        String sessionMemberId = (String) session.getAttribute("memberId");
+        if (!memberModifyDTO.getMemberId().equals(sessionMemberId)) {
+            session.setAttribute("isPwdChecked", true);
+            redirectAttributes.addFlashAttribute("errors", "잘못된 접근입니다.");  // 알림 설정
+            return "redirect:/member/view.do";
+        }
+
         int result = memberService.modifyMember(memberModifyDTO);
         if (result > 0) {
 //            log.info("회원수정성공"+memberModifyDTO);
@@ -98,9 +107,11 @@ public class MemberController {
     }
     
     // D전환 여부
-    @GetMapping("/checkGoodsStatusY")
+    @GetMapping("/checkGoodsStatusY.do")
     @ResponseBody
-    public String checkGoodsStatusY(@RequestParam String memberId, HttpSession session) {
+    public String checkGoodsStatusY(HttpSession session) {
+        log.info("판매중상품갯수확인");
+        String memberId = (String) session.getAttribute("memberId");
         boolean hasGoods = !memberService.goodsStatusY(memberId);
         JSONObject jsonResponse = new JSONObject();
         jsonResponse.put("hasGoods", hasGoods);

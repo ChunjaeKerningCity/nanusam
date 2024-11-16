@@ -72,19 +72,15 @@
 
 .form-row {
     display: flex;
-    gap: 10px; /* 간격 설정 */
+    gap: 10px;
 }
 
 .form-row input[type="text"] {
-    flex: 3; /* 입력 필드: 70-80% */
+    flex: 3;
 }
 
-.form-row button {
-    flex: 1; /* 버튼: 20-30% */
-}
-.message{
-    font-size: 13px;
-    text-align: left;
+.form-row .button.confirmBtn  {
+    flex: 2;
 }
 
 /*약관동의부분*/
@@ -140,4 +136,11 @@
     overflow: auto;
     border: 1px solid #ccc;
     padding: 5px;
+}
+
+.div_err{
+    color: #ff6f61;
+    text-align: left;
+    font-size: 12px;
+    display: none;
 }
