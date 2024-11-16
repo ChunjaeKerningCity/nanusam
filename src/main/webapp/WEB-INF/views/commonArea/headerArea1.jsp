@@ -14,6 +14,6 @@
       <a href="/bbs/list.do">공지사항</a>
       <a href="/goods/list.do">상품</a>
       <a href="/goods/mygoods.do">내 상품</a>
-      <a href="/chat/list.do">셀파톡</a>
+      <a id="chatList" href="#">셀파톡</a>
     </div>
 <c:import url="/WEB-INF/views/commonArea/openChatListScript.jsp"/>
