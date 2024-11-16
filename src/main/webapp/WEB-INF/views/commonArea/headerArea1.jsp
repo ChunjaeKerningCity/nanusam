@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div class="navTop">
   <div>
     <a href="/">
@@ -12,5 +14,6 @@
       <a href="/bbs/list.do">공지사항</a>
       <a href="/goods/list.do">상품</a>
       <a href="#">내 상품</a>
-      <a href="/chat/list.do">셀파톡</a>
+      <a href="#" id="chatList">셀파톡</a>
     </div>
+<c:import url="/WEB-INF/views/commonArea/openChatListScript.jsp"/>

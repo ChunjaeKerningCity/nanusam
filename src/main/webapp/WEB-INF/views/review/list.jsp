@@ -66,52 +66,178 @@
         }
     </style>
 
+
+    <style>
+        /* 후기 리스트 스타일 */
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        /* 각 후기 카드 */
+        .review-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 텍스트 영역 */
+        .review-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .review-writer {
+            font-size: 16px; /* 작성자 폰트 크기 */
+            color: #999; /* 작성자 폰트 색상 */
+            font-weight: bold; /* 작성자를 강조하기 위해 굵게 설정 */
+        }
+
+        .review-content {
+            font-size: 18px; /* 내용 폰트 크기 */
+            color: #333; /* 내용 폰트 색상 */
+            line-height: 1.6; /* 가독성을 높이기 위해 줄 간격 설정 */
+        }
+
+        /* 별점과 작성자 */
+        .review-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: dimgray;
+        }
+
+        .review-stars {
+            color: gold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .review-text {
+            font-size: 16px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* 등록일 */
+        .review-footer {
+            font-size: 12px;
+            color: #888;
+        }
+
+        .review-button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .review-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .review-button.modify {
+            color: #007bff;
+            border-color: #007bff;
+        }
+
+        .review-button.modify:hover {
+            background-color: #cce5ff;
+        }
+    </style>
+
 </header>
 
 <main>
     <div class="container-center">
-        <div>
-            <hr/>
-            <h2 class="hd">
-                ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록
-            </h2>
-            <hr/>
-            <table class="table table-hover">
-                <thead>
-                <tr class="hd2">
-                    <th scope="col" style="width:10%;">번호</th>
-                    <th scope="col" style="width:10%;">평점</th>
-                    <th scope="col" style="text-align : left;">후기</th>
-                    <th scope="col" style="width:10%;">${memberType eq 'seller'? '작성자' : '판매자'}</th>
-                    <th scope="col" style="width:10%;">등록일</th>
-                    <c:if test="${memberType eq 'buyer'}" var="buyer">
-                        <th scope="col" style="width:10%;">수정/삭제</th>
-                    </c:if>
-                </tr>
-                </thead>
-                <tbody>
-                <c:if test="${not empty pageDTO && not empty pageDTO.dtoList}">
-                    <c:forEach items="${pageDTO.dtoList}" var="review" varStatus="loop">
-                        <tr>
-                            <td>${pageDTO.total_count-(pageDTO.page_no-1)*pageDTO.page_size-loop.count+1}</td>
-                            <td style="color : #555;"><img src="/resources/public/star.png" alt="star score" style="margin-bottom : 3px;width:18px; height:18px;"> (${review.score})</td>
-                            <td style="text-align : left;">${review.content}</td>
-                            <td>${memberType eq 'buyer'? review.seller : review.buyer}</td>
-                            <td>${review.regDateStr}</td>
-                            <c:if test="${buyer}">
-                                <td><button id="btnModify" onclick="modify(${review.idx})">수정/삭제</button>></td>
-                            </c:if>
-                        </tr>
-                    </c:forEach>
-                </c:if>
-                <c:if test="${empty pageDTO.dtoList}">
-                    <tr>
-                        <td colspan="7" class="text-center">후기가 존재하지 않습니다.</td>
-                    </tr>
-                </c:if>
-                </tbody>
-            </table>
-        </div>
+<%--        <div>--%>
+<%--            <hr/>--%>
+<%--            <h2 class="hd">--%>
+<%--                ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록--%>
+<%--            </h2>--%>
+<%--            <hr/>--%>
+<%--            <table class="table table-hover">--%>
+<%--                <thead>--%>
+<%--                <tr class="hd2">--%>
+<%--                    <th scope="col" style="width:10%;">번호</th>--%>
+<%--                    <th scope="col" style="width:10%;">평점</th>--%>
+<%--                    <th scope="col" style="text-align : left;">후기</th>--%>
+<%--                    <th scope="col" style="width:10%;">${memberType eq 'seller'? '작성자' : '판매자'}</th>--%>
+<%--                    <th scope="col" style="width:10%;">등록일</th>--%>
+<%--                    <c:if test="${memberType eq 'buyer'}" var="buyer">--%>
+<%--                        <th scope="col" style="width:10%;">수정/삭제</th>--%>
+<%--                    </c:if>--%>
+<%--                </tr>--%>
+<%--                </thead>--%>
+<%--                <tbody>--%>
+<%--                <c:if test="${not empty pageDTO && not empty pageDTO.dtoList}">--%>
+<%--                    <c:forEach items="${pageDTO.dtoList}" var="review" varStatus="loop">--%>
+<%--                        <tr>--%>
+<%--                            <td>${pageDTO.total_count-(pageDTO.page_no-1)*pageDTO.page_size-loop.count+1}</td>--%>
+<%--                            <td style="color : #555;"><img src="/resources/public/star.png" alt="star score" style="margin-bottom : 3px;width:18px; height:18px;"> (${review.score})</td>--%>
+<%--                            <td style="text-align : left;">${review.content}</td>--%>
+<%--                            <td>${memberType eq 'buyer'? review.seller : review.buyer}</td>--%>
+<%--                            <td>${review.regDateStr}</td>--%>
+<%--                            <c:if test="${buyer}">--%>
+<%--                                <td><button id="btnModify" onclick="modify(${review.idx})">수정/삭제</button>></td>--%>
+<%--                            </c:if>--%>
+<%--                        </tr>--%>
+<%--                    </c:forEach>--%>
+<%--                </c:if>--%>
+<%--                <c:if test="${empty pageDTO.dtoList}">--%>
+<%--                    <tr>--%>
+<%--                        <td colspan="7" class="text-center">후기가 존재하지 않습니다.</td>--%>
+<%--                    </tr>--%>
+<%--                </c:if>--%>
+<%--                </tbody>--%>
+<%--            </table>--%>
+<%--        </div>--%>
+                <h2 class="hd">
+                    ${memberType eq 'seller'? '판매자' : '내가 쓴'} 후기목록
+                </h2>
+            <div class="line"></div>
+            <div class="review-list">
+                <c:forEach items="${pageDTO.dtoList}" var="review">
+                    <div class="review-card">
+                        <!-- 텍스트 내용 -->
+                        <div class="review-content">
+                            <!-- 별점과 작성자 -->
+                            <div class="review-header">
+                                <div class="review-stars">
+                                    <img src="/resources/public/star.png" alt="별점" style="width: 18px; height: 18px;" />
+                                    (${review.score})
+                                    <!-- 수정/삭제 버튼 -->
+                                </div>
+                                <c:if test="${memberType eq 'buyer'}">
+                                    <button class="button confirmBtn" onclick="modify(${review.idx})">수정/삭제</button>
+                                </c:if>
+                            </div>
+                            <!-- 후기 내용 -->
+                            <div class="review-text">
+                                <div class="review-writer">${memberType eq 'buyer' ? review.seller : review.buyer}</div>
+                                <div class="review-content">${review.content}</div>
+                            </div>
+                            <!-- 등록일 -->
+                            <div class="review-footer">등록일: ${review.regDateStr}</div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
