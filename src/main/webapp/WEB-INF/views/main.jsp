@@ -105,7 +105,6 @@
         <div class="mainContent">
             <div class="cardContainerTop">
                 <h2>오늘의 상품 추천</h2>
-                <a href="#">더보기 ▶</a>
             </div>
             <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
             <div class="cardContainer" id="cardContainer">

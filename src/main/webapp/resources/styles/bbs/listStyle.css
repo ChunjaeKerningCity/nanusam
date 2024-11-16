@@ -3,58 +3,97 @@
   border-collapse: collapse;
 }
 
-.boardTable th,
-.boardTable td {
+.boardTable th, .boardTable td {
   padding: 10px;
-  border: 1px solid #ddd;
   text-align: center;
 }
 
 .boardTable th {
-  background-color: #fff1aa;
+  background-color: #f8f8f8;
+  font-weight: bold;
 }
 
-.boardTable .label {
-  padding: 3px 8px;
-  border-radius: 5px;
-  font-size: 12px;
+.boardTable td {
+  background-color: #ffffff;
 }
 
-.label.notice {
-  background-color: #ff5b5b;
-  color: white;
+.boardTable tr:hover {
+  background-color: #f1f1f1;
+}
+
+.boardTable .idx {
+  font-weight: bold;
+}
+
+.boardTable .aHref {
+  text-decoration: none;
+  color: #333;
+}
+
+.boardTable .aHref:hover {
+  text-decoration: underline;
+  color: #000;
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  gap: 5px;
-  margin-top: 20px;
-}
-
-.pagination button {
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  background-color: white;
-  padding: 5px 10px;
-}
-
-.pagination button .currentPage {
-  color: #fff1aa;
+  margin: 20px 0;
+  text-align: center;
 }
 
 .pagination2 {
+  display: inline-flex;
   list-style: none;
   padding: 0;
-  gap: 10px;
+  gap: 15px;
 }
 
-.pageItem {
-  gap: 10px;
-}
-
-.pageItem a {
+.page-link {
+  display: inline-block;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
   text-decoration: none;
-  color:black;
+  font-size: 16px;
+}
+
+.pageItem.prev .page-link,
+.pageItem.next .page-link {
+  font-weight: bold;
+}
+
+.pageItem.number .page-link {
+  padding: 5px 10px;
+}
+
+.pageItem .page-link.active {
+  background-color: #333;
+  color: #fff;
+  border-color: #333;
+}
+
+.boardTable tr {
+  border-top: 1px solid #d1d1d1;
+  border-bottom: 1px solid #d1d1d1;
+}
+
+.col-number {
+  width: 5%;
+}
+
+.col-title {
+  width: 63%;
+}
+
+.col-author {
+  width: 10%;
+}
+
+.col-views {
+  width: 7%;
+}
+
+.col-date {
+  width: 15%;
 }

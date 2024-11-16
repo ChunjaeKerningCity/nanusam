@@ -11,8 +11,6 @@
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
     <link href="/resources/styles/bbs/listStyle.css" rel="stylesheet" />
-    <style>
-    </style>
 </head>
 <body>
 <header class="center">
@@ -33,18 +31,22 @@
             <table class="boardTable">
                 <thead>
                 <tr>
-                    <th>제목</th>
-                    <th>조회수</th>
-                    <th>등록일</th>
+                    <th class="col-number">번호</th>
+                    <th class="col-title">제목</th>
+                    <th class="col-author">작성자</th>
+                    <th class="col-views">조회수</th>
+                    <th class="col-date">작성날짜</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:if test="${not empty bbsList && not empty bbsList.dtoList}">
                     <c:forEach items="${bbsList.dtoList}" var="list" varStatus="loop">
                         <tr>
-                            <td ><a style="color: black"  href="/bbs/view.do?idx=${list.idx}">${list.title}</a></td>
-                            <td>${list.readCnt}</td>
-                            <td id="regDate">${list.regDateStr}</td>
+                            <td class="col-number">${list.idx}</td>
+                            <td class="col-title"><a class="aHref" href="/bbs/view.do?idx=${list.idx}">${list.title}</a></td>
+                            <td class="col-author">${list.memberId}</td>
+                            <td class="col-views">${list.readCnt}</td>
+                            <td class="col-date" id="regDate">${list.regDateStr}</td>
                         </tr>
                     </c:forEach>
                 </c:if>
@@ -58,23 +60,23 @@
 
             <div class="pagination">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination2 flex">
+                    <ul class="pagination2">
                         <c:if test="${bbsList.prev_page_flag}">
-                            <li class="pageItem">
+                            <li class="pageItem prev">
                                 <a class="page-link" href="/bbs/list.do?page_no=${bbsList.page_block_start - 1}" aria-label="Previous">
-                                    <span> < </span>
+                                    <span> &lt; </span>
                                 </a>
                             </li>
                         </c:if>
                         <c:forEach var="no" begin="${bbsList.page_block_start}" end="${bbsList.page_block_end}" step="1">
-                            <li class="pageItem">
-                                <a class="page-link" href="/bbs/list.do?page_no=${no}">[${no}]</a>
-                            </li>
+                            <div>
+                                <a class="page-link" href="/bbs/list.do?page_no=${no}">${no}</a>
+                            </div>
                         </c:forEach>
                         <c:if test="${bbsList.next_page_flag}">
-                            <li class="page-item">
+                            <li class="pageItem next">
                                 <a class="page-link" href="/bbs/list.do?page_no=${bbsList.page_block_end + 1}" aria-label="Next">
-                                    <span> > </span>
+                                    <span> &gt; </span>
                                 </a>
                             </li>
                         </c:if>

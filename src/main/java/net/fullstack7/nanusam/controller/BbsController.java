@@ -174,7 +174,7 @@ public class BbsController {
 
 //        log.info("dto : " + dto);
 //        log.info("===========================");
-        return "redirect:/admin/noticeMm.do";
+        return "redirect:/bbs/view.do?idx="+dto.getIdx();
     }
     @PostMapping("/delete.do")
     public String deleteGet(
