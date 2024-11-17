@@ -22,8 +22,18 @@
             text-align: left;
         }
 
+        td[rowspan="3"] {
+            text-align: left;
+            width: 200px;
+            height: 200px;
+            padding: 0;
+        }
+
         td img {
-            object-fit: cover;
+            margin: 0;
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -31,10 +41,9 @@
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8"/>
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8"/>
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8"/>
 </header>
-
+<div class="line"></div>
 <main class="marginTop">
     <div class="commonContainer">
         <div class="commonLeft"></div>
@@ -42,14 +51,10 @@
             <h3>상품정보</h3>
             <table>
                 <tr>
-                    <td rowspan="4" style="width: 200px"><img src="/resources/image/${item.goodsInfo.mainImageName}">
+                    <td rowspan="3"><img src="/resources/image/${item.goodsInfo.mainImageName}">
                     </td>
                     <th>판매자</th>
                     <td>${item.seller}</td>
-                </tr>
-                <tr>
-                    <th>카테고리</th>
-                    <td>${item.goodsInfo.category}</td>
                 </tr>
                 <tr>
                     <th>상품명</th>
@@ -120,7 +125,10 @@
                                 배송 전
                             </c:when>
                             <c:when test="${item.deliveryStatus == '1'}">
-                                배송 중
+                                배송 중&nbsp;
+                                <c:if test="${item.buyer == sessionScope.memberId}">
+                                    <button onclick="location.href='/payment/deliveryEnd.do?idx=${item.idx}'">배송확인</button>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 배송 완료
@@ -130,15 +138,15 @@
 
                     </td>
                 </tr>
-                <c:if test="${item.deliveryStatus == '1'}">
-                    <tr>
-                        <th>
-                        </th>
-                        <td>
-                            <button onclick="location.href='/payment/deliveryEnd.do?idx=${item.idx}'">배송확인</button>
-                        </td>
-                    </tr>
-                </c:if>
+<%--                <c:if test="${item.deliveryStatus == '1'}">--%>
+<%--                    <tr>--%>
+<%--                        <th>--%>
+<%--                        </th>--%>
+<%--                        <td>--%>
+<%--                            --%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+<%--                </c:if>--%>
 
             </table>
         </div>

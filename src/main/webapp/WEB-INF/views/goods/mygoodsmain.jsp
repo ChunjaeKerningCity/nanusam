@@ -68,7 +68,7 @@
             </table>
     <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
         <div class="col">
-            <div class="alert alert-secondary" role="alert">
+            <div class="alert alert-secondary center" role="alert">
                 등록된 상품이 없습니다.
             </div>
         </div>

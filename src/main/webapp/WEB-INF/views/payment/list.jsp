@@ -126,7 +126,6 @@
 <script>
     window.addEventListener("message",(e)=>{
         if(e.data==='childClosed'){
-            console.log('childClosed');
             location.reload();
         }
     });

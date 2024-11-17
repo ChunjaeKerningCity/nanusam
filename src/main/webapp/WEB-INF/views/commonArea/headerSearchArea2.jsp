@@ -1,6 +1,6 @@
 <%@ page pageEncoding="UTF-8"%>
-<div class="searchArea">
-  <form class="searchContainer" action="/goods/list.do" method="get">
+<div>
+  <form class="searchContainer2" action="/goods/list.do" method="get">
     <select name="searchCategory" id="searchCategory"
         class="searchSelect">
       <option value="">전체</option>

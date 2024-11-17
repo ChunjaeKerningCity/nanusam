@@ -7,6 +7,7 @@ import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.BbsDTO;
 import net.fullstack7.nanusam.dto.GoodsDTO;
 import net.fullstack7.nanusam.service.AdminService;
+import net.fullstack7.nanusam.service.GoodsService;
 import net.fullstack7.nanusam.service.MainService;
 import org.json.JSONArray;
 import org.springframework.http.MediaType;
@@ -25,11 +26,13 @@ import javax.servlet.http.HttpSession;
 @Log4j2
 public class MainController {
     private final MainService mainService;
+    private final GoodsService goodsService;
 
     @GetMapping("/")
     public String main(Model model) {
         List<GoodsDTO> mainViewGoodsList = mainService.mainViewGoodsList(1); // 첫 페이지 로드
         model.addAttribute("mainViewGoodsList", mainViewGoodsList);
+        model.addAttribute("categories", goodsService.codeList("goods"));
         return "main";
     }
 
