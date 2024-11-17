@@ -150,7 +150,9 @@
 
             </table>
         </div>
-        <div class="commonRight"></div>
+        <div class="commonRight">
+            <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
+        </div>
     </div>
 </main>
 

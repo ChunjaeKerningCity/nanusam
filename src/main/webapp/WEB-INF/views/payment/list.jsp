@@ -71,17 +71,17 @@
                         </td>
                     </tr>
                 </c:forEach>
-                <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
-                    <div class="col">
-                        <div class="alert alert-secondary center" role="alert">
-                            결제 내역 없음
-                        </div>
-                    </div>
-                </c:if>
+
 
                 </tbody>
             </table>
-
+            <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
+                <div class="col">
+                    <div class="alert alert-secondary center" role="alert">
+                        결제 내역 없음
+                    </div>
+                </div>
+            </c:if>
 
             <%--    페이징--%>
             <div class="row" style="margin-top: 1rem;">
@@ -115,7 +115,9 @@
                 </nav>
             </div>
         </div>
-        <div class="commonRight"></div>
+        <div class="commonRight">
+            <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
+        </div>
     </div>
 </main>
 

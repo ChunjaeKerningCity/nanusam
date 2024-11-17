@@ -84,7 +84,9 @@
   </nav>
 </div>
     </div>
-    <div class="commonRight"></div>
+    <div class="commonRight">
+      <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
+    </div>
   </div>
 </main>
 
