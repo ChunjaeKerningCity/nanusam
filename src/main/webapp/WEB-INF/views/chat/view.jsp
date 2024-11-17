@@ -279,7 +279,12 @@
     let readChk = message[3];
     console.log("sender : content : regDate : readChk >>" + sender +" : "+ content +" : "+regDate+" : "+readChk );
     if(sender === 'system'){
-      chatWindow.innerHTML += "<div class='systemMsg'>"+content+"</div><div class='systemMsg timestamp'>" + regDate + "</div>";
+      if(content==='read'){
+       location.reload();
+       return;
+      }else {
+        chatWindow.innerHTML += "<div class='systemMsg'>" + content + "</div><div class='systemMsg timestamp'>" + regDate + "</div>";
+      }
     }else if(sender !== "${sessionScope.memberId}") {
       if (content !== "") {
         chatWindow.innerHTML += "<div class='otherMsg'>" + sender + " : " + content + "</div><div class='otherMsg timestamp'>" + regDate + "</div>";
@@ -287,7 +292,9 @@
     }else{
       if (content !== "") {
         chatWindow.innerHTML += "<div class='myMsg'>" + content + "</div>"
-                +"<div class='myMsg timestamp'>"+regDate+"</div>";
+                +"<div class='myMsg timestamp'>"+regDate
+                //+(readChk==='Y'?'읽음':'읽지않음')
+                +"</div>";
       }
     }
     chatWindow.scrollTop = chatWindow.scrollHeight;

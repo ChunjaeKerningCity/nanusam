@@ -7,8 +7,8 @@
         VALUES (#{seller},#{customer},#{goodsIdx})
     </insert>
     <insert id="messageRegist" useGeneratedKeys="true" keyProperty="idx" parameterType="net.fullstack7.nanusam.domain.ChatMessageVO">
-        INSERT INTO tbl_chat_message(groupIdx, senderId, content)
-        VALUES (#{groupIdx},#{senderId},#{content})
+        INSERT INTO tbl_chat_message(groupIdx, senderId, content,readChk)
+        VALUES (#{groupIdx},#{senderId},#{content},#{readChk})
     </insert>
     <update id="updateRecentDate">
         UPDATE tbl_chat_group
