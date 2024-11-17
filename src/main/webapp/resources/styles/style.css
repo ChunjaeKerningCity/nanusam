@@ -249,7 +249,6 @@ body {
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   width: 1200px;
   margin: 10px 0 10px 0;
 }
@@ -263,6 +262,7 @@ body {
   color: inherit;
   transition: transform 0.3s ease;
   margin-top: 20px;
+  margin-right: 18px;
 }
 
 .card:hover {

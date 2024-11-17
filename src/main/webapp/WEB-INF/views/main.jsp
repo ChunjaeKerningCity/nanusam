@@ -137,8 +137,8 @@
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp" />
 
 <script>
-    let currentPage = 1; // 현재 페이지 번호
-    const PAGE_SIZE = 5; // 한 페이지에 로드할 아이템 수
+    let currentPage = 1;
+    const PAGE_SIZE = 5;
     console.log(currentPage);
     console.log(PAGE_SIZE);
 
@@ -160,7 +160,7 @@
     let isLoading = false;
 
     function loadMoreGoods() {
-        if (isLoading) return; // 이미 로딩 중이면 중복 호출 방지
+        if (isLoading) return;
         isLoading = true;
         currentPage++;
 
@@ -188,7 +188,7 @@
             card.className = 'card';
 
             const img = document.createElement('img');
-            img.src = '/resources/image/goods_' + item.idx +'_0.png';
+            img.src = '/resources/image/' + item.mainImageName;
             img.className = 'cardImage';
             img.alt = 'cardImage';
 
@@ -215,12 +215,6 @@
             card.appendChild(cardInfo);
 
             cardContainer.appendChild(card);
-            console.log("==========");
-            console.log(currentPage);
-            console.log(PAGE_SIZE);
-            console.log("ㅇㅇ")
-            console.log("gd")
-            console.log("==========");
         });
     }
 </script>

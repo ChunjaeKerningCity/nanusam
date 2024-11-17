@@ -12,7 +12,7 @@
     FROM
       tbl_goods
     WHERE
-      status != 'D'
+      status = 'Y'
     ORDER BY
       regDate DESC
       LIMIT
