@@ -27,6 +27,9 @@
             max-height: 850px;
             object-fit: contain;
         }
+        .card:hover {
+            transform: none;
+        }
     </style>
 </head>
 <body>

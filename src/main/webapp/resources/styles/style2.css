@@ -14,3 +14,7 @@
     transition: transform 0.3s ease;
     margin-top: 20px;
 }
+
+.card2:hover {
+    transform: scale(1.05);
+}
