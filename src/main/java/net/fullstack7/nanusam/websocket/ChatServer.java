@@ -49,7 +49,7 @@ public class ChatServer {
     }
 
     @OnOpen
-    public void onOpen(Session session, EndpointConfig config, @PathParam("groupIdx") int groupIdx) {
+    public void onOpen(Session session, EndpointConfig config, @PathParam("groupIdx") int groupIdx) throws IOException {
         log.info("onOpen");
         HttpSession httpSession = (HttpSession) config.getUserProperties().get(HttpSession.class.getName());
         if(httpSession != null) {
@@ -58,16 +58,34 @@ public class ChatServer {
                 session.getUserProperties().put("memberId", loginId);
                 session.getUserProperties().put("groupIdx", groupIdx);
                 log.info("접속아이디 : " + loginId);
+//                ChatGroupDTO dto = chatService.getGroupDTO(groupIdx);
+//                if(dto!=null) {
+//                    log.info("onOpen unreadCnt : "+chatService.countUnreadMessages(groupIdx,loginId));
+//                    String other = (loginId.equals(dto.getCustomer()))?dto.getSeller():dto.getCustomer();
+//                    log.info("onOpen other : "+other);
+//                    for (Session s : session.getOpenSessions()) {
+//                        String sessionMemberId = (String) s.getUserProperties().get("memberId");
+//                        if (other.equals(sessionMemberId)) {
+//                            log.info("onOpen : other session is open");
+//                            if(chatService.countUnreadMessages(groupIdx,loginId)>0) {
+//                                log.info("onOpen : sendText");
+//                                s.getBasicRemote().sendText("system\\|\\|read\\|\\|" + loginId + "\\|\\|");
+//                            }
+//                        }
+//                    }
+//                }
             }else{
                 log.info("접속한 세션이 유효하지 않습니다");
                 this.errCode = "002";
                 sendErrorMessage(session, this.errCode);
             }
+
         }else{
             log.info("세션이 없습니다.");
             this.errCode= "001";
             sendErrorMessage(session, this.errCode);
         }
+
     }
 
     @OnMessage
@@ -84,6 +102,7 @@ public class ChatServer {
     @OnClose
     public void onClose(Session session) {
         log.info("웹소켓 종료 : " + (String)session.getUserProperties().get("memberId"));
+        session.getUserProperties().clear();
     }
 
     @OnError
@@ -171,6 +190,7 @@ public class ChatServer {
                         .groupIdx(groupIdx)
                         .senderId("system")
                         .content(content)
+                        .readChk(isUserSessionConnected(reservationMemberId,session)?"Y":"N")
                         .build());
 
                 ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
@@ -203,6 +223,7 @@ public class ChatServer {
                         .groupIdx(groupIdx)
                         .senderId("system")
                         .content(content)
+                        .readChk(isUserSessionConnected(receiverId,session)?"Y":"N")
                         .build());
                 ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
                 if(messageDTO==null){
@@ -248,6 +269,7 @@ public class ChatServer {
                 .groupIdx(groupIdx)
                 .senderId(sender)
                 .content(content)
+                .readChk(isUserSessionConnected(receiver,session)?"Y":"N")
                 .build());
         ChatMessageDTO messageDTO = chatService.getMessage(messageIdx);
 
@@ -323,5 +345,24 @@ public class ChatServer {
                 config.getUserProperties().put(HttpSession.class.getName(), httpSession);
             }
         }
+    }
+
+    /**
+     * 특정 사용자의 세션이 서버에 접속해 있는지 확인하는 메서드
+     *
+     * @param memberId 확인하려는 사용자의 ID
+     * @return 접속해 있으면 true, 접속하지 않으면 false
+     */
+    private boolean isUserSessionConnected(String memberId, Session session) {
+        for (Session s : session.getOpenSessions()) {
+            String sessionMemberId = (String) s.getUserProperties().get("memberId");
+            log.info("openSessionMemberId : " + sessionMemberId);
+            if (memberId.equals(sessionMemberId)) {
+                log.info("return true");
+                return true; // 세션이 서버에 접속해 있음
+            }
+        }
+        log.info("return false");
+        return false; // 세션이 서버에 접속해 있지 않음
     }
 }
