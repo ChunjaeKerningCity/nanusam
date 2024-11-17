@@ -102,7 +102,9 @@
               console.log(error);
             });
   }
-
+</script>
+</c:if>
+<script>
   document.addEventListener("scroll", () => {
     const sidebar = document.querySelector('.fixedSidebar');
     const scrollPosition = window.scrollY;
@@ -110,8 +112,7 @@
     if (scrollPosition > 150) {
       sidebar.style.bottom = '100px';
     } else {
-      sidebar.style.bottom = '-50px';
+      sidebar.style.bottom = '-63px';
     }
   });
 </script>
-</c:if>

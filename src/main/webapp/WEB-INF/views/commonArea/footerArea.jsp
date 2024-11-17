@@ -29,5 +29,5 @@
       <a href="/admin/login.do" style="color: rgb(153, 153, 153); text-decoration: none">Copyright</a> © TeacherOfDivision Corp. All Rights Reserved
     </p>
   </div>
-  <img src="/resources/public/footerRight.png" alt="가맹문의" style=""/>
+  <img src="/resources/public/footerRight.png" alt="가맹문의" style="width: 273px; height: 137px;"/>
 </div>

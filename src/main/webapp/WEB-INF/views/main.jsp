@@ -11,7 +11,7 @@
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
     <style>
         .fixedSidebar {
-            bottom: -50px;
+            bottom: -63px;
         }
     </style>
 </head>

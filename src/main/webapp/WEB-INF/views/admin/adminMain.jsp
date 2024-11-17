@@ -303,7 +303,7 @@
                 <div class="stat-content">
                   <div class="text-left dib">
                     <div class="stat-text">
-                      <span class="count">144</span>시간
+                      <span class="count">168</span>시간
                     </div>
                     <div class="stat-heading">프로젝트 기간</div>
                   </div>
