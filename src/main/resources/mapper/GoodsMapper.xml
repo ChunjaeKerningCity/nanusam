@@ -170,15 +170,15 @@
                 order by ${orderBy} ${orderByDir}
             </when>
             <otherwise>
-                order by g.regDate desc
+                order by regDate desc
             </otherwise>
         </choose>
         limit #{page_skip_count}, #{page_size}
     </select>
 
     <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
-        insert into tbl_goods (name, memberId, price, quality, status, category, content)
-        values (#{name}, #{memberId}, #{price}, #{quality}, #{status}, #{category}, #{content})
+        insert into tbl_goods (name, memberId, price, quality, status, category, content, mainImageName)
+        values (#{name}, #{memberId}, #{price}, #{quality}, #{status}, #{category}, #{content}, #{mainImageName})
     </insert>
 
     <update id="modifyMainImage">
@@ -195,8 +195,10 @@
             category=#{category},
             content=#{content},
             name=#{name},
-            mainImageName=#{mainImageName},
             modifyDate=now()
+        <if test="mainImageName != null and mainImageName != ''">
+            ,mainImageName=#{mainImageName}
+        </if>
         where idx = #{idx}
           and memberId = #{memberId}
     </update>

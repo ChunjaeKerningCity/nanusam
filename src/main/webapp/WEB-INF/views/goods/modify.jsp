@@ -101,7 +101,7 @@
                                     <c:forEach var="img" items="${images}" varStatus="s">
                                         <li id="file${s.count}">
                                             <input style="display:none;" type="checkbox" name="deleteFile"
-                                                   id="deleteFile${s.count}" value="${file.fileName}"
+                                                   id="deleteFile${s.count}" value="${img.fileName}"
                                                    onchange="toggleDelete(${s.count})">
                                             <span>${img.orgFileName}</span> <label style="display: inline;"
                                                                                    for="deleteFile${s.count}">x</label>
