@@ -308,8 +308,8 @@
                           <span class="badge badge-complete">판매중</span>
                           <form action="/admin/updateGoodsStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="idx" value="${goods.idx}" />
-                            <input type="hidden" name="status" value="${goods.status}" class="status"/>
-                            <button type="submit" onclick="return confirmModify();" class="defaultA"><= 변경</button>
+                            <input type="hidden" name="status" value="${goods.status}" id="sts_${goods.idx}"/>
+                            <button type="submit" onclick="return confirmModify(${goods.idx});" class="defaultA"><= 변경</button>
                           </form>
                         </c:when>
                         <c:when test="${goods.status == 'R'}">
@@ -317,7 +317,7 @@
                           <form action="/admin/updateGoodsStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="idx" value="${goods.idx}" />
                             <input type="hidden" name="status" value="${goods.status}" />
-                            <button type="submit" onclick="return confirmModify();" class="defaultA"><= 변경</button>
+                            <button type="submit" disabled onclick="return notBtn1();" class="defaultA">변경 불가</button>
                           </form>
                         </c:when>
                         <c:when test="${goods.status == 'N'}">
@@ -325,15 +325,15 @@
                           <form action="/admin/updateGoodsStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="idx" value="${goods.idx}" />
                             <input type="hidden" name="status" value="${goods.status}" />
-                            <button type="submit" onclick="return confirmModify();" class="defaultA"><= 변경</button>
+                            <button type="submit" disabled onclick="return notBtn2();" class="defaultA">변경 불가</button>
                           </form>
                         </c:when>
                         <c:otherwise>
                           <span class="badge badge-danger">거래 불가</span>
                           <form action="/admin/updateGoodsStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="idx" value="${goods.idx}" />
-                            <input type="hidden" name="status" value="${goods.status}" />
-                            <button type="submit" onclick="return confirmModify();" class="defaultA"><= 변경</button>
+                            <input type="hidden" name="status" value="${goods.status}" id="sts_${goods.idx}" />
+                            <button type="submit" onclick="return confirmModify(${goods.idx});" class="defaultA"><= 변경</button>
                           </form>
                         </c:otherwise>
                       </c:choose>
@@ -405,14 +405,14 @@
     }
   }
 
-  function confirmModify() {
+  function confirmModify(idx) {
     if (confirm('상품 정보를 변경하시겠습니까?')) {
       let newStatus = prompt('변경할 새로운 상태 값을 입력하세요\n(Y:판매중, D:거래불가):');
       if (newStatus !== null && newStatus.trim() !== '') {
         newStatus = newStatus.trim().toUpperCase();
         if (['Y', 'D'].includes(newStatus) && newStatus.length === 1) {
-          document.querySelector('.status').value = newStatus;
-          console.log(newStatus)
+          document.querySelector('#sts_' + idx).value = newStatus;
+          console.log(newStatus);
           return true;
         } else {
           alert('잘못된 입력입니다. Y, D 중 하나의 한 글자만 입력 가능합니다.');
@@ -428,6 +428,13 @@
     }
   }
 
+  function notBtn1 () {
+    alert("예약된 상품은 변경이 불가능합니다.")
+  }
+
+  function notBtn2 () {
+    alert("거래 완료된 상품은 변경이 불가능합니다.")
+  }
 </script>
 
 </body>

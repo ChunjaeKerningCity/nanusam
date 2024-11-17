@@ -16,8 +16,8 @@
         }
 
         .h1 {
-            font-size: 48px;
-            margin: 0;
+            font-size: 40px;
+            margin: 0 0 10px 0;
         }
 
         .underH1 {

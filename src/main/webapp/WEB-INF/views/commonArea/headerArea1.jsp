@@ -8,7 +8,7 @@
     </a>
   </div>
   <div>
-    <div class="navGnb">
+    <div class="navGnb" style="min-width: 570px">
       <a href="/main/cpInfo.do">회사 소개글</a>
       <a href="/main/directions.do">오시는 길</a>
       <a href="/bbs/list.do">공지사항</a>
