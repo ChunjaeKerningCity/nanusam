@@ -89,10 +89,12 @@
 <c:import url="/WEB-INF/views/commonArea/errPrintJs.jsp"/>
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8" />
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8" />
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
 </header>
+<div class="line"/>
 <main>
+    <div class="commonContainer">
+    <div class="commonLeft"></div>
     <div class="container-center">
         <div>
             <hr/>
@@ -144,7 +146,7 @@
 <%--            </div>--%>
             <!--// 리스트 영역 -->
         </div>
-
+        <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
         <!-- 페이징 영역 -->
         <div class="row" style="margin-top: 1rem; justify-content: center">
             <nav aria-label="Page navigation example">
@@ -170,6 +172,8 @@
             </nav>
         </div>
         <!--// 페이징 영역 -->
+    </div>
+    <div class="commonRight"></div>
     </div>
 </main>
 
