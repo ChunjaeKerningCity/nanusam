@@ -56,6 +56,7 @@
                 </div>
             </c:forEach>
         </div>
+        <div class="center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <li class="page-item">
@@ -79,6 +80,7 @@
                 </li>
             </ul>
         </nav>
+        </div>
     </div>
     <div class="commonRight">
         <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
