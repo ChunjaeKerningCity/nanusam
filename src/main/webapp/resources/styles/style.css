@@ -351,19 +351,22 @@ body {
 
 .fixedSidebar {
   position: fixed;
-  bottom: 100px;
+  bottom: 50px;
   right: 200px;
   width: 120px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: transparent;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  text-align: center;
+  transition: bottom 0.5s ease;
 }
 
-.fixedSidebar .item {
-  margin-bottom: 20px;
-  text-align: center;
+.sideBarItemArea {
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  background-color: #fff;
 }
 
 .fixedSidebar .topButton {
@@ -372,6 +375,18 @@ body {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+}
+
+.Vibration {
+  animation: phoneAlert 0.5s ease-in-out infinite;
+}
+
+@keyframes phoneAlert {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
 }
 
 /*사이드 바 끝*/
@@ -414,5 +429,3 @@ body {
   transform: scale(1.05);
 }
 /* 공통 버튼 태그 + a 태그 끗 */
-
-/*사이드바*/

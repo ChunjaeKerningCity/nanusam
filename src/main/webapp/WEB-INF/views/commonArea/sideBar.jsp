@@ -2,18 +2,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="fixedSidebar">
   <div class="item">
-    <a class="aHref" href="${pageContext.request.contextPath}/cart/list.do">찜한상품</a><br>
-    <a class="aHref" href="${pageContext.request.contextPath}/payment/list.do">결제내역</a><br>
+    <div class="sideBarItemArea">
+      <a class="aHref" href="${pageContext.request.contextPath}/cart/list.do">
+        찜한상품<br>
+        <img src="https://m.bunjang.co.kr/pc-static/resource/11198bb2dc24672fee03.png" width="16" height="16" alt="찜 아이콘">
+      </a>
+    </div>
+    <div class="sideBarItemArea">
+      <a class="aHref" href="${pageContext.request.contextPath}/payment/list.do">
+        결제내역<br>
+        <img src="/resources/public/payment.png" width="16" height="16" alt="pay">
+      </a>
+    </div>
     <c:if test="${not empty sessionScope.memberId}" var="login">
-      <div id="alert" onclick="openAlertList()">알림<span id="unreadCount">${unreadCount}</span></div>
-      <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=buyer&memberId=${sessionScope.memberId}">내가쓴후기</a><br>
-      <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=seller&memberId=${sessionScope.memberId}">내가받은후기</a><br>
-      <a class="aHref" href="${pageContext.request.contextPath}/goods/reservation.do">예약목록</a><br>
+      <div class="sideBarItemArea">
+        <div id="alert" onclick="openAlertList()" style="cursor:pointer;">
+          알림&nbsp;<span id="unreadCount">${unreadCount}</span><br/>
+          <img src="/resources/public/notification.png" width="16" height="16" alt="notification">
+        </div>
+      </div>
+      <div class="sideBarItemArea">
+        <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=buyer&memberId=${sessionScope.memberId}">
+          내가쓴후기<br>
+          <img src="/resources/public/myWriteReview.png" width="16" height="16" alt="myWriteReview">
+        </a>
+      </div>
+      <div class="sideBarItemArea">
+        <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=seller&memberId=${sessionScope.memberId}">
+          내가받은후기<br>
+          <img src="/resources/public/peopleWriteReview.png" width="16" height="16" alt="peopleWriteReview">
+        </a>
+      </div>
+      <div class="sideBarItemArea">
+        <a class="aHref" href="${pageContext.request.contextPath}/goods/reservation.do">
+          예약목록<br>
+          <img src="/resources/public/reservation.png" width="16" height="16" alt="reservation">
+        </a>
+      </div>
     </c:if>
-  </div>
-  <div class="line"></div>
-  <div class="item">
-    <button class="topButton">TOP</button>
+    <div class="sideBarItemArea">
+      <button class="topButton">TOP</button>
+    </div>
   </div>
 </div>
 <c:if test="${login}">
@@ -32,8 +61,15 @@
             .then(response => response.json())
             .then(data => {
               const unreadCount = document.getElementById("unreadCount");
-              if (data.unreadCount!=='0') {
+              const notificationIcon = document.querySelector('img[alt="notification"]');
+              if (data.unreadCount !== 0) {
+                notificationIcon.src = "/resources/public/notificationOn.png";
                 unreadCount.textContent = '('+ data.unreadCount+')';
+                notificationIcon.classList.add("Vibration");
+              } else {
+                notificationIcon.src = "/resources/public/notification.png";
+                unreadCount.textContent = '('+ data.unreadCount+')';
+                notificationIcon.classList.remove("Vibration");
               }
             })
             .catch(error => {
@@ -66,5 +102,16 @@
               console.log(error);
             });
   }
+
+  document.addEventListener("scroll", () => {
+    const sidebar = document.querySelector('.fixedSidebar');
+    const scrollPosition = window.scrollY;
+
+    if (scrollPosition > 150) {
+      sidebar.style.bottom = '100px';
+    } else {
+      sidebar.style.bottom = '-50px';
+    }
+  });
 </script>
 </c:if>
