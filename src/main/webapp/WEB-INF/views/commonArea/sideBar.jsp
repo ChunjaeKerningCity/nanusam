@@ -8,12 +8,6 @@
         <img src="https://m.bunjang.co.kr/pc-static/resource/11198bb2dc24672fee03.png" width="16" height="16" alt="찜 아이콘">
       </a>
     </div>
-    <div class="sideBarItemArea">
-      <a class="aHref" href="${pageContext.request.contextPath}/payment/list.do">
-        결제내역<br>
-        <img src="/resources/public/payment.png" width="16" height="16" alt="pay">
-      </a>
-    </div>
     <c:if test="${not empty sessionScope.memberId}" var="login">
       <div class="sideBarItemArea">
         <div id="alert" onclick="openAlertList()" style="cursor:pointer;">

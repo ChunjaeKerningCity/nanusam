@@ -132,6 +132,8 @@ public class AdminController {
         boolean updated = adminService.updateGoodsStatus(idx, status);
         if (updated) {
             redirectAttributes.addFlashAttribute("errors", "상품 상태가 성공적으로 변경되었습니다.");
+            log.info(idx);
+            log.info(status);
         } else {
             redirectAttributes.addFlashAttribute("errors", "상품 상태 변경에 실패했습니다.");
         }
