@@ -21,10 +21,9 @@
 
 <header class="center">
     <c:import url="/WEB-INF/views/commonArea/headerArea1.jsp" charEncoding="UTF-8"/>
-    <c:import url="/WEB-INF/views/commonArea/headerSearchArea.jsp" charEncoding="UTF-8"/>
     <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8"/>
 </header>
-
+<div class="line"></div>
 <main class="marginTop">
     <div class="commonContainer">
         <div class="commonLeft"></div>
@@ -58,15 +57,27 @@
                                     배송 중
                                 </c:when>
                                 <c:otherwise>
-                                    <span onclick="window.open('${pageContext.request.contextPath}/review/regist.do?seller=${item.seller}'
+                                    <c:if test="${item.review eq 'N'}" var="N">
+                                    <span onclick="window.open('${pageContext.request.contextPath}/review/regist.do?idx=${item.idx}&seller=${item.seller}&goodsIdx=${item.goodsIdx}'
                                             ,'_blank','width=800,height=600,resizable=no')">배송 완료 <br>
                                     (구매후기작성하기)</span>
+                                    </c:if>
+                                    <c:if test="${not N}">
+                                        배송완료<br>
+                                        (구매후기작성완료)
+                                    </c:if>
                                 </c:otherwise>
                             </c:choose>
                         </td>
                     </tr>
                 </c:forEach>
-
+                <c:if test="${pageinfo.dtoList == null || pageinfo.dtoList.size() == 0}">
+                    <div class="col">
+                        <div class="alert alert-secondary center" role="alert">
+                            결제 내역 없음
+                        </div>
+                    </div>
+                </c:if>
 
                 </tbody>
             </table>
@@ -111,6 +122,15 @@
 <footer class="footerContainer">
     <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
 </footer>
+
+<script>
+    window.addEventListener("message",(e)=>{
+        if(e.data==='childClosed'){
+            console.log('childClosed');
+            location.reload();
+        }
+    });
+</script>
 
 <c:import url="/WEB-INF/views/commonArea/swiperScriptTag.jsp"/>
 </body>
