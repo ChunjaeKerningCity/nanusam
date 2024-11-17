@@ -134,6 +134,11 @@ public class GoodsController {
 
         GoodsDTO goodsDTO = goodsService.view(idx);
 
+        if(goodsDTO != null && (goodsDTO.getStatus().equals("N") || goodsDTO.getStatus().equals("D"))) {
+            redirectAttributes.addFlashAttribute("errors", "수정 불가 상품입니다.(판매 완료/삭제된 상품)");
+            return "redirect:/goods/view.do?idx=" + idx;
+        }
+
         if (session.getAttribute("memberId") == null || !session.getAttribute("memberId").equals(goodsDTO.getMemberId())) {
             redirectAttributes.addFlashAttribute("errors", "수정 권한이 없습니다.");
             return "redirect:/goods/view.do?idx=" + idx;
