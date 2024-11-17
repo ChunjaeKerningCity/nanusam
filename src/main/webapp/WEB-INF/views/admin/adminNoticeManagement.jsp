@@ -151,11 +151,11 @@
       transform: scale(1.05);
     }
 
-    .noticeTitle {
+    .noticeTitleTD {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 160px;
+      max-width: 120px;
     }
 
     .noticeTitle a {
@@ -180,7 +180,11 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 200px;
+      max-width: 300px;
+    }
+
+    p {
+      margin: 0;
     }
   </style>
 </head>
@@ -207,10 +211,24 @@
 
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.noticeContent').forEach(element => {
-      const content = element.textContent.trim();
-      if (content.length > 20) {
-        element.textContent = content.substring(0, 20) + '...';
+      let content = element.innerHTML.trim();
+
+      const pTagPositions = [];
+      let index = -1;
+
+      while ((index = content.indexOf('<p', index + 1)) !== -1) {
+        pTagPositions.push(index);
       }
+
+      if (pTagPositions.length >= 2) {
+        const secondPIndex = pTagPositions[1];
+        content = content.substring(0, secondPIndex) + '...';
+      } else if (content.length > 20) {
+        content = content.substring(0, 20) + '...';
+      }
+
+      // 변경된 내용을 요소에 반영
+      element.innerHTML = content;
     });
   });
 </script>
@@ -356,7 +374,7 @@
                   <tr>
                     <td>${notice.idx}</td>
                     <td>${notice.memberId}</td>
-                    <td>
+                    <td class="noticeTitleTD">
                       <a href="/bbs/view.do?idx=${notice.idx}" class="noticeTitle">${notice.title}</a>
                     </td>
                     <td class="noticeContent">${notice.content}</td>

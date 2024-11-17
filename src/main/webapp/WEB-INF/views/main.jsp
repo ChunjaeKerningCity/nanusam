@@ -9,6 +9,11 @@
     <title>NanuSam</title>
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
+    <style>
+        .fixedSidebar {
+            bottom: -63px;
+        }
+    </style>
 </head>
 <body>
 
