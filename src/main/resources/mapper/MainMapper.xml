@@ -11,7 +11,11 @@
       mainImageName
     FROM
       tbl_goods
-    ORDER BY regDate DESC
-      LIMIT #{offset}, #{limit}
+    WHERE
+      status != 'D'
+    ORDER BY
+      regDate DESC
+      LIMIT
+      #{offset}, #{limit}
   </select>
 </mapper>

@@ -8,6 +8,7 @@
       <div id="alert" onclick="openAlertList()">알림<span id="unreadCount">${unreadCount}</span></div>
       <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=buyer&memberId=${sessionScope.memberId}">내가쓴후기</a><br>
       <a class="aHref" href="${pageContext.request.contextPath}/review/list.do?memberType=seller&memberId=${sessionScope.memberId}">내가받은후기</a><br>
+      <a class="aHref" href="${pageContext.request.contextPath}/goods/reservation.do">예약목록</a><br>
     </c:if>
   </div>
   <div class="line"></div>

@@ -146,7 +146,6 @@
         // 보이는 영역의 높이
         const windowHeight = window.innerHeight;
 
-        // 스크롤이 페이지의 90% 이상 내려왔을 때 추가 로드
         if (scrollTop + windowHeight >= documentHeight * 0.95) {
             loadMoreGoods();
         }
@@ -167,7 +166,6 @@
                 appendGoods(data);
                 isLoading = false;
             } else {
-                // 더 이상 로드할 데이터가 없으면 스크롤 이벤트 제거
                 window.removeEventListener('scroll', onScroll);
             }
         })
@@ -181,11 +179,11 @@
         const cardContainer = document.getElementById('cardContainer');
         goodsList.forEach(item => {
             const card = document.createElement('a');
-            card.href = `/goods/view.do?idx=${item.idx}`;
+            card.href = '/goods/view.do?idx=' + item.idx;
             card.className = 'card';
 
             const img = document.createElement('img');
-            img.src = `/resources/image/goods_${item.idx}_0.png`;
+            img.src = '/resources/image/goods_' + item.idx +'_0.png';
             img.className = 'cardImage';
             img.alt = 'cardImage';
 
@@ -215,6 +213,8 @@
             console.log("==========");
             console.log(currentPage);
             console.log(PAGE_SIZE);
+            console.log("ㅇㅇ")
+            console.log("gd")
             console.log("==========");
         });
     }

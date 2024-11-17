@@ -37,7 +37,7 @@ public class MainController {
     }
 
     // 무한 스크롤을 위한 데이터 로드 API
-    @GetMapping(value = "/loadMoreGoods")
+    @GetMapping(value = "/loadMoreGoods", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String loadMoreGoods(@RequestParam(value = "page") int page) {
         List<GoodsDTO> goodsList = mainService.mainViewGoodsList(page);

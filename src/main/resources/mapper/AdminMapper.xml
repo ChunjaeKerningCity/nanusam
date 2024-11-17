@@ -67,7 +67,8 @@
 <!--  공지사항 관련-->
   <select id="noticeList" resultType="net.fullstack7.nanusam.domain.BbsVO">
     SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
-    FROM tbl_bbs;
+    FROM tbl_bbs
+    ORDER BY regDate DESC;
   </select>
 
 <!--  상품 관련-->
@@ -96,7 +97,7 @@
   </delete>
 
 <!--  상품 status 변경 ('Y', 'R', 'N', 'D')-->
-  <update id="updateGoodsStatus" parameterType="map">
+  <update id="updateGoodsStatus">
     UPDATE tbl_goods
     SET status = #{status}
     WHERE idx = #{idx};
