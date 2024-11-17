@@ -27,4 +27,5 @@ public class PaymentVO {
     private String paymentCompany;
     private String paymentNo;
     private String deliveryStatus;
+    private String review;
 }
