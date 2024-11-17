@@ -10,4 +10,6 @@ public interface PaymentService {
     PaymentDTO view(int idx);
     String deliveryStart(int idx, String seller);
     String deliveryEnd(int idx, String buyer);
+    String reviewAvaliable(int idx, String buyer, String seller, int goodsIdx);
+    String modifyReview(int idx);
 }

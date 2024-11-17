@@ -2,9 +2,8 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.fullstack7.nanusam.dto.PageRequestDTO;
-import net.fullstack7.nanusam.dto.PageResponseDTO;
-import net.fullstack7.nanusam.dto.ReviewDTO;
+import net.fullstack7.nanusam.dto.*;
+import net.fullstack7.nanusam.service.PaymentService;
 import net.fullstack7.nanusam.service.ReviewService;
 import net.fullstack7.nanusam.util.JSFunc;
 import org.springframework.stereotype.Controller;
@@ -28,7 +27,7 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
-
+    private final PaymentService paymentService;
     @GetMapping("/list.do")
     public String list(@RequestParam(required = false, defaultValue = "") String memberType
             , @RequestParam(required = false, defaultValue = "") String memberId
@@ -71,18 +70,40 @@ public class ReviewController {
     }
 
     @GetMapping("/regist.do")
-    public String registGet(@RequestParam(required = false, defaultValue = "")String seller, Model model, HttpSession session,HttpServletResponse response) {
+    public String registGet(
+            @RequestParam(required = false, defaultValue = "-1") int idx
+            , @RequestParam(required = false, defaultValue = "")String seller
+            ,@RequestParam(required = false, defaultValue = "-1") int goodsIdx
+            , Model model
+            , HttpSession session
+            ,HttpServletResponse response) {
         response.setCharacterEncoding("UTF-8");
-        if(seller.isEmpty()){
-            JSFunc.alertBack("구매자정보가 없습니다.",response);
-            return null;
+        if(seller.isEmpty()||idx<0||goodsIdx<0){
+            model.addAttribute("errors","파라미터 정확히 입력하세요.");
+            return "review/error";
         }
+        String reviewAvailable = paymentService.reviewAvaliable(idx,session.getAttribute("memberId").toString(),seller,goodsIdx);
+        if(reviewAvailable!=null){
+            model.addAttribute("errors",reviewAvailable);
+            return "review/error";
+        }
+        PaymentDTO paymentDTO = paymentService.view(idx);
+        GoodsDTO goodsDTO = paymentDTO.getGoodsInfo();
+        model.addAttribute("paymentIdx",idx);
+        model.addAttribute("goodsName",goodsDTO.getName());
         model.addAttribute("seller",seller);
         return "review/regist";
     }
 
     @PostMapping("/regist.do")
-    public String registPost(@Valid ReviewDTO reviewDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model, HttpSession session,HttpServletResponse response){
+    public String registPost(
+            @RequestParam(required = false, defaultValue = "-1") int paymentIdx
+            ,@Valid ReviewDTO reviewDTO
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+            , Model model
+            , HttpSession session
+            ,HttpServletResponse response){
         log.info("registPost");
         response.setCharacterEncoding("UTF-8");
         if(bindingResult.hasErrors()){
@@ -93,6 +114,7 @@ public class ReviewController {
             JSFunc.alertBack(errors.toString(),response);
             return null;
         }
+        log.info(reviewDTO.toString());
         log.info("no binding error");
         if(reviewDTO.getBuyer().equals(reviewDTO.getSeller())){
             log.info("seller == buyer");
@@ -106,6 +128,7 @@ public class ReviewController {
             JSFunc.alertBack("후기등록실패",response);
             return null;
         }
+        log.info("후기정보변경 : "+paymentService.modifyReview(paymentIdx));
         model.addAttribute("registFinished","true");
         return "review/regist";
     }

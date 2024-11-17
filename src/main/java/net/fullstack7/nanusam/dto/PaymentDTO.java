@@ -38,7 +38,7 @@ public class PaymentDTO {
     private String paymentCompany;
     private String paymentNo;
     private String deliveryStatus;
-
+    private String review;
 
 
     @Builder.Default

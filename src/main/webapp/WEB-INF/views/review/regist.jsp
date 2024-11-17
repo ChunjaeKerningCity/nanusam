@@ -79,6 +79,7 @@
     </script>
 </c:if>
     <form action="../review/regist.do" method="post">
+        <input type="hidden" name="paymentIdx" value="${paymentIdx}"/>
         <table>
             <tr>
                 <td>
@@ -86,6 +87,14 @@
                 </td>
                 <td>
                     <input id="seller" type="text" name="seller" value="${seller}" readonly/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="goodsName">상품 : </label>
+                </td>
+                <td>
+                    <input id="goodsName" type="text" name="goodsName" value="${goodsName}" readonly/>
                 </td>
             </tr>
             <tr>
@@ -127,6 +136,14 @@
             </tr>
         </table>
     </form>
+<script>
+    console.log(window.opener);
+    window.onbeforeunload = function(){
+        if(window.opener  && !window.opener.closed){
+            window.opener.postMessage("childClosed", "*");
+        }
+    }
+</script>
 </body>
 </html>
 

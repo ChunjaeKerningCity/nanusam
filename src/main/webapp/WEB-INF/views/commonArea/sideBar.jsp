@@ -49,7 +49,7 @@
     if(e.data==='childClosed'){
       getUnreadCount();
     }
-  })
+  });
   function getAlertList(){
     fetch("/alert/getList.do", {
       method: "GET",

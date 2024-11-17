@@ -19,6 +19,7 @@
         <result property="paymentCompany" column="paymentCompany"/>
         <result property="paymentNo" column="paymentNo"/>
         <result property="deliveryStatus" column="deliveryStatus"/>
+        <result property="review" column="review"/>
 
         <!-- GoodsDTO (조인된 데이터) -->
         <association property="goodsInfo" column="goods_idx"
@@ -58,6 +59,7 @@
             p.paymentCompany,
             p.paymentNo,
             p.deliveryStatus,
+            p.review,
 
             -- GoodsDTO 관련 컬럼
             g.idx AS goods_idx,
@@ -87,6 +89,7 @@
         <if test="searchCategory != null and searchCategory != ''">
             and p.deliveryStatus=#{searchCategory}
         </if>
+        order by payDate desc
         limit #{page_skip_count}, #{page_size}
     </select>
 
@@ -124,6 +127,7 @@
             p.paymentCompany,
             p.paymentNo,
             p.deliveryStatus,
+            p.review,
 
             -- GoodsDTO 관련 컬럼
             g.idx AS goods_idx,
@@ -161,5 +165,10 @@
         <if test="seller != null and seller != ''">
             and seller = #{seller}
         </if>
+    </update>
+    <update id="modifyReview">
+        UPDATE tbl_payment
+        SET review = 'Y'
+        WHERE idx=#{idx}
     </update>
 </mapper>
