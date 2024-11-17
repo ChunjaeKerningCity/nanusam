@@ -49,14 +49,11 @@ public class ChatController {
             log.info("session is null");
             return "redirect:/member/login.do";
         }
-        log.info("referer : " + CommonUtil.urlToUri(req.getHeader("referer")));
         if(groupIdx == -1) {
             log.info("groupIdx == -1");
             redirectAttributes.addFlashAttribute("errors","파라미터 오류");
             return "redirect:/chat/list.do";
         }
-
-
         ChatGroupDTO chatGroupDTO = chatService.getGroupDTO(groupIdx);
         if(chatGroupDTO == null) {
             redirectAttributes.addFlashAttribute("errors","채팅방 불러오기 실패.");
@@ -80,6 +77,7 @@ public class ChatController {
         model.addAttribute("other", chatGroupDTO.getSeller().equals(memberId)?chatGroupDTO.getCustomer():chatGroupDTO.getSeller());
         model.addAttribute("seller", chatGroupDTO.getSeller());
         model.addAttribute("goodsIdx", chatGroupDTO.getGoodsIdx());
+        model.addAttribute("goodsDTO",goodsService.view(chatGroupDTO.getGoodsIdx()));
         model.addAttribute("chatMessageList", chatMessageList);
         model.addAttribute("groupIdx", groupIdx);
         return "chat/view";

@@ -22,4 +22,5 @@ public class ChatGroupDTO {
     private String sellerName;
     private String customerName;
     private String goodsName;
+    private String mainImageName;
 }

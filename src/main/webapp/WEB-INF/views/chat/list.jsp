@@ -112,7 +112,7 @@
 
                 <td>
                     <div class="chat_goods">${chat.goodsName}</div>
-                    <div class="goods_img"><img src="/resources/image/goods_${chat.goodsIdx}_0.png" alt=""></div>
+                    <div class="goods_img"><img src="/resources/image/${chat.mainImageName}" alt=""></div>
                 </td>
                 <td class="${(sender eq chat.lastMessage.senderId) and (chat.unreadCount gt 0) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
                     <div>${sender eq chat.seller ? chat.sellerName : chat.customerName}</div>

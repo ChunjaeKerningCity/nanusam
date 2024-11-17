@@ -21,7 +21,8 @@
         WHERE delChk='N' AND (seller=#{memberId} OR customer=#{memberId})
     </select>
     <select id="groupDTOList" resultType="net.fullstack7.nanusam.dto.ChatGroupDTO">
-        SELECT tc.idx AS idx, tc.seller AS seller, tc.customer AS customer, tc.goodsIdx AS goodsIdx, tc.delChk AS delChk, tc.regDate AS regDate, tm.`name` AS sellerName, tm2.`name` AS customerName, tg.`name` AS goodsName
+        SELECT tc.idx AS idx, tc.seller AS seller, tc.customer AS customer, tc.goodsIdx AS goodsIdx, tc.delChk AS delChk, tc.regDate AS regDate
+             , tm.`name` AS sellerName, tm2.`name` AS customerName, tg.`name` AS goodsName, tg.mainImageName as mainImageName
         FROM tbl_chat_group AS tc
                  INNER JOIN tbl_member AS tm ON tc.seller = tm.memberId
                  INNER JOIN tbl_member AS tm2 ON tc.customer = tm2.memberId

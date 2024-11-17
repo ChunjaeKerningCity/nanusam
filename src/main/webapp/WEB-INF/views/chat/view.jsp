@@ -176,7 +176,7 @@
       채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
       </div>
       <div class="chat_goods">
-        <img class="goods_img" src="/resources/image/goods_${goodsIdx}_0.png" alt="">
+        <img class="goods_img" src="/resources/image/${goodsDTO.mainImageName}" alt="">
         <span class="goods_name">상품 : ${chatGroupDTO.goodsName}</span>
       </div>
     </div>
