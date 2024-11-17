@@ -96,7 +96,7 @@
     WHERE idx = #{idx};
   </delete>
 
-<!--  상품 status 변경 ('Y', 'R', 'N', 'D')-->
+<!--  상품 status 변경 ('Y', 'D')-->
   <update id="updateGoodsStatus">
     UPDATE tbl_goods
     SET status = #{status}

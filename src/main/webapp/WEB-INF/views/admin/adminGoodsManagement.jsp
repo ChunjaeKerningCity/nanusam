@@ -308,7 +308,7 @@
                           <span class="badge badge-complete">판매중</span>
                           <form action="/admin/updateGoodsStatus.do" method="post" style="display: inline;">
                             <input type="hidden" name="idx" value="${goods.idx}" />
-                            <input type="hidden" name="status" value="${goods.status}" />
+                            <input type="hidden" name="status" value="${goods.status}" class="status"/>
                             <button type="submit" onclick="return confirmModify();" class="defaultA"><= 변경</button>
                           </form>
                         </c:when>
@@ -411,7 +411,7 @@
       if (newStatus !== null && newStatus.trim() !== '') {
         newStatus = newStatus.trim().toUpperCase();
         if (['Y', 'D'].includes(newStatus) && newStatus.length === 1) {
-          document.querySelector('input[name="status"]').value = newStatus;
+          document.querySelector('.status').value = newStatus;
           console.log(newStatus)
           return true;
         } else {

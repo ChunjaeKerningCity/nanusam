@@ -147,6 +147,8 @@ public class AdminServiceImpl implements AdminService {
   @Override
   public boolean updateGoodsStatus(int idx, String status) {
     int result = adminXmlmapper.updateGoodsStatus(idx, status);
+    log.info(idx);
+    log.info(status);
     return result > 0;
   }
 
