@@ -35,43 +35,43 @@
   color: #000;
 }
 
-.pagination {
-  margin: 20px 0;
-  text-align: center;
-}
+/*.pagination {*/
+/*  margin: 20px 0;*/
+/*  text-align: center;*/
+/*}*/
 
-.pagination2 {
-  display: inline-flex;
-  list-style: none;
-  padding: 0;
-  gap: 15px;
-}
+/*.pagination2 {*/
+/*  display: inline-flex;*/
+/*  list-style: none;*/
+/*  padding: 0;*/
+/*  gap: 15px;*/
+/*}*/
 
-.page-link {
-  display: inline-block;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-}
+/*.page-link {*/
+/*  display: inline-block;*/
+/*  border-radius: 50%;*/
+/*  width: 25px;*/
+/*  height: 25px;*/
+/*  line-height: 25px;*/
+/*  text-align: center;*/
+/*  text-decoration: none;*/
+/*  font-size: 16px;*/
+/*}*/
 
-.pageItem.prev .page-link,
-.pageItem.next .page-link {
-  font-weight: bold;
-}
+/*.pageItem.prev .page-link,*/
+/*.pageItem.next .page-link {*/
+/*  font-weight: bold;*/
+/*}*/
 
-.pageItem.number .page-link {
-  padding: 5px 10px;
-}
+/*.pageItem.number .page-link {*/
+/*  padding: 5px 10px;*/
+/*}*/
 
-.pageItem .page-link.active {
-  background-color: #333;
-  color: #fff;
-  border-color: #333;
-}
+/*.pageItem .page-link.active {*/
+/*  background-color: #333;*/
+/*  color: #fff;*/
+/*  border-color: #333;*/
+/*}*/
 
 .boardTable tr {
   border-top: 1px solid #d1d1d1;

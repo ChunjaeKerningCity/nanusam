@@ -11,6 +11,8 @@
     <c:import url="/WEB-INF/views/commonArea/commonStyleScriptGroup.jsp" />
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
     <link href="/resources/styles/bbs/listStyle.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
 <header class="center">
@@ -24,7 +26,7 @@
     <div class="commonContainer">
         <div class="commonLeft"></div>
         <div class="commonMain">
-            <h2 class="textCenter">
+            <h2 class="textCenter" style="margin: 50px 0 20px 0; font-weight: bold;">
                 공지사항
             </h2>
             <!-- 리스트 영역 -->
@@ -58,23 +60,23 @@
                 </tbody>
             </table>
 
-            <div class="pagination">
+            <div class="row" style="margin-top: 1rem;">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination2">
+                    <ul class="pagination justify-content-center">
                         <c:if test="${bbsList.prev_page_flag}">
-                            <li class="pageItem prev">
+                            <li class="page-item prev">
                                 <a class="page-link" href="/bbs/list.do?page_no=${bbsList.page_block_start - 1}" aria-label="Previous">
                                     <span> &lt; </span>
                                 </a>
                             </li>
                         </c:if>
                         <c:forEach var="no" begin="${bbsList.page_block_start}" end="${bbsList.page_block_end}" step="1">
-                            <div>
+                            <li class="page-item">
                                 <a class="page-link" href="/bbs/list.do?page_no=${no}">${no}</a>
-                            </div>
+                            </li>
                         </c:forEach>
                         <c:if test="${bbsList.next_page_flag}">
-                            <li class="pageItem next">
+                            <li class="page-item next">
                                 <a class="page-link" href="/bbs/list.do?page_no=${bbsList.page_block_end + 1}" aria-label="Next">
                                     <span> &gt; </span>
                                 </a>
