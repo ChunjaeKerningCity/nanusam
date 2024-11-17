@@ -344,7 +344,6 @@
                   <th>AdminId</th>
                   <th>Title</th>
                   <th>Content</th>
-                  <th>글 노출일</th>
                   <th>등록일</th>
                   <th>수정일</th>
                   <th>조회수</th>
@@ -361,7 +360,6 @@
                       <a href="/bbs/view.do?idx=${notice.idx}" class="noticeTitle">${notice.title}</a>
                     </td>
                     <td class="noticeContent">${notice.content}</td>
-                    <td>${notice.displayDate}</td>
                     <td>${notice.regDateStr}</td>
                     <td>${notice.modifyDateStr}</td>
                     <td>${notice.readCnt}</td>

@@ -84,7 +84,7 @@ public class BbsController {
         log.info("dto : " + dto);
         log.info("===========================");
 
-        return "redirect:/bbs/list.do";
+        return "redirect:/admin/noticeMm.do";
     }
     @GetMapping("/view.do")
     public String viewGet(
