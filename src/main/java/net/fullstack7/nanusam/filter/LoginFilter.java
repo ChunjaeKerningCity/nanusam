@@ -26,13 +26,13 @@ public class LoginFilter  implements Filter {
 
 
         if(request.getSession().getAttribute("memberId") == null){
-            String referer = request.getHeader("referer");
-            String refererUri = referer != null ? CommonUtil.urlToUri(referer) : "";
-
-            if (refererUri != null && !refererUri.isEmpty()) {
-                refererUri = URLEncoder.encode(URLEncoder.encode(refererUri, "UTF-8"), "UTF-8"); // 두 번 인코딩
-            }
-            request.getSession().setAttribute("redirectAfterLogin", refererUri);
+//            String referer = request.getHeader("referer");
+//            String refererUri = referer != null ? CommonUtil.urlToUri(referer) : "";
+//
+//            if (refererUri != null && !refererUri.isEmpty()) {
+//                refererUri = URLEncoder.encode(URLEncoder.encode(refererUri, "UTF-8"), "UTF-8"); // 두 번 인코딩
+//            }
+//            request.getSession().setAttribute("redirectAfterLogin", refererUri);
             //-------------------------
             response.setContentType("text/html;charset=UTF-8");
             response.getWriter().println("<script>");

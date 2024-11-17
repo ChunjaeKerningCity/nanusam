@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.MemberDTO;
 import net.fullstack7.nanusam.service.MemberService;
+import net.fullstack7.nanusam.util.CommonUtil;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,12 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,11 +29,20 @@ public class LoginController {
     private final MemberService memberService;
 
     @GetMapping("/login.do")
-    public String login(HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
+    public String login(HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {
         if(session.getAttribute("memberId") != null){
             redirectAttributes.addFlashAttribute("errors", "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.");
             return "redirect:/";
         }
+
+        String referer = request.getHeader("referer");
+        String refererUri = referer != null ? CommonUtil.urlToUri(referer) : "";
+
+        if (refererUri != null && !refererUri.isEmpty()) {
+            refererUri = URLEncoder.encode(URLEncoder.encode(refererUri, "UTF-8"), "UTF-8"); // 두 번 인코딩
+            session.setAttribute("redirectAfterLogin", refererUri);
+        }
+
         return "login/login";
     }
 
@@ -47,13 +59,14 @@ public class LoginController {
             String redirectURL = (String) session.getAttribute("redirectAfterLogin");
 
             if (redirectURL != null) {
+                if(redirectURL.contains("/login/regist")){
+                    return "redirect:/";
+                }
                 try {
                     session.removeAttribute("redirectAfterLogin");
-
                     return "redirect:" + URLDecoder.decode(URLDecoder.decode(redirectURL, "UTF-8"), "UTF-8");
                 }catch(Exception e){
                     log.error(e);
-
                 }
             }
             //----------------------------

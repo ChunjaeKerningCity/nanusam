@@ -34,41 +34,6 @@ public class ChatServer {
     // ExecutorService 선언 및 초기화
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
-    // 에러 메시지 전송 메서드
-    private void sendErrorMessage(Session session, String errCode) {
-        String errorMessage;
-
-        // errCode에 따른 메시지 설정
-        switch (errCode) {
-            case "001":
-                errorMessage = "세션이 유효하지 않습니다.";
-                break;
-            case "002":
-                errorMessage = "접속한 세션이 유효하지 않습니다";
-                break;
-            case "003":
-                errorMessage = "해당 채팅방이 없습니다";
-                break;
-            case "004":
-                errorMessage = "접근권한이 없습니다";
-                break;
-            case "005":
-                errorMessage = "메세지 형식이 올바르지 않습니다(\\|\\| 포함하지 마세요)";
-                break;
-            case "006":
-                errorMessage = "db 접근시 오류 발생";
-                break;
-            default:
-                errorMessage = "일시적 오류가 발생했습니다.";
-        }
-
-        try {
-            session.getBasicRemote().sendText("error||" + errorMessage);
-        } catch (IOException e) {
-            log.error("에러 메시지 전송 실패: " + e.getMessage());
-        }
-    }
-
     @Autowired
     public void setChatService(ChatService chatService) {
         ChatServer.chatService = chatService; // ChatService를 정적 필드에 주입
@@ -313,6 +278,42 @@ public class ChatServer {
             sendErrorMessage(session, this.errCode);
         }
     }
+
+    // 에러 메시지 전송 메서드
+    private void sendErrorMessage(Session session, String errCode) {
+        String errorMessage;
+
+        // errCode에 따른 메시지 설정
+        switch (errCode) {
+            case "001":
+                errorMessage = "세션이 유효하지 않습니다.";
+                break;
+            case "002":
+                errorMessage = "접속한 세션이 유효하지 않습니다";
+                break;
+            case "003":
+                errorMessage = "해당 채팅방이 없습니다";
+                break;
+            case "004":
+                errorMessage = "접근권한이 없습니다";
+                break;
+            case "005":
+                errorMessage = "메세지 형식이 올바르지 않습니다(\\|\\| 포함하지 마세요)";
+                break;
+            case "006":
+                errorMessage = "db 접근시 오류 발생";
+                break;
+            default:
+                errorMessage = "일시적 오류가 발생했습니다.";
+        }
+
+        try {
+            session.getBasicRemote().sendText("error||" + errorMessage);
+        } catch (IOException e) {
+            log.error("에러 메시지 전송 실패: " + e.getMessage());
+        }
+    }
+
 
     public static class EndpointConfigurator extends ServerEndpointConfig.Configurator{
         @Override
