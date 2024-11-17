@@ -33,7 +33,9 @@
                         <a href="/goods/view.do?idx=${item.idx}" class="button confirmBtn" style="text-decoration: none;">상세보기</a>
                     </td>
                     <td>
+                        <c:if test="${item.status eq 'Y' or item.status eq 'R'}">
                         <a href="/goods/modify.do?idx=${item.idx}" class="button confirmBtn" style="text-decoration: none;">수정</a>
+                        </c:if>
                     </td>
                     <td>
                         <c:if test="${item.status eq 'N' and item.payInfo.deliveryStatus eq '0'}">
