@@ -63,7 +63,6 @@ public class GoodsController {
     public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage
             , @RequestParam(required = false) MultipartFile[] detailImage
             , @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        log.info(goodsDTO.toString());
         if (bindingResult.hasErrors()) {
             log.info("registPost > bindingResult has errors");
             redirectAttributes.addFlashAttribute("formerrors", bindingResult.getAllErrors());
@@ -204,7 +203,9 @@ public class GoodsController {
 
         try {
             if (mainImage != null && mainImage.getSize() > 0) {
-                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()), savepath);
+                message = upload(mainImage, goodsDTO.getIdx()
+                        , "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename())
+                        , savepath);
             }
 
 
@@ -215,7 +216,9 @@ public class GoodsController {
             if (detailImage != null && detailImage.length > 0) {
                 for (MultipartFile detail : detailImage) {
                     if (detail.getSize() > 0) {
-                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()), savepath);
+                        message = upload(detail, goodsDTO.getIdx()
+                                , "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename())
+                                , savepath);
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("errors", message);
                         }
@@ -338,15 +341,10 @@ public class GoodsController {
     }
 
     private String upload(MultipartFile file, int refIdx, String name, String savePath) throws Exception {
-        log.info("0");
         String message = null;
         String newName = "";
-        log.info("================================");
-        log.info("UploadController >> uploadPOST START");
         try {
-            log.info("1");
             if (file != null && !file.isEmpty()) {
-                log.info("2");
                 FileDTO dto = new FileDTO();
                 dto.setRefIdx(refIdx);
                 dto.setFilePath(savePath);
@@ -365,22 +363,9 @@ public class GoodsController {
                 message = goodsService.fileupload(dto);
             }
         } catch (Exception e) {
-            log.info("3");
             log.info(e.getMessage());
             message = e.getMessage();
-            log.info("upload " + message);
         }
-
-        log.info("uploadDir : " + savePath);
-        log.info("orgName : " + file.getOriginalFilename());
-        log.info("newName : " + newName);
-        //log.info("ext : "+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
-        log.info("ext : " + Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
-        log.info("size : " + file.getSize());
-        log.info("contentType : " + file.getContentType());
-        log.info("UploadController >> uploadPOST END");
-        log.info("================================");
-
         return message;
     }
 
