@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.dto;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -46,6 +47,17 @@ public class MemberDTO {
 
     private String status;              // 회원상태 Y 활성화 N 비활성화
     private LocalDateTime leaveDate;    // 탈퇴일
+
+//    public boolean isEligibleAge() {
+//        LocalDate today = LocalDate.now();
+//        LocalDate birthDate = LocalDate.parse(birthday);
+//        int age = today.getYear() - birthDate.getYear();
+//        if (today.getMonthValue() < birthDate.getMonthValue() ||
+//                (today.getMonthValue() == birthDate.getMonthValue() && today.getDayOfMonth() < birthDate.getDayOfMonth())) {
+//            age--;
+//        }
+//        return age >= 20;  // 20세 이상이면 true
+//    }
 
 //    private String regDateStr;
 //    @Builder.Default

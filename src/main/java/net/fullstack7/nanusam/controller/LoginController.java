@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -145,19 +146,30 @@ public class LoginController {
     public String registPost(@Valid MemberDTO memberDTO
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
-            , Model model) {
+            , Model model
+            , HttpSession session) {
+        session.setAttribute("termsAgree", true);
+
         if(bindingResult.hasErrors()){
             log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
             return "redirect:/login/regist.do";
         }
+
+        // 생일로부터 나이를 계산
+//        if (!memberDTO.isEligibleAge()) {
+//            redirectAttributes.addFlashAttribute("errors", "만 20세 이상만 가입 가능합니다.");
+//            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+//            return "redirect:/login/regist.do";
+//        }
+
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
             redirectAttributes.addFlashAttribute("errors","회원가입이 완료되었습니다. 로그인 페이지로 이동합니다.");
             return "redirect:/login/login.do";
         } else {
-            model.addAttribute("errors", "회원가입에 실패했습니다.");
+            redirectAttributes.addFlashAttribute("errors", "회원가입에 실패했습니다.");
             return "login/regist";
         }
     }
