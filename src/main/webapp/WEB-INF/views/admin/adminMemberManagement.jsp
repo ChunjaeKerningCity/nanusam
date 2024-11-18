@@ -275,7 +275,7 @@
             <div class="card-header">
               <strong class="card-title">Data Table</strong>
             </div>
-            <div class="card-body">
+            <div class="card-body" style="font-size: 12px">
               <table id="bootstrap-data-table" class="table table-striped table-bordered">
                 <thead>
                 <tr>
