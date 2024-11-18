@@ -87,7 +87,7 @@
                     </li>
                 </c:if>
                 <c:forEach var="no" begin="${pageinfo.page_block_start}" end="${pageinfo.page_block_end}" step="1">
-                    <li class="page-item"><a class="page-link" href="/goods/mygoods.do?page_no=${no}">${no}</a></li>
+                    <li class="page-item"><a class="page-link ${pageinfo.page_no eq no ? 'active':''}" href="${pageinfo.page_no eq no ? '#':'?page_no='.concat(no)}">${no}</a></li>
                 </c:forEach>
                 <c:if test="${pageinfo.next_page_flag}">
                     <li class="page-item">

@@ -127,7 +127,8 @@
                 </a>
             </li>
             <c:forEach begin="${pageDTO.page_block_start}" end="${pageDTO.page_block_end}" var="page_num">
-                <li class="page-item ${pageDTO.page_no == page_num? "active":""}"><a class="page-link" href="?page_no=${page_num}">${page_num}</a></li>
+                <li class="page-item ${pageDTO.page_no == page_num? "active":""}"><a class="page-link" href="
+                ${pageDTO.page_no == page_num? '#':'?page_no='.concat(page_num)}">${page_num}</a></li>
             </c:forEach>
             <li class="page-item">
                 <a class="page-link" href="<c:choose>
