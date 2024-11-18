@@ -32,11 +32,12 @@ public class MemberController {
 
     @GetMapping("/pwdCheck.do")
     public String pwdCheck(HttpSession session) {
+        session.removeAttribute("isPwdChecked");
         return "myPage/pwdCheck";
     }
 
     @PostMapping("/pwdCheck.do")
-    public String pwdCheck(@RequestParam String pwd, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+    public String pwdCheck(@RequestParam String pwd, HttpSession session,  RedirectAttributes redirectAttributes) {
         String memberId = (String) session.getAttribute("memberId");
         boolean pwdCheck = memberService.pwdCheck(memberId, pwd);
         if (pwdCheck) {
