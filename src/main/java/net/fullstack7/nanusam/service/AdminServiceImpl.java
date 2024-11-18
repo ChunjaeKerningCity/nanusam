@@ -57,36 +57,30 @@ public class AdminServiceImpl implements AdminService {
   public boolean updateMemberStatus(String memberId, String status) {
     // 상품 상태 확인
     List<String> goodsStatuses = adminXmlmapper.getGoodsStatusByMemberId(memberId);
-
     // 회원이 등록한 상품이 없는 경우, 상태 변경 가능
     if (goodsStatuses.isEmpty()) {
       log.info("No goods found for memberId {}. Proceeding with status change.", memberId);
       int result = adminXmlmapper.updateMemberStatus(memberId, status);
       return result > 0;
     }
-
     // 상품 상태가 'R'인 경우 회원 상태 변경 불가
     if (goodsStatuses.contains("R")) {
       log.info("Member status change blocked: Goods status 'R' found for memberId {}", memberId);
       return false;
     }
-
     // 상품 상태가 'N'인 경우 회원 상태만 변경
     if (goodsStatuses.contains("N")) {
       int result = adminXmlmapper.updateMemberStatus(memberId, status);
       return result > 0;
     }
-
     // 회원 상태가 'Y' -> 상품 상태 'Y'를 'D'로 변경
     if ("Y".equals(status)) {
       adminXmlmapper.updateGoodsStatusByMemberId(memberId, "D", "Y");
     }
-
     // 회원 상태가 'N' -> 상품 상태 'D'를 'Y'로 변경
     if ("N".equals(status)) {
       adminXmlmapper.updateGoodsStatusByMemberId(memberId, "Y", "D");
     }
-
     int result = adminXmlmapper.updateMemberStatus(memberId, status);
     return result > 0;
   }

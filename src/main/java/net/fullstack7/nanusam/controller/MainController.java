@@ -36,7 +36,7 @@ public class MainController {
         return "main";
     }
 
-    // 무한 스크롤을 위한 데이터 로드 API
+    // 무한 스크롤을 위한 데이터 로드
     @GetMapping(value = "/loadMoreGoods", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public String loadMoreGoods(@RequestParam(value = "page") int page) {
