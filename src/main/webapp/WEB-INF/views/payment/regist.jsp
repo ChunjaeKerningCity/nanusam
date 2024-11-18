@@ -107,12 +107,12 @@
                     <legend>주문자 정보</legend>
 
                     <label for="name">이름</label>
-                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="name" name="name" required value="${item.name}">
                     <div id="div_err_name" style="display: none;"></div>
                     <br>
 
                     <label for="phone">전화번호</label>
-                    <input type="tel" id="phone" name="phone" pattern="^\d{3}\d{3,4}\d{4}$" placeholder="01012345678"
+                    <input type="tel" id="phone" name="phone" pattern="^\d{3}\d{3,4}\d{4}$" placeholder="01012345678" value="${item.phone}"
                            required>
                     <div id="div_err_phone" style="display: none;"></div>
                     <br>
