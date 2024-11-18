@@ -67,7 +67,7 @@
         <div class="commonRight"></div>
     </div>
 </main>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/resources/scripts/cdn/postcode.v2.js"></script>
 <script src="../../../resources/scripts/login/regist.js?ts=<%=LocalDateTime.now()%>"></script>
 <script>
     // 백엔드 오류메세지
