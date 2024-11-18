@@ -58,13 +58,14 @@ public class LoginController {
             session.setAttribute("memberName", memberDTO.getName());
             //----------------------------
             String redirectURL = (String) session.getAttribute("redirectAfterLogin");
-
             if (redirectURL != null) {
-                if(redirectURL.contains("/login/regist")){
-                    return "redirect:/";
-                }
                 try {
                     session.removeAttribute("redirectAfterLogin");
+                    redirectURL = URLDecoder.decode(URLDecoder.decode(redirectURL, "UTF-8"), "UTF-8");
+                    log.info("redirectURL: " + redirectURL);
+                    if(redirectURL.contains("login/regist")||redirectURL.contains("login/login")){
+                        return "redirect:/";
+                    }
                     return "redirect:" + URLDecoder.decode(URLDecoder.decode(redirectURL, "UTF-8"), "UTF-8");
                 }catch(Exception e){
                     log.error(e);
