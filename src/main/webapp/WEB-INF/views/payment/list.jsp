@@ -98,7 +98,7 @@
                         </c:if>
                         <c:forEach var="no" begin="${pageinfo.page_block_start}" end="${pageinfo.page_block_end}"
                                    step="1">
-                            <li class="page-item"><a class="page-link"
+                            <li class="page-item"><a class="page-link${pageinfo.page_no == no ? ' active':''}"
                                                      href="/payment/list.do?page_no=${no}&searchCategory=${pageinfo.searchCategory}">${no}</a>
                             </li>
                         </c:forEach>
