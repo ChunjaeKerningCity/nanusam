@@ -178,7 +178,7 @@
     </div>
 </main>
 
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/resources/scripts/cdn/postcode.v2.js"></script>
 <script>
     function goZip() {
         new daum.Postcode({
