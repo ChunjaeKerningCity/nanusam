@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="footerContent">
   <img src="/resources/public/nanusamLogo.png" alt="로고" id="footerLogo" />
   <div>
