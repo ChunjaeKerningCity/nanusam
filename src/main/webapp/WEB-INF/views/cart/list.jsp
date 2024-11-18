@@ -159,7 +159,7 @@
                         </li>
                     </c:if>
                     <c:forEach var="no" begin="${cartList.page_block_start}" end="${cartList.page_block_end}" step="1">
-                        <li class="page-item"><a class="page-link" href="/cart/list.do?page_no=${no}">${no}</a></li>
+                        <li class="page-item"><a class="page-link ${pageinfo.page_no == no ? ' active':''}" href="/cart/list.do?page_no=${no}">${no}</a></li>
                     </c:forEach>
                     <c:if test="${cartList.next_page_flag}">
                         <li class="page-item">

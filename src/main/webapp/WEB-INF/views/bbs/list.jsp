@@ -72,7 +72,7 @@
                         </c:if>
                         <c:forEach var="no" begin="${bbsList.page_block_start}" end="${bbsList.page_block_end}" step="1">
                             <li class="page-item">
-                                <a class="page-link" href="/bbs/list.do?page_no=${no}">${no}</a>
+                                <a class="page-link ${pageinfo.page_no == no ? ' active':''}"  href="/bbs/list.do?page_no=${no}">${no}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${bbsList.next_page_flag}">

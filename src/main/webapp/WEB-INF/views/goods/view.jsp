@@ -13,8 +13,8 @@
     <c:import url="/WEB-INF/views/commonArea/swiperLinkTag.jsp" />
     <style>
         .carousel-img-container {
-            width: 850px;
-            height: 850px;
+            width: 800px;
+            height: 800px;
             display: flex;
             align-items: center;
             /*justify-content: center;*/
@@ -23,8 +23,8 @@
         }
         .c-img-size {
             margin: 0 auto;
-            max-width: 850px;
-            max-height: 850px;
+            max-width: 800px;
+            max-height: 800px;
             object-fit: contain;
         }
         .card:hover {
@@ -48,7 +48,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="height: 850px">
+                        <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel" style="height: 800px">
                             <div class="carousel-inner carousel-img-container">
                                 <c:forEach items="${item.images}" var="img" varStatus="s">
                                     <div class="carousel-item ${s.count==1?'active':''}">
@@ -99,7 +99,7 @@
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         </div>
         <div class="commonRight">
-            <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
+            <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
         </div>
     </div>
 </main>
