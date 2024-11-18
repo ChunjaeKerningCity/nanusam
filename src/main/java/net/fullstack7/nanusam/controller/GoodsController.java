@@ -35,7 +35,7 @@ public class GoodsController {
     private final GoodsService goodsService;
     private final AlertService alertService;
     //파일주소
-    private final String uploadDir = "/resources/image";
+//    private final String uploadDir = "/resources/image";
 
     @GetMapping("/list.do")
     public String list(Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -342,7 +342,7 @@ public class GoodsController {
                 log.info("2");
                 FileDTO dto = new FileDTO();
                 dto.setRefIdx(refIdx);
-                dto.setFilePath(uploadDir);
+                dto.setFilePath(savePath);
                 //dto.setFileName(file.getOriginalFilename());
                 newName = uploadFile(file.getOriginalFilename(), name, file.getBytes(), savePath);
                 dto.setFileName(newName);
@@ -364,7 +364,7 @@ public class GoodsController {
             log.info("upload " + message);
         }
 
-        log.info("uploadDir : " + uploadDir);
+        log.info("uploadDir : " + savePath);
         log.info("orgName : " + file.getOriginalFilename());
         log.info("newName : " + newName);
         //log.info("ext : "+ file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
