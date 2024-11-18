@@ -14,4 +14,5 @@ public class CartDTO {
     private String memberId;
     private int goodsIdx;
     private String name;    //G.name
+    private String mainImageName;
 }

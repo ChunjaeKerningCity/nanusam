@@ -35,19 +35,19 @@ public class BbsController {
 //        log.info("BbsController >> list START");
 
         if (bindingResult.hasErrors()){
-            log.info("BbsController >> list ERROR");
+//            log.info("BbsController >> list ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/bbs/list.do";
         }
 
         PageResponseDTO pageResponseDTO = bbsService.listByPage(pageRequestDTO);
-        log.info("pageResponseDTO"+pageResponseDTO);
+//        log.info("pageResponseDTO"+pageResponseDTO);
         model.addAttribute("bbsList", pageResponseDTO);
 
         if (pageResponseDTO == null) {
-            log.info("pageResponseDTO is null");
+//            log.info("pageResponseDTO is null");
         } else {
-            log.info("bbsListStart : " + pageResponseDTO.getPage_no());
+//            log.info("bbsListStart : " + pageResponseDTO.getPage_no());
         }
 //        log.info("BbsController >> list END");
 //        log.info("===========================");
@@ -60,9 +60,9 @@ public class BbsController {
     ){
         BbsDTO dto = BbsDTO.builder().build();
         model.addAttribute("dto", dto);
-        log.info("===========================");
-        log.info("regist");
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("regist");
+//        log.info("===========================");
         return "bbs/regist";
     }
     @PostMapping("/regist.do")
@@ -71,18 +71,18 @@ public class BbsController {
             , BindingResult bindingResult
             , RedirectAttributes redirectAttributes
     ){
-        log.info("===========================");
-        log.info("registPOST");
+//        log.info("===========================");
+//        log.info("registPOST");
 
 
         if(bindingResult.hasErrors()) {
-            log.info("hasErrors");
+//            log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/admin/noticeMm.do";
         }
         bbsService.regist(dto);
-        log.info("dto : " + dto);
-        log.info("===========================");
+//        log.info("dto : " + dto);
+//        log.info("===========================");
 
         return "redirect:/admin/noticeMm.do";
     }
@@ -94,13 +94,13 @@ public class BbsController {
             , RedirectAttributes redirectAttributes
     ){
         if(idx==-1){
-            log.info("idx==null");
+//            log.info("idx==null");
             redirectAttributes.addFlashAttribute("errors", "파라미터오류");
             return "redirect:/bbs/list.do";
         }
         BbsDTO dto = bbsService.view(idx);
         if(dto==null){
-            log.info("dto == null");
+//            log.info("dto == null");
             redirectAttributes.addFlashAttribute("errors", "게시글조회 실패");
             return "redirect:/bbs/list.do";
         }
@@ -118,9 +118,9 @@ public class BbsController {
                 dto.setReadCnt(dto.getReadCnt()+1);
             }
         }else if(readCntFlag==0){
-            log.info("readCntFlag == 0 에러확인하셈 조회수증가안시킴");
+//            log.info("readCntFlag == 0 에러확인하셈 조회수증가안시킴");
         }else{
-            log.info("조회수증가안시킴");
+//            log.info("조회수증가안시킴");
         }
 
         model.addAttribute("dto", dto);
@@ -165,7 +165,7 @@ public class BbsController {
 //        log.info("modifyPOST");
 
         if(bindingResult.hasErrors()) {
-            log.info("hasErrors");
+//            log.info("hasErrors");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("idx", dto.getIdx());
             return "redirect:/admin/noticeMm.do";

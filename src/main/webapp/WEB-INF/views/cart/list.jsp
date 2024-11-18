@@ -121,7 +121,7 @@
 <%--                                <input type="checkbox" name="select" id="select" value="${list.idx}">--%>
 <%--                            </td>--%>
                                 <td>
-                                    <a href="/goods/view.do?idx=${list.goodsIdx}" class="aHref"><img src="/resources/image/goods_${list.goodsIdx}_0.png" class="card-img-top" alt="${list.name}" ></a>
+                                    <a href="/goods/view.do?idx=${list.goodsIdx}" class="aHref"><img src="/resources/image/${list.mainImageName}" style="width: 150px" class="card-img-top" alt="${list.name}" >${list.name}</a>
                                 </td>
                             <td><button type="button" name="btnPayment" id="btnPayment" class="button confirmBtn" onclick="javascript:location.href='/payment/regist.do?goodsIdx=${list.goodsIdx}'">결제</button>
                             <form action="/cart/delete.do" method="get" id="deleteForm_1" style="display:inline;">
