@@ -138,12 +138,6 @@
            location.href="/review/delete.do?idx=${dto.idx}";
        }
     });
-    window.addEventListener('unload',()=>{
-        if (window.opener && !window.opener.closed) {
-            window.opener.alert('자식 창이 닫혔습니다.');
-            window.opener.location.reload();
-        }
-    });
 </script>
 </body>
 </html>
