@@ -87,6 +87,13 @@ public class MemberController {
 //            log.info("errors: " +bindingResult.getAllErrors());
             return "redirect:/member/view.do";
         }
+
+//        // 생일로부터 나이를 계산
+//        if (!memberModifyDTO.isEligibleAge()) {
+//            redirectAttributes.addFlashAttribute("errors", "만 20세 이상만 가입 가능합니다.");
+//            redirectAttributes.addFlashAttribute("memberDTO", memberModifyDTO);
+//            return "redirect:/member/view.do";
+//        }
         String sessionMemberId = (String) session.getAttribute("memberId");
         if (!memberModifyDTO.getMemberId().equals(sessionMemberId)) {
             session.setAttribute("isPwdChecked", true);

@@ -64,22 +64,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const zipCodeInput = document.getElementById("zipCode");
     const addr1Input = document.getElementById("addr1");
     const addr2Input = document.getElementById("addr2");
+    const birthdayInput = document.getElementById("birthday"); // 생년월일 필드
     const checkIdButton = document.querySelector("button[onclick='checkId()']");
 
     memberIdInput.addEventListener("keyup", function () {
         const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,14}$/;
         if (idRegex.test(memberIdInput.value)) {
-            // showMessage2(memberIdInput, true, "");
-
             showMessage(memberIdInput, true, "");
-
             checkIdButton.classList.remove("disabled");
             checkIdButton.disabled = false;
             checkIdButton.style.backgroundColor = "#fff1aa";
         } else {
-            //showMessage2(memberIdInput, false, "dd");
             showMessage(memberIdInput, false, "아이디는 영문자로 시작하고 5~15자의 영문자와 숫자만 사용 가능합니다.");
-
             checkIdButton.classList.add("disabled");
             checkIdButton.disabled = true;
             checkIdButton.style.backgroundColor = "#f0f0f0";
@@ -110,6 +106,28 @@ document.addEventListener("DOMContentLoaded", function () {
             "유효한 이메일 형식으로 입력해주세요.");
     });
 
+    // 생년월일 검증
+    birthdayInput.addEventListener("change", function () {
+        const birthday = new Date(birthdayInput.value);
+        const today = new Date();
+
+        // 만 나이 계산
+        let age = today.getFullYear() - birthday.getFullYear();
+        const monthDiff = today.getMonth() - birthday.getMonth();
+        const dayDiff = today.getDate() - birthday.getDate();
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        // 만 20세 미만일 경우
+        if (age < 20) {
+            showMessage(birthdayInput, false, "만 20세 이상만 가입 가능합니다.");
+        } else {
+            showMessage(birthdayInput, true, "");
+        }
+    });
+
+    // 폼 제출 시 최종 검증
     document.getElementById("registerForm").addEventListener("submit", function (event) {
         if (!memberIdInput.classList.contains("valid") || !isIdChecked) {
             alert("아이디를 확인해주세요.");
@@ -118,6 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
             nameInput.classList.contains("invalid") ||
             phoneInput.classList.contains("invalid") ||
             emailInput.classList.contains("invalid") ||
+            birthdayInput.classList.contains("invalid") || // 생년월일 검증 추가
             zipCodeInput.value === "" ||
             addr1Input.value === "" ||
             addr2Input.value === ""
@@ -182,8 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // 페이지 새로고침
 window.addEventListener("pageshow", function(event) {
-    if (event.persisted || window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
-        // 캐시에서 로드된 경우 새로고침
-        window.location.reload();
+    if (event.persisted) {
+        location.reload();
     }
 });

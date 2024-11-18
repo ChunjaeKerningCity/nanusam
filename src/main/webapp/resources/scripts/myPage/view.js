@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const zipCodeInput = document.getElementById("zipCode");
     const addr1Input = document.getElementById("addr1");
     const addr2Input = document.getElementById("addr2");
+    const birthdayInput = document.getElementById("birthday");
 
     phoneInput.addEventListener("keyup", function () {
         const phoneRegex = /^[0-9]{11}$/;
@@ -34,11 +35,33 @@ document.addEventListener("DOMContentLoaded", function () {
             "유효한 이메일 형식으로 입력해주세요.");
     });
 
+    // 생년월일 검증
+    birthdayInput.addEventListener("change", function () {
+        const birthday = new Date(birthdayInput.value);
+        const today = new Date();
+
+        // 만 나이 계산
+        let age = today.getFullYear() - birthday.getFullYear();
+        const monthDiff = today.getMonth() - birthday.getMonth();
+        const dayDiff = today.getDate() - birthday.getDate();
+        if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+            age--;
+        }
+
+        // 만 20세 미만일 경우
+        if (age < 20) {
+            showMessage(birthdayInput, false, "만 20세 이상만 가입 가능합니다.");
+        } else {
+            showMessage(birthdayInput, true, "");
+        }
+    });
+
     document.getElementById("modifyForm").addEventListener("submit", function (event) {
          if (passwordInput.classList.contains("invalid") ||
             nameInput.classList.contains("invalid") ||
             phoneInput.classList.contains("invalid") ||
             emailInput.classList.contains("invalid") ||
+             birthdayInput.classList.contains("invalid") ||
             zipCodeInput.value === "" ||
             addr1Input.value === "" ||
             addr2Input.value === ""
