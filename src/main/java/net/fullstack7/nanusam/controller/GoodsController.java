@@ -263,10 +263,12 @@ public class GoodsController {
         String errors = goodsService.cancelReservation(GoodsDTO.builder().memberId(session.getAttribute("memberId").toString()).idx(idx).build());
         String[] result = errors.split("::");
         redirectAttributes.addFlashAttribute("errors", result[0]);
-        alertService.regist(AlertDTO.builder()
-                .memberId(result[1])
-                .content(result[2] + " 상품의 예약이 취소되었습니다.")
-                .build());
+        if(result.length > 1) {
+            alertService.regist(AlertDTO.builder()
+                    .memberId(result[1])
+                    .content(result[2] + " 상품의 예약이 취소되었습니다.")
+                    .build());
+        }
         return "redirect:/goods/mygoods.do?page_no=" + page_no;
     }
 

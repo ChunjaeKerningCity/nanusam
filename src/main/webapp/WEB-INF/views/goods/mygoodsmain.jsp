@@ -17,7 +17,7 @@
                 <th>상세보기</th>
                 <th>수정</th>
                 <th>관리</th>
-                <th>예약자ID</th>
+                <th>예약자/구매자ID</th>
                 <th>결제정보</th>
             </tr>
         <c:forEach items="${pageinfo.dtoList}" var="item">
