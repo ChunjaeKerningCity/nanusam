@@ -75,6 +75,12 @@
         window.close();
     </script>
 </c:if>
+<c:if test="${deleteFinished}">
+    <script>
+        alert("후기 삭제 완료!");
+        window.close();
+    </script>
+</c:if>
 <form action="${pageContext.request.contextPath}/review/modify.do" method="post">
 
     <table>

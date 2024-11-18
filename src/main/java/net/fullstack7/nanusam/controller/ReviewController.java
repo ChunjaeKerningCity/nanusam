@@ -230,7 +230,7 @@ public class ReviewController {
             return null;
         }
         log.info("삭제성공");
-        model.addAttribute("modifyFinished","true");
+        model.addAttribute("deleteFinished","true");
         return "review/modify";
     }
 
