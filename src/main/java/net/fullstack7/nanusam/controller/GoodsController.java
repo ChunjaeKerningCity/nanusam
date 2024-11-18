@@ -173,7 +173,23 @@ public class GoodsController {
             , @RequestParam(required = false) MultipartFile[] detailImage) {
 
         if (idx <= 0) {
-            redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
+            redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        GoodsDTO orgDTO = goodsService.view(idx);
+        if(orgDTO == null) {
+            redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        if(!orgDTO.getMemberId().equals(session.getAttribute("memberId"))) {
+            redirectAttributes.addFlashAttribute("errors", "수정 권한이 없습니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        if(orgDTO.getStatus().equals("N") || orgDTO.getStatus().equals("D")) {
+            redirectAttributes.addFlashAttribute("errors", "수정 불가 상품입니다.(삭제 또는 판매완료)");
             return "redirect:/goods/list.do";
         }
 
@@ -217,7 +233,7 @@ public class GoodsController {
                 for (MultipartFile detail : detailImage) {
                     if (detail.getSize() > 0) {
                         message = upload(detail, goodsDTO.getIdx()
-                                , "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename())
+                                , "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID() + getExt(detail.getOriginalFilename())
                                 , savepath);
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("errors", message);
