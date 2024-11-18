@@ -100,7 +100,7 @@
 <c:if test="${buyer}">
    <script>
         function modify(idx){
-            window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
+            childWindow = window.open("/review/modify.do?idx="+idx,"_blank","width=800,height=600,resizable=no");
         }
    </script>
 </c:if>
