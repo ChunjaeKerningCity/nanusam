@@ -34,7 +34,8 @@ import java.util.UUID;
 public class GoodsController {
     private final GoodsService goodsService;
     private final AlertService alertService;
-    private final String uploadDir = "D:\\code\\project\\nanusam\\src\\main\\webapp\\resources\\image";
+    //파일주소
+    private final String uploadDir = "/resources/image";
 
     @GetMapping("/list.do")
     public String list(Model model, @Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
@@ -173,6 +174,16 @@ public class GoodsController {
 
 
         if (deleteFile != null && deleteFile.length > 0) {
+
+            for (String filename : deleteFile) {
+                if(filename.contains("_0.")) {
+                    if(mainImage.getSize() == 0) {
+                        redirectAttributes.addFlashAttribute("errors", "메인 이미지를 등록해주세요.");
+                        return "redirect:/goods/modify.do?idx=" + idx;
+                    }
+                }
+            }
+
             for (String filename : deleteFile) {
                 File dfile = new File(uploadDir, filename);
                 dfile.delete();
@@ -218,7 +229,7 @@ public class GoodsController {
             return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
         }
 
-        return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
+        return "redirect:/goods/mygoods.do";
     }
 
     @GetMapping("/delete.do")
