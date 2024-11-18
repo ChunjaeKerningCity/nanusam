@@ -80,10 +80,7 @@
   });
   function getAlertList(){
     fetch("/alert/getList.do", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      }
+      method: "GET"
     })
             .then(response => response.json())
             .then(data => {
