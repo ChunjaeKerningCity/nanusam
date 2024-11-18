@@ -71,7 +71,7 @@
         </li>
       </c:if>
       <c:forEach var="no" begin="${pageinfo.page_block_start}" end="${pageinfo.page_block_end}" step="1">
-        <li class="page-item"><a class="page-link" href="/goods/reservation.do?page_no=${no}">${no}</a></li>
+        <li class="page-item"><a class="page-link${pageinfo.page_no == no ? ' active':''}" href="/goods/reservation.do?page_no=${no}">${no}</a></li>
       </c:forEach>
       <c:if test="${pageinfo.next_page_flag}">
         <li class="page-item">
@@ -85,7 +85,7 @@
 </div>
     </div>
     <div class="commonRight">
-      <c:import url="/WEB-INF/views/commonArea/footerArea.jsp"/>
+      <c:import url="/WEB-INF/views/commonArea/sideBar.jsp" charEncoding="UTF-8" />
     </div>
   </div>
 </main>
