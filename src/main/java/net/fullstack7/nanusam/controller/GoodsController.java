@@ -84,7 +84,7 @@ public class GoodsController {
             return "redirect:/goods/regist.do";
         }
 
-        String savepath = session.getServletContext().getRealPath("/resources/images");
+        String savepath = session.getServletContext().getRealPath("/resources/image");
 
         try {
             message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()), savepath);
@@ -171,7 +171,7 @@ public class GoodsController {
             return "redirect:/goods/list.do";
         }
 
-        String savepath = session.getServletContext().getRealPath("/resources/images");
+        String savepath = session.getServletContext().getRealPath("/resources/image");
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
         String message = null;
 
