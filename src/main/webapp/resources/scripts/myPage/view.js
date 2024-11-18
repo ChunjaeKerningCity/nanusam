@@ -137,3 +137,10 @@ function deleteGo() {
             });
     }
 }
+// 페이지 새로고침
+window.addEventListener("pageshow", function(event) {
+    if (event.persisted || window.performance.getEntriesByType("navigation")[0].type === "back_forward") {
+        // 캐시에서 로드된 경우 새로고침
+        window.location.reload();
+    }
+});
