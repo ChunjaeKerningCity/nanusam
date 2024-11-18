@@ -47,10 +47,7 @@
   function getUnreadCount() {
     const memberId = '${memberId}';
     fetch("/alert/unreadCount.do?memberId="+memberId, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      }
+      method: "GET"
     })
             .then(response => response.json())
             .then(data => {
