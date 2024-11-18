@@ -177,6 +177,22 @@ public class GoodsController {
             return "redirect:/goods/list.do";
         }
 
+        GoodsDTO orgDTO = goodsService.view(idx);
+        if(orgDTO == null) {
+            redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        if(!orgDTO.getMemberId().equals(session.getAttribute("memberId"))) {
+            redirectAttributes.addFlashAttribute("errors", "수정 권한이 없습니다.");
+            return "redirect:/goods/list.do";
+        }
+
+        if(orgDTO.getStatus().equals("N") || orgDTO.getStatus().equals("D")) {
+            redirectAttributes.addFlashAttribute("errors", "수정 불가 상품입니다.(삭제 또는 판매완료)");
+            return "redirect:/goods/list.do";
+        }
+
         String savepath = session.getServletContext().getRealPath("/resources/image");
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
         String message = null;
