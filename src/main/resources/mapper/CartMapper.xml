@@ -12,7 +12,7 @@
     </select>
 
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.CartVO">
-        SELECT C.idx, C.memberId, C.goodsIdx, G.idx, G.name
+        SELECT C.idx, C.memberId, C.goodsIdx, G.idx, G.name, G.mainImageName
         FROM tbl_cart AS C
                  LEFT JOIN tbl_goods G
                            ON C.goodsIdx = G.idx
