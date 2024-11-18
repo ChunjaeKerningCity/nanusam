@@ -158,11 +158,11 @@ public class LoginController {
         }
 
         // 생일로부터 나이를 계산
-//        if (!memberDTO.isEligibleAge()) {
-//            redirectAttributes.addFlashAttribute("errors", "만 20세 이상만 가입 가능합니다.");
-//            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
-//            return "redirect:/login/regist.do";
-//        }
+        if (!memberDTO.isEligibleAge()) {
+            redirectAttributes.addFlashAttribute("errors", "만 20세 이상만 가입 가능합니다.");
+            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
+            return "redirect:/login/regist.do";
+        }
 
         int result = memberService.registMember(memberDTO);
         if (result > 0) {
