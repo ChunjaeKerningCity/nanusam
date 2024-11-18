@@ -218,7 +218,7 @@ public class GoodsController {
             return "redirect:/goods/modify.do?idx=" + goodsDTO.getIdx();
         }
 
-        return "redirect:/goods/view.do?idx=" + goodsDTO.getIdx();
+        return "redirect:/goods/mygoods.do";
     }
 
     @GetMapping("/delete.do")
