@@ -60,7 +60,9 @@ public class GoodsController {
     }
 
     @PostMapping("/regist.do")
-    public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage, @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registPost(HttpSession session, @RequestParam(required = false) MultipartFile mainImage
+            , @RequestParam(required = false) MultipartFile[] detailImage
+            , @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         log.info(goodsDTO.toString());
         if (bindingResult.hasErrors()) {
             log.info("registPost > bindingResult has errors");
@@ -87,7 +89,9 @@ public class GoodsController {
         String savepath = session.getServletContext().getRealPath("/resources/image");
 
         try {
-            message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()), savepath);
+            message = upload(mainImage, goodsDTO.getIdx()
+                    , "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename())
+                    , savepath);
 
             if (message != null) {
                 redirectAttributes.addFlashAttribute("item", goodsDTO);
@@ -98,7 +102,9 @@ public class GoodsController {
             if (detailImage != null && detailImage.length > 0) {
                 for (MultipartFile detail : detailImage) {
                     if (detail.getSize() > 0) {
-                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()), savepath);
+                        message = upload(detail, goodsDTO.getIdx()
+                                , "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename())
+                                , savepath);
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("item", goodsDTO);
                             redirectAttributes.addFlashAttribute("errors", message);
@@ -119,7 +125,7 @@ public class GoodsController {
 
     @GetMapping("/view.do")
     public String viewGet(@RequestParam(required = true, defaultValue = "0") int idx, Model model, RedirectAttributes redirectAttributes) {
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
@@ -130,7 +136,7 @@ public class GoodsController {
     @GetMapping("/modify.do")
     public String modifyGet(HttpSession session, Model model, @RequestParam(required = false, defaultValue = "0") int idx, RedirectAttributes redirectAttributes) {
 
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
@@ -164,9 +170,10 @@ public class GoodsController {
             , @Valid GoodsDTO goodsDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes
             , HttpSession session
             , @RequestParam(required = false) String[] deleteFile
-            , @RequestParam(required = false) MultipartFile mainImage, @RequestParam(required = false) MultipartFile[] detailImage) {
+            , @RequestParam(required = false) MultipartFile mainImage
+            , @RequestParam(required = false) MultipartFile[] detailImage) {
 
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "등록되지 않은 상품입니다.");
             return "redirect:/goods/list.do";
         }
@@ -238,7 +245,7 @@ public class GoodsController {
     @GetMapping("/delete.do")
     public String deleteGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
             , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
         }
 
@@ -253,7 +260,7 @@ public class GoodsController {
     public String directGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
             , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
 
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
             return "redirect:/goods/mygoods.do?page_no=" + page_no;
         }
@@ -269,7 +276,7 @@ public class GoodsController {
     public String cancelGet(HttpSession session, @RequestParam(defaultValue = "0") int idx
             , @RequestParam(required = false, defaultValue = "1") int page_no, RedirectAttributes redirectAttributes) {
 
-        if (idx == 0) {
+        if (idx <= 0) {
             redirectAttributes.addFlashAttribute("errors", "존재하지 않는 상품입니다.");
             return "redirect:/goods/mygoods.do?page_no=" + page_no;
         }
