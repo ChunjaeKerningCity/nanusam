@@ -84,8 +84,10 @@ public class GoodsController {
             return "redirect:/goods/regist.do";
         }
 
+        String savepath = session.getServletContext().getRealPath("/resources/images");
+
         try {
-            message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+            message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()), savepath);
 
             if (message != null) {
                 redirectAttributes.addFlashAttribute("item", goodsDTO);
@@ -96,7 +98,7 @@ public class GoodsController {
             if (detailImage != null && detailImage.length > 0) {
                 for (MultipartFile detail : detailImage) {
                     if (detail.getSize() > 0) {
-                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()), savepath);
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("item", goodsDTO);
                             redirectAttributes.addFlashAttribute("errors", message);
@@ -169,6 +171,7 @@ public class GoodsController {
             return "redirect:/goods/list.do";
         }
 
+        String savepath = session.getServletContext().getRealPath("/resources/images");
         goodsDTO.setMemberId(session.getAttribute("memberId").toString());
         String message = null;
 
@@ -185,7 +188,7 @@ public class GoodsController {
             }
 
             for (String filename : deleteFile) {
-                File dfile = new File(uploadDir, filename);
+                File dfile = new File(savepath, filename);
                 dfile.delete();
                 goodsService.deleteFileByName(filename);
             }
@@ -194,7 +197,7 @@ public class GoodsController {
 
         try {
             if (mainImage != null && mainImage.getSize() > 0) {
-                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()));
+                message = upload(mainImage, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_0" + getExt(mainImage.getOriginalFilename()), savepath);
             }
 
 
@@ -205,7 +208,7 @@ public class GoodsController {
             if (detailImage != null && detailImage.length > 0) {
                 for (MultipartFile detail : detailImage) {
                     if (detail.getSize() > 0) {
-                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()));
+                        message = upload(detail, goodsDTO.getIdx(), "goods_" + goodsDTO.getIdx() + "_z" + UUID.randomUUID().toString() + getExt(detail.getOriginalFilename()), savepath);
                         if (message != null) {
                             redirectAttributes.addFlashAttribute("errors", message);
                         }
@@ -320,14 +323,14 @@ public class GoodsController {
         return "goods/reservation";
     }
 
-    private String uploadFile(String orgName, String newName, byte[] fileData) throws Exception {
+    private String uploadFile(String orgName, String newName, byte[] fileData, String savePath) throws Exception {
         String saveName = newName;
-        File targetFile = new File(uploadDir, saveName);
+        File targetFile = new File(savePath, saveName);
         FileCopyUtils.copy(fileData, targetFile);
         return saveName;
     }
 
-    private String upload(MultipartFile file, int refIdx, String name) throws Exception {
+    private String upload(MultipartFile file, int refIdx, String name, String savePath) throws Exception {
         log.info("0");
         String message = null;
         String newName = "";
@@ -341,7 +344,7 @@ public class GoodsController {
                 dto.setRefIdx(refIdx);
                 dto.setFilePath(uploadDir);
                 //dto.setFileName(file.getOriginalFilename());
-                newName = uploadFile(file.getOriginalFilename(), name, file.getBytes());
+                newName = uploadFile(file.getOriginalFilename(), name, file.getBytes(), savePath);
                 dto.setFileName(newName);
                 dto.setFileExt(Objects.requireNonNull(file.getOriginalFilename()).substring(file.getOriginalFilename().lastIndexOf(".")));
                 dto.setFileContentType(file.getContentType());
