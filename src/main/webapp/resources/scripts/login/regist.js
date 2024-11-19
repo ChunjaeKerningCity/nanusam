@@ -69,11 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     memberIdInput.addEventListener("keyup", function () {
         const idRegex = /^[a-zA-Z][a-zA-Z0-9]{4,14}$/;
+
         if (idRegex.test(memberIdInput.value)) {
             showMessage(memberIdInput, true, "");
             checkIdButton.classList.remove("disabled");
             checkIdButton.disabled = false;
             checkIdButton.style.backgroundColor = "#fff1aa";
+
+            isIdChecked = false; 
         } else {
             showMessage(memberIdInput, false, "아이디는 영문자로 시작하고 5~15자의 영문자와 숫자만 사용 가능합니다.");
             checkIdButton.classList.add("disabled");
@@ -127,10 +130,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+
     // 폼 제출 시 최종 검증
     document.getElementById("registerForm").addEventListener("submit", function (event) {
         if (!memberIdInput.classList.contains("valid") || !isIdChecked) {
-            alert("아이디를 확인해주세요.");
+            alert("아이디 중복확인을 진행하세요.");
             event.preventDefault();
         } else if (passwordInput.classList.contains("invalid") ||
             nameInput.classList.contains("invalid") ||
