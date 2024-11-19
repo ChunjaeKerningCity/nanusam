@@ -111,7 +111,7 @@ public class LoginController {
             return "redirect:/login/regist.do";
         } else {
             model.addAttribute("errors", "약관동의 후 회원가입이 가능합니다");
-            return "login/registCheck";
+            return "redirect:/login/registCheck.do";
         }
     }
 
