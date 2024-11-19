@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/resources/styles/nav/style.css" />
   <script
       type="text/javascript"
-      src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=pt1jhhbu83"
+      src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=${clientId}"
   ></script>
 </head>
 <body>
@@ -29,7 +29,7 @@
       <div class="flex">
         <div class="mapText">
           <h2 class="heading">찾아오시는 길</h2>
-          <p class="subHeading">항상 최고의 서비스를 제공하겠습니다.</p>
+          <p class="subHeading">항상 최고의 서비스를 제공하겠습니다. ${clientId}</p>
 
           <div class="infoContainer">
             <h3 class="officeTitle">나누쌤 본사</h3>

@@ -69,3 +69,5 @@ bin/
 
 ### remove test ###
 !**/src/test/
+
+.env

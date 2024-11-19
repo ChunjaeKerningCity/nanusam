@@ -1,5 +1,6 @@
 package net.fullstack7.nanusam.controller;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.util.List;
 import javax.sound.sampled.Line.Info;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,11 @@ public class MainController {
     }
 
     @GetMapping("/main/directions.do")
-    public String directions(){
+    public String directions(Model model) {
+        Dotenv dotenv = Dotenv.configure().directory("./").load();
+        String clientId = dotenv.get("NCP_CLIENT_ID");
+        log.info(clientId);
+        model.addAttribute("clientId", clientId);
         return "navigation/directions";
     }
 
