@@ -33,10 +33,13 @@ public class MemberDTO {
     @Pattern(regexp = "^[0-9]{11}$", message = "휴대폰 번호는 숫자만 입력 가능합니다.")
     private String phone;
     @NotBlank
+    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$", message = "생일은 YYYY-MM-DD 형식이어야 하며, 만 20세 이상만 회원가입 가능합니다.")
     private String birthday;            // YYYY-MM-DD
     @NotBlank
+    @Size (min = 4, max = 30)
     private String addr1;
     @NotBlank
+    @Size (min = 4, max = 30)
     private String addr2;
     @NotBlank
     @Pattern(regexp = "^[0-9]{5,6}$", message = "우편번호는 숫자만 입력 가능합니다.")
