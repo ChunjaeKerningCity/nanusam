@@ -13,4 +13,6 @@ public class CartVO {
     private int idx;
     private String memberId;
     private int goodsIdx;
+    private String name;    //G.name
+    private String mainImageName;
 }

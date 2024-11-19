@@ -25,6 +25,20 @@ body {
   justify-content: center;
 }
 
+.ccenter {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+.commonContainer {
+  display: grid;
+  grid-template-columns: 360px 1200px 360px;
+  min-height: 600px;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
 .textCenter {
   text-align: center;
 }
@@ -193,6 +207,21 @@ body {
 }
 /* 슬라이더 영역 */
 
+.marginTop {
+  margin-top: 100px;
+}
+
+.inputCustom {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #f0f0f0;
+}
+
 .mainContainer {
   display: flex;
   justify-content: center;
@@ -202,7 +231,7 @@ body {
 .mainContent {
   width: 1200px;
   height: auto;
-  min-height: 500px;
+  min-height: 1000px;
   margin-top: 100px;
 }
 
@@ -220,7 +249,6 @@ body {
 .cardContainer {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   width: 1200px;
   margin: 10px 0 10px 0;
 }
@@ -234,6 +262,7 @@ body {
   color: inherit;
   transition: transform 0.3s ease;
   margin-top: 20px;
+  margin-right: 18px;
 }
 
 .card:hover {
@@ -322,19 +351,23 @@ body {
 
 .fixedSidebar {
   position: fixed;
-  bottom: 100px;
+  bottom: 50px;
   right: 200px;
   width: 120px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  background-color: transparent;
   padding: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  text-align: center;
+  transition: bottom 0.5s ease;
 }
 
-.fixedSidebar .item {
-  margin-bottom: 20px;
-  text-align: center;
+.sideBarItemArea {
+  margin-bottom: 10px;
+  min-width: 120px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  background-color: #fff;
 }
 
 .fixedSidebar .topButton {
@@ -345,4 +378,55 @@ body {
   cursor: pointer;
 }
 
+.Vibration {
+  animation: phoneAlert 0.5s ease-in-out infinite;
+}
+
+@keyframes phoneAlert {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-3px); }
+  40% { transform: translateX(3px); }
+  60% { transform: translateX(-2px); }
+  80% { transform: translateX(2px); }
+}
+
 /*사이드 바 끝*/
+
+/* 공통 버튼 태그 + a 태그 */
+.button {
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.confirmBtn {
+  background-color: #fff1aa;
+  color: black;
+}
+
+.confirmBtn:hover {
+  background-color: #ffe97a;
+}
+
+.cancelBtn {
+  background-color: #ff6f61;
+  color: white;
+}
+
+.cancelBtn:hover {
+  background-color: #e66055;
+}
+
+.aHref {
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.aHref:hover {
+  transform: scale(1.05);
+}
+/* 공통 버튼 태그 + a 태그 끗 */

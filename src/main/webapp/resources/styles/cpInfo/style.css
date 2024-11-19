@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;500&family=Pacifico&display=swap");
+
+.header {
+  padding-top: 5vh;
+  background-color: #000;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 2.5vw; /* 반응형 글자 크기 */
+}
+
+.path {
+  fill: none;
+  stroke: #f2f2f2;
+  stroke-width: 0.2vw; /* 반응형 선 굵기 */
+}
+
+.path1 {
+  stroke-dasharray: 6884;
+  animation: drawPath1 1s linear, floating 2.2s linear infinite;
+}
+
+.content1 {
+  background-color: #f1f1f1;
+}
+
+.content2 {
+  background-color: #000;
+}
+
+.path2 {
+  stroke: #000;
+}
+
+.content2 {
+  background-image: url("/resources/public/newzealand.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.content3 {
+  background-color: #1a1a1a;
+}
+
+.footer {
+  height: 30vh;
+  background-color: #000;
+}
+
+@keyframes drawPath1 {
+  0% {
+    stroke-dashoffset: 6884;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes floating {
+  50% {
+    transform: translate3d(0, 2vh, 0);
+  }
+}
+
+.whiteText {
+  position: absolute;
+  color: white;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.textHeader {
+  top: 3vh;
+  left: 3vw;
+}
+
+.textHeaderContainer1 {
+  bottom: 3vh;
+  right: 20vw;
+  font-weight: bold;
+  font-size: 2vw;
+}
+
+.textHeaderContainer2 {
+  width: 500px;
+  right: 8vw;
+  font-size: 2vw;
+}
+
+.textHeaderContainer3 {
+  top: 20vh;
+  right: 0vw;
+  width: 800px;
+  font-size: 1.2vw;
+}
+
+@keyframes slideInFromRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.headerVision {
+  animation-delay: 0.5s;
+  position: absolute;
+  top: 30vh;
+  right: 12vw;
+}
+
+.headerVision.slideIn {
+  animation: slideInFromRight 1.5s ease-out;
+}
+
+.textConetnt1 {
+  padding: 20px;
+  padding-right: 60px;
+  display: flex;
+  align-items: center;
+  height: 500px;
+  border-right: 1px solid black;
+  position: absolute;
+  top: 220vh;
+  left: 6vw;
+  font-size: 1.5vw;
+  font-family: "Noto Sans KR", sans-serif;
+  line-height: 1.5;
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+.leftLine {
+  width: 100px;
+  border-top: 3px solid black;
+  margin: 30px 0 30px 0;
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-30px);
+  }
+}
+
+.slideInFromLeft {
+  animation: slideInFromLeft 1.5s forwards;
+}
+
+.textConetnt2 {
+  padding: 20px;
+  padding-left: 60px;
+  display: flex;
+  align-items: center;
+  width: 700px;
+  height: 500px;
+  position: absolute;
+  top: 359.4vh;
+  right: 6vw;
+  border-left: 1px solid black;
+  font-size: 1.5vw;
+  font-family: "Noto Sans KR", sans-serif;
+  line-height: 1.8;
+  font-size: 1.2vw;
+  opacity: 0;
+  transform: translateY(100px);
+  z-index: 1;
+}
+
+.slideInFromBottom {
+  animation: slideInFromBottom 1.5s forwards;
+}

@@ -9,5 +9,104 @@
     WHERE memberId = #{memberId} AND memType = 'a'
   </select>
 
+<!--  맴버 전체 조회-->
+  <select id="memberList" resultType="net.fullstack7.nanusam.domain.MemberVO">
+    SELECT
+      memberId,
+      name,
+      email,
+      phone,
+      birthday,
+      addr1,
+      addr2,
+      zipCode,
+      regDate,
+      changeDate,
+      status
+    FROM tbl_member
+    WHERE memType = 't';
+  </select>
+
+  <!-- 맴버 상태 변경 -->
+  <update id="updateMemberStatus">
+    UPDATE tbl_member
+    SET status = #{status}
+    WHERE memberId = #{memberId};
+  </update>
+
+  <!-- 상태 변경 회원의 상품 상태 확인 -->
+  <select id="getGoodsStatusByMemberId" resultType="string">
+    SELECT status
+    FROM tbl_goods
+    WHERE memberId = #{memberId};
+  </select>
+
+  <!-- 상태 변경 회원의 상품 상태 업데이트 -->
+  <update id="updateGoodsStatusByMemberId">
+    UPDATE tbl_goods
+    SET status = #{newStatus}
+    WHERE memberId = #{memberId} AND status = #{currentStatus};
+  </update>
+
+  <!-- 맴버 삭제 -->
+  <delete id="deleteMember">
+    DELETE FROM tbl_member
+    WHERE memberId = #{memberId};
+  </delete>
+
 <!--  메인페이지에서 사용할 것들-->
+<!--  회원수-->
+  <select id="getTotalMemberCount">
+    SELECT COUNT(*) FROM tbl_member;
+  </select>
+
+  <select id="getTotalGoodsCount">
+    SELECT COUNT(*) FROM tbl_goods;
+  </select>
+
+<!--  공지사항 관련-->
+  <select id="noticeList" resultType="net.fullstack7.nanusam.domain.BbsVO">
+    SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
+    FROM tbl_bbs
+    ORDER BY regDate DESC;
+  </select>
+
+<!--  상품 관련-->
+  <select id="goodsList">
+    SELECT
+      idx,
+      name,
+      memberId,
+      price,
+      quality,
+      status,
+      regDate,
+      modifyDate,
+      readCnt,
+      category,
+      content,
+      reservationId
+    FROM
+      tbl_goods;
+  </select>
+
+<!--  상품 삭제-->
+  <delete id="deleteGoods">
+    DELETE FROM tbl_goods
+    WHERE idx = #{idx};
+  </delete>
+
+<!--  상품 status 변경 ('Y', 'D')-->
+  <update id="updateGoodsStatus">
+    UPDATE tbl_goods
+    SET status = #{status}
+    WHERE idx = #{idx};
+  </update>
+
+<!--  관리자인지 확인 Filter-->
+  <select id="getMemType" resultType="string" parameterType="string">
+    SELECT memType
+    FROM tbl_member
+    WHERE memberId = #{memberId}
+  </select>
 </mapper>

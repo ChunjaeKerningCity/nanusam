@@ -5,7 +5,7 @@
 
     <!-- 일반 로그인 -->
     <select id="login" >
-        SELECT memberId, pwd
+        SELECT memberId, name, pwd, memType, status
         FROM tbl_member
         WHERE memberId = #{memberId}
     </select>
@@ -19,7 +19,7 @@
 
     <!-- 회원 정보 확인 -->
     <select id="viewMember" >
-        SELECT *
+        SELECT memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, changeDate
         FROM tbl_member
         WHERE memberId = #{memberId}
     </select>
@@ -51,13 +51,73 @@
             phone = #{phone},
             addr1 = #{addr1},
             addr2 = #{addr2},
-            zipCode = #{zipCode}
+            zipCode = #{zipCode},
+            changeDate = now()
         WHERE memberId = #{memberId}
     </update>
 
-    <!-- 회원 삭제 -->
-    <delete id="deleteMember">
-        DELETE FROM tbl_member
+<!--    R 상품 있는지 확인-->
+  <select id="goodsStatusCheck" resultType="int">
+    SELECT COUNT(*)
+    FROM tbl_goods
+    WHERE (memberId = #{memberId} OR reservationId = #{memberId})
+    AND status = #{status}
+  </select>
+
+<!--    배송상태 확인-->
+  <select id="deliveryStatusCheck" resultType="int">
+    SELECT COUNT(*)
+    FROM tbl_payment
+    WHERE (seller = #{memberId} OR buyer = #{memberId})
+    AND deliveryStatus = #{deliveryStatus}
+  </select>
+
+<!--Y가 있는지 확인-->
+    <select id="goodsStatusY" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_goods
         WHERE memberId = #{memberId}
-    </delete>
+        AND status = #{status}
+    </select>
+
+<!--    Y 상품 D로 전환-->
+  <update id="goodsStatusUpdate">
+    UPDATE tbl_goods
+    SET status = #{status}
+    WHERE memberId = #{memberId}
+  </update>
+
+    <!-- 회원상태 전환 -->
+  <update id="memberStatusUpdate">
+    UPDATE tbl_member
+    SET leaveDate = NOW(),
+        status = 'N'
+    WHERE memberId = #{memberId}
+  </update>
+
+    <!--    테이블 이동-->
+  <insert id="insertSecessionMember" parameterType="net.fullstack7.nanusam.domain.SecessionMemberVO">
+    INSERT INTO tbl_secession_member
+    (memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, memType, regDate, leaveDate, status, description)
+    SELECT
+
+        memberId, pwd, name, email, phone, birthday, addr1, addr2, zipCode, memType, regDate, leaveDate, status, '회원탈퇴'
+    FROM tbl_member
+    WHERE memberId = #{memberId}
+  </insert>
+
+    <!--    기존 테이블에서회원정보 N 처리-->
+  <update id="deleteMember" parameterType="String">
+    UPDATE tbl_member
+    SET pwd = 'N',
+        name = 'N',
+        email = 'N',
+        phone = 'N',
+        birthday = 'N',
+        addr1 = 'N',
+        addr2 = 'N',
+        zipCode = 'N',
+        memType = 'N'
+    WHERE memberId = #{memberId}
+  </update>
 </mapper>

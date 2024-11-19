@@ -27,29 +27,29 @@ public class BbsServiceImpl implements BbsService {
 
     @Override
     public List<BbsDTO> list(){
-        log.info("===================================");
-        log.info("BbsServiceImpl >> list() START");
+//        log.info("===================================");
+//        log.info("BbsServiceImpl >> list() START");
 
         List<BbsVO> voList = bbsMapper.list();
         List<BbsDTO> dtoList = voList.stream()
                 .map(vo->modelMapper.map(vo, BbsDTO.class))
                 .collect(Collectors.toList());
 
-        log.info("voList = " + voList);
-        log.info("dtoList = " + dtoList);
-        log.info("BbsServiceImpl >> list() END");
-        log.info("===================================");
+//        log.info("voList = " + voList);
+//        log.info("dtoList = " + dtoList);
+//        log.info("BbsServiceImpl >> list() END");
+//        log.info("===================================");
         return dtoList;
     }
 
     @Override
     public PageResponseDTO<BbsDTO> listByPage(PageRequestDTO pageRequestDTO){
-        log.info("===================================");
-        log.info("BbsServiceImpl >> listByPage() START");
-        log.info("page_no = " + pageRequestDTO.getPage_no());
-        log.info("page_size = " + pageRequestDTO.getPage_size());
-        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
-        log.info("page_block = " + pageRequestDTO.getPage_block_size());
+//        log.info("===================================");
+//        log.info("BbsServiceImpl >> listByPage() START");
+//        log.info("page_no = " + pageRequestDTO.getPage_no());
+//        log.info("page_size = " + pageRequestDTO.getPage_size());
+//        log.info("page_skip = " + pageRequestDTO.getPage_skip_count());
+//        log.info("page_block = " + pageRequestDTO.getPage_block_size());
 
         List<BbsVO> voList = bbsMapper.listByPage(pageRequestDTO);
         List<BbsDTO> dtoList = voList.stream()
@@ -63,26 +63,26 @@ public class BbsServiceImpl implements BbsService {
                 .total_count(total_count)
                 .build();
 
-        log.info("voList = " + voList);
-        log.info("dtoList = " + dtoList);
-        log.info("BbsServiceImpl >> listByPage() END");
-        log.info("===================================");
+//        log.info("voList = " + voList);
+//        log.info("dtoList = " + dtoList);
+//        log.info("BbsServiceImpl >> listByPage() END");
+//        log.info("===================================");
         return pageResponseDTO;
     }
 
     @Override
     public BbsDTO view(int idx){
-        log.info("=================================================");
-        log.info("BbsServiceImpl >> view() START");
+//        log.info("=================================================");
+//        log.info("BbsServiceImpl >> view() START");
 
         BbsVO vo = bbsMapper.view(idx);
         BbsDTO dto = modelMapper.map(vo, BbsDTO.class);
 
-        log.info("idx=" +idx);
-        log.info("vo=" +vo);
-        log.info("dto=" +dto);
-        log.info("BbsServiceImpl >> view() END");
-        log.info("=================================================");
+//        log.info("idx=" +idx);
+//        log.info("vo=" +vo);
+//        log.info("dto=" +dto);
+//        log.info("BbsServiceImpl >> view() END");
+//        log.info("=================================================");
         return dto;
     }
 
@@ -91,11 +91,11 @@ public class BbsServiceImpl implements BbsService {
         BbsVO vo = modelMapper.map(dto, BbsVO.class);
         bbsMapper.regist(vo);
 
-        log.info("===================================");
-        log.info("BbsServiceImpl >> regist() START");
-        log.info("vo = " + vo);
-        log.info("BbsServiceImpl >> regist() END");
-        log.info("===================================");
+//        log.info("===================================");
+//        log.info("BbsServiceImpl >> regist() START");
+//        log.info("vo = " + vo);
+//        log.info("BbsServiceImpl >> regist() END");
+//        log.info("===================================");
     }
 
     @Override
@@ -110,6 +110,7 @@ public class BbsServiceImpl implements BbsService {
     }
 
     @Override
-    public void addReadCnt(int idx){
+    public int addReadCnt(int idx){
+        return bbsMapper.addReadCnt(idx);
     }
 }

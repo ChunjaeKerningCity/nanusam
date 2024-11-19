@@ -9,6 +9,7 @@
     <select id="totalCount" resultType="int">
         SELECT COUNT(*) AS total_count
         FROM tbl_bbs
+        where idx > 0
     </select>
 
     <select id="list" resultType="net.fullstack7.nanusam.domain.BbsVO">
@@ -21,6 +22,7 @@
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.BbsVO">
         SELECT idx, memberId, title, content, bbsCode, displayDate, regDate, modifyDate, readCnt
         FROM tbl_bbs
+        where idx > 0
         ORDER BY idx DESC
         LIMIT #{page_skip_count}, #{page_size}
     </select>
@@ -32,8 +34,8 @@
     </select>
 
     <insert id="regist">
-        INSERT INTO tbl_bbs(idx, memberId, title, content, bbsCode, displayDate)
-        VALUES (#{idx}, #{memberId}, #{title}, #{content}, #{bbsCode}, #{displayDate})
+        INSERT INTO tbl_bbs (idx, memberId, title, content, bbsCode, displayDate)
+        VALUES (#{idx}, #{memberId}, #{title}, #{content}, #{bbsCode}, #{displayDate});
     </insert>
 
     <update id="modify">
@@ -46,7 +48,8 @@
     </delete>
 
     <update id="addReadCnt">
-        UPDATE tbl_bbs SET readCnt = readCnt + 1 WHERE idx=#{idx}
-        AND memberId Not IN (SELECT * FROM tbl_bbs WHERE memberId = #{memberId})
+        UPDATE tbl_bbs
+        SET readCnt = readCnt + 1
+        WHERE idx=#{idx}
     </update>
 </mapper>

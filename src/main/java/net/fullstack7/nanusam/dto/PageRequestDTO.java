@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 
 @Log4j2
 @ToString
@@ -36,6 +37,7 @@ public class PageRequestDTO {
     private String orderDir;
     private String memberId;
     private String reservationId;
+    private List<String> status;
 
     public int getPage_skip_count() {
         return (this.page_no - 1) * this.page_size;

@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div class="footerContent">
   <img src="/resources/public/nanusamLogo.png" alt="로고" id="footerLogo" />
   <div>
     <p class="footerLink">
       <a href="/main/cpInfo.do" style="padding-left: 0px">회사소개</a> |
-      <a href="#">회원약관</a> | <a href="#">개인정보처리방침</a> |
-      <a href="#">이메일수집거부</a> | <a href="#">고객센터</a> |
+      <a href="#">회원약관</a> | <a href="/main/commonClass.do">개인정보처리방침</a> |
+      <a href="/main/commonArea.do">이메일수집거부</a> | <a href="/main/commonArea2.do">고객센터</a> |
       <a
           href="https://github.com/ChunjaeKerningCity/nanusam"
           target="_blank"
@@ -29,5 +29,5 @@
       <a href="/admin/login.do" style="color: rgb(153, 153, 153); text-decoration: none">Copyright</a> © TeacherOfDivision Corp. All Rights Reserved
     </p>
   </div>
-  <img src="/resources/public/footerRight.png" alt="가맹문의" />
+  <img src="/resources/public/footerRight.png" alt="가맹문의" style="width: 273px; height: 137px;"/>
 </div>

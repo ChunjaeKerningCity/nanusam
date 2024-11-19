@@ -16,13 +16,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
       /* General styles */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f4f7f9;
-      color: #333;
-    }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f7f9;
+        color: #333;
+      }
     div {
       margin-bottom: 10px;
     }
@@ -130,19 +130,55 @@
       margin-top: -8px;
       margin-bottom: 8px;
     }
-  </style>
+
+      /* Chat header styling */
+      .chat_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .chat_other {
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .chat_goods {
+        display: flex;
+        align-items: center; /* 세로 정렬 */
+        font-size: 14px;
+      }
+
+      .goods_img {
+        width: 50px; /* 이미지 크기 조정 */
+        height: 50px;
+        margin-right: 10px; /* 이미지와 텍스트 사이 간격 */
+        object-fit: cover; /* 이미지 비율을 유지하면서 크기 맞추기 */
+      }
+
+      .goods_name {
+        font-weight: bold;
+        white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 */
+      }
+
   </style>
 </head>
 <body>
 <c:set var="loginId" value="${sessionScope.memberId}"/>
 <input type="hidden" id="chatId" value="${other}"/>
 <div id="chat_title" class="container text-center">
-  <div class="row">
+  <div class="row chat_header">
     <div class="col">
       <button type="button" class="btn btn-secondary" onclick="location.href='/chat/list.do'">◀</button>
     </div>
     <div class="col">
-      채팅 상대 : ${other}
+      <div class="chat_other">
+      채팅 상대 : ${other eq chatGroupDTO.seller ? chatGroupDTO.sellerName : chatGroupDTO.customerName}
+      </div>
+      <div class="chat_goods">
+        <img class="goods_img" src="/resources/image/${goodsDTO.mainImageName}" alt="">
+        <span class="goods_name">상품 : ${chatGroupDTO.goodsName}</span>
+      </div>
     </div>
     <div class="col">
       <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,7 +189,7 @@
         <c:if test="${loginId eq seller}">
           <li><a class="dropdown-item" onclick="reserve()">예약확정</a></li>
         </c:if>
-        <li><a class="dropdown-item" href="/goods/view.do?goodsIdx=${goodsIdx}">상품상세</a></li>
+        <li><a class="dropdown-item" href="${pageContext.request.contextPath}/goods/view.do?idx=${goodsIdx}">상품상세</a></li>
       </ul>
     </div>
   </div>
@@ -197,6 +233,7 @@
     chatWindow = document.getElementById("chatWindow");
     chatMessage = document.getElementById("chatMessage");
     chatId = document.getElementById("chatId").value;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
   function sendMessage(){
@@ -223,11 +260,11 @@
 
   webSocket.onopen = function(event){
     // 웹소켓 초기화
-    chatWindow.innerHTML += "웹소켓 서버에 연결되었습니다.</br>";
+    chatWindow.innerHTML += "채팅방 입장</br>";
   };
 
   webSocket.onclose = function(event){
-    chatWindow.innerHTML += "웹소켓 서버가 종료되었습니다</br>"
+    chatWindow.innerHTML += "채팅방 종료</br>"
   };
 
   webSocket.onerror = function(event){
@@ -242,18 +279,25 @@
     let readChk = message[3];
     console.log("sender : content : regDate : readChk >>" + sender +" : "+ content +" : "+regDate+" : "+readChk );
     if(sender === 'system'){
-      chatWindow.innerHTML += "<div class='systemMsg'>"+content+"</div><div class='systemMsg timestamp'>" + regDate + "</div>";
+      if(content==='read'){
+       location.reload();
+       return;
+      }else {
+        chatWindow.innerHTML += "<div class='systemMsg'>" + content + "</div><div class='systemMsg timestamp'>" + regDate + "</div>";
+      }
     }else if(sender !== "${sessionScope.memberId}") {
       if (content !== "") {
         chatWindow.innerHTML += "<div class='otherMsg'>" + sender + " : " + content + "</div><div class='otherMsg timestamp'>" + regDate + "</div>";
       }
-      chatWindow.scrollTop = chatWindow.scrollHeight;
     }else{
       if (content !== "") {
-        chatWindow.innerHTML += "<div class='myMsg'>" + sender + " : " + content + "</div>"
-                +"<div class='myMsg timestamp'>"+regDate+"</div>";
+        chatWindow.innerHTML += "<div class='myMsg'>" + content + "</div>"
+                +"<div class='myMsg timestamp'>"+regDate
+                //+(readChk==='Y'?'읽음':'읽지않음')
+                +"</div>";
       }
     }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>

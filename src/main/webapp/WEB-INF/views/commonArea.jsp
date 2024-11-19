@@ -19,8 +19,12 @@
   <c:import url="/WEB-INF/views/commonArea/headerArea2.jsp" charEncoding="UTF-8" />
 </header>
 
-<main>
-<%--메인영역--%>
+<main class="marginTop">
+  <div class="commonContainer">
+    <div class="commonLeft">왼쪽 내용</div>
+    <div class="commonMain">메인 내용</div>
+    <div class="commonRight">오른쪽 내용</div>
+  </div>
 </main>
 
 <footer class="footerContainer">

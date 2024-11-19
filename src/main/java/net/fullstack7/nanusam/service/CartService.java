@@ -7,10 +7,13 @@ import net.fullstack7.nanusam.dto.PageResponseDTO;
 import java.util.List;
 
 public interface CartService {
-    int totalCount();
-    List<CartDTO> list();
-    PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO);
+    public int totalCount(String memberId);
+    public List<CartDTO> list();
+    public List<CartDTO> list(String memberId);
+    public PageResponseDTO<CartDTO> listByPage(PageRequestDTO requestDTO);
+    String add(CartDTO dto);
 
-    void add(CartDTO dto);
+    boolean existCart(CartDTO dto);
+
     void delete(int idx);
 }

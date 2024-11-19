@@ -1,0 +1,147 @@
+/*로그인, 회원가입, 정보확인,비밀번호확인*/
+/* 기본 폼 스타일 */
+.pwd-form,
+.login-form,
+.regist-form,
+.frm-view{
+    width: 320px;
+    padding: 30px;
+    margin: 0 auto;
+    border-radius: 10px;
+    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
+    text-align: center;
+}
+
+/* 입력 필드 스타일 */
+.login-form input[type="text"],
+.login-form input[type="password"],
+.regist-form input[type="text"],
+.regist-form input[type="email"],
+.regist-form input[type="date"],
+.regist-form input[type="password"],
+.pwd-form input[type="password"],
+.frm-view input[type="text"],
+.frm-view input[type="email"],
+.frm-view input[type="date"],
+.frm-view input[type="password"]{
+    width: 100%;
+    padding: 12px;
+    margin: 10px;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+}
+
+/*login.jsp 회원가입버튼*/
+.button2
+{
+    width: 100%;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.btn-Regist{
+    background-color: #FFF1AA;
+    border-radius: 5px;
+    height: 41px;
+    border: none;
+    padding: 12px;
+    margin: 8px 0;
+}
+
+
+.login-button {
+    background-color: #FFF1AA;
+    color: #333;
+}
+
+.signup-button {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.loginArea {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-row input[type="text"] {
+    flex: 3;
+}
+
+.form-row .button.confirmBtn  {
+    flex: 2;
+}
+
+/*약관동의부분*/
+.checkbox-container {
+    margin-left: 75%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkbox-container input {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #555;
+    display: inline-block;
+    position: relative;
+}
+
+.checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 0px;
+    width: 6px;
+    height: 12px;
+    border: solid #555;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display: none;
+}
+
+.checkbox-container input:checked + .checkmark::after {
+    display: block;
+}
+
+.button {
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.terms-content {
+    display: inline-block;
+    width: 800px;
+    height: 500px;
+    overflow: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+
+.div_err{
+    margin: 10px;
+    color: #ff6f61;
+    text-align: left;
+    font-size: 12px;
+    display: none;
+}

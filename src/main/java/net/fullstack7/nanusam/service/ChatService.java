@@ -1,12 +1,8 @@
 package net.fullstack7.nanusam.service;
 
-import net.fullstack7.nanusam.domain.ChatGroupVO;
-import net.fullstack7.nanusam.domain.ChatMessageVO;
-import net.fullstack7.nanusam.dto.ChatDTO;
 import net.fullstack7.nanusam.dto.ChatGroupDTO;
 import net.fullstack7.nanusam.dto.ChatMessageDTO;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 public interface ChatService {
@@ -21,4 +17,7 @@ public interface ChatService {
     public int readMessages(int groupIdx, String memberId);
     public ChatMessageDTO getMessage(int idx);
     public int countUnreadMessages(int groupIdx, String memberId);
+    public ChatGroupDTO getGroupDTO(int groupIdx);
+    public List<ChatGroupDTO> groupDTOList(String memberId);
+    public int updateRecentDate(int idx);
 }

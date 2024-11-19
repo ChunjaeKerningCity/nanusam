@@ -3,9 +3,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.GoodsMapper">
     <select id="listByPage" resultType="net.fullstack7.nanusam.domain.GoodsVO">
-        select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category, content, reservationId
+        select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category, content,
+        reservationId, mainImageName
         from tbl_goods
-        where status != 'N'
+        where idx > 0
+        <if test="status != null and status.size() > 0">
+            and status in
+            <foreach collection="status" item="statusItem" open="(" separator="," close=")">
+                #{statusItem}
+            </foreach>
+        </if>
+
         <if test='searchKeyword != null and searchKeyword != ""'>
             and name like concat('%', #{searchKeyword}, '%')
         </if>
@@ -29,7 +37,19 @@
         limit #{page_skip_count}, #{page_size}
     </select>
     <select id="view" resultType="net.fullstack7.nanusam.domain.GoodsVO">
-        select idx, name, memberId, price, quality, status, regDate, modifyDate, readCnt, category, content
+        select idx,
+               name,
+               memberId,
+               price,
+               quality,
+               status,
+               regDate,
+               modifyDate,
+               readCnt,
+               category,
+               content,
+               reservationId,
+               mainImageName
         from tbl_goods
         where idx = #{idx}
     </select>
@@ -37,29 +57,168 @@
         select count(idx) as total_count
         from tbl_goods
         where idx > 0
+        <if test="status != null and status.size() > 0">
+            and status in
+            <foreach collection="status" item="statusItem" open="(" separator="," close=")">
+                #{statusItem}
+            </foreach>
+        </if>
         <if test='searchKeyword != null and searchKeyword != ""'>
             and name like concat('%', #{searchKeyword}, '%')
         </if>
         <if test='searchCategory != null and searchCategory != ""'>
             and category = #{searchCategory}
         </if>
+        <if test='memberId != null and memberId != ""'>
+            and memberId = #{memberId}
+        </if>
+        <if test='reservationId != null and reservationId != ""'>
+            and reservationId = #{reservationId}
+        </if>
+    </select>
+    <resultMap id="GoodsWithPaymentResultMap" type="net.fullstack7.nanusam.dto.GoodsDTO">
+        <id property="idx" column="goods_idx"/>
+        <result property="name" column="goods_name"/>
+        <result property="memberId" column="memberId"/>
+        <result property="price" column="price"/>
+        <result property="quality" column="quality"/>
+        <result property="status" column="status"/>
+        <result property="content" column="content"/>
+        <result property="regDate" column="regDate"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="readCnt" column="readCnt"/>
+        <result property="category" column="category"/>
+        <result property="reservationId" column="reservationId"/>
+        <result property="mainImageName" column="mainImageName"/>
+        <!-- payment (조인된 데이터) -->
+        <association property="payInfo" column="goods_idx"
+                     javaType="net.fullstack7.nanusam.dto.PaymentDTO" resultMap="paymentResultMap"/>
+    </resultMap>
+
+    <resultMap id="paymentResultMap" type="net.fullstack7.nanusam.dto.PaymentDTO">
+        <id property="idx" column="payment_idx"/>
+        <result property="seller" column="seller"/>
+        <result property="buyer" column="buyer"/>
+        <result property="goodsIdx" column="goods_idx"/>
+        <result property="payDate" column="payDate"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="addr1" column="addr1"/>
+        <result property="addr2" column="addr2"/>
+        <result property="zipCode" column="zipCode"/>
+        <result property="method" column="method"/>
+        <result property="paymentCompany" column="paymentCompany"/>
+        <result property="paymentNo" column="paymentNo"/>
+        <result property="deliveryStatus" column="deliveryStatus"/>
+    </resultMap>
+
+    <select id="listWithPayment" resultMap="GoodsWithPaymentResultMap">
+        SELECT
+        g.idx AS goods_idx,
+        g.name AS goods_name,
+        g.memberId,
+        g.price,
+        g.quality,
+        g.status,
+        g.content,
+        g.regDate,
+        g.modifyDate,
+        g.readCnt,
+        g.category,
+        g.reservationId,
+        g.mainImageName,
+        p.idx AS payment_idx,
+        p.seller,
+        p.buyer,
+        p.goodsIdx,
+        p.payDate,
+        p.name,
+        p.email,
+        p.phone,
+        p.addr1,
+        p.addr2,
+        p.zipCode,
+        p.method,
+        p.paymentCompany,
+        p.paymentNo,
+        p.deliveryStatus
+        FROM tbl_goods g
+        left outer join tbl_payment p ON g.idx = p.goodsIdx
+        WHERE g.idx > 0
+        <if test="status != null and status.size() > 0">
+            and g.status in
+            <foreach collection="status" item="statusItem" open="(" separator="," close=")">
+                #{statusItem}
+            </foreach>
+        </if>
+
+        <if test='searchKeyword != null and searchKeyword != ""'>
+            and g.name like concat('%', #{searchKeyword}, '%')
+        </if>
+        <if test='searchCategory != null and searchCategory != ""'>
+            and g.category = #{searchCategory}
+        </if>
+        <if test='memberId != null and memberId != ""'>
+            and g.memberId = #{memberId}
+        </if>
+        <if test='reservationId != null and reservationId != ""'>
+            and g.reservationId = #{reservationId}
+        </if>
+        <choose>
+            <when test='orderBy != null and orderBy != ""'>
+                order by ${orderBy} ${orderByDir}
+            </when>
+            <otherwise>
+                order by regDate desc
+            </otherwise>
+        </choose>
+        limit #{page_skip_count}, #{page_size}
     </select>
 
     <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
-        insert into tbl_goods (name, memberId, price, quality, status, category, content)
-        values (#{name},#{memberId},#{price},#{quality},#{status},#{category},#{content})
+        insert into tbl_goods (name, memberId, price, quality, status, category, content, mainImageName)
+        values (#{name}, #{memberId}, #{price}, #{quality}, #{status}, #{category}, #{content}, #{mainImageName})
     </insert>
 
+    <update id="modifyMainImage">
+        update tbl_goods
+        set mainImageName=#{mainImageName},
+            modifyDate=now()
+        where idx = #{idx}
+    </update>
+
     <update id="modifyGoodsInfo">
-        update tbl_goods set price=#{price}, quality=#{quality}, category=#{category}, content=#{content}, name=#{name}
-        where idx=#{idx}
+        update tbl_goods
+        set price=#{price},
+            quality=#{quality},
+            category=#{category},
+            content=#{content},
+            name=#{name},
+            modifyDate=now()
+        <if test="mainImageName != null and mainImageName != ''">
+            ,mainImageName=#{mainImageName}
+        </if>
+        where idx = #{idx}
+          and memberId = #{memberId}
+    </update>
+
+    <update id="modifyStatus">
+        update tbl_goods
+        set status=#{status},
+            reservationId=#{reservationId}
+        where idx = #{idx}
     </update>
 
     <delete id="deleteByIdx">
-        delete from tbl_goods where idx=#{idx}
+        delete
+        from tbl_goods
+        where idx = #{idx}
     </delete>
 
-    <select id="getSellerId" resultType="int">
-        select memberId from tbl_goods where idx=#{idx}
+    <select id="getSellerId" resultType="String">
+        select memberId
+        from tbl_goods
+        where idx = #{idx}
     </select>
 </mapper>

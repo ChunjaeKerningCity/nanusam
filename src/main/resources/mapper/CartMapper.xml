@@ -3,30 +3,43 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.fullstack7.nanusam.mapper.CartMapper">
     <select id="list" resultType="net.fullstack7.nanusam.domain.CartVO">
-        SELECT idx, memberId, goodsIdx
-        FROM tbl_cart
-        ORDER BY idx DESC
---         LIMIT #{page_skip_count}, #{page_size}
-    </select>
-
-    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.CartVO">
-        SELECT idx, memberId, goodsIdx
-        FROM tbl_cart
-        ORDER BY idx DESC
+        SELECT C.idx, C.memberId, C.goodsIdx, G.idx, G.name
+        FROM tbl_cart AS C
+                 LEFT JOIN tbl_goods G
+                           ON C.goodsIdx = G.idx
+        WHERE C.memberId = #{memberId}
         LIMIT #{page_skip_count}, #{page_size}
     </select>
 
-    <select id="totalCount" resultType="int">
-        SELECT COUNT(*) AS total_count
-        FROM tbl_cart
+    <select id="listByPage" resultType="net.fullstack7.nanusam.domain.CartVO">
+        SELECT C.idx, C.memberId, C.goodsIdx, G.idx, G.name, G.mainImageName
+        FROM tbl_cart AS C
+                 LEFT JOIN tbl_goods G
+                           ON C.goodsIdx = G.idx
+        WHERE C.memberId = #{memberId}
+            LIMIT #{page_skip_count}, #{page_size}
     </select>
 
-    <insert id="add">
-        INSERT INTO tbl_cart(idx, memberId, goodsIdx)
-        VALUES(#{idx}, #{memberId}, #{goodsIdx})
+    <select id="totalCount" resultType="int">
+        SELECT count(C.idx)
+        FROM tbl_cart AS C
+                 LEFT JOIN tbl_goods G
+                           ON C.goodsIdx = G.idx
+        WHERE C.memberId = #{memberId}
+    </select>
+
+    <insert id="add" parameterType="net.fullstack7.nanusam.domain.CartVO" useGeneratedKeys="true" keyProperty="idx" >
+        INSERT INTO tbl_cart(memberId, goodsIdx)
+        VALUES(#{memberId}, #{goodsIdx})
     </insert>
 
-    <delete id="delete">
+    <select id="exist" parameterType="net.fullstack7.nanusam.domain.CartVO" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_cart
+        WHERE memberId = #{memberId} AND goodsIdx = #{goodsIdx}
+    </select>
+
+    <delete id="delete" parameterType="int">
         DELETE FROM tbl_cart WHERE idx=#{idx}
     </delete>
 </mapper>

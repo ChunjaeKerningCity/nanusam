@@ -1,5 +1,7 @@
 package net.fullstack7.nanusam.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,19 +33,52 @@ public class MemberDTO {
     @Pattern(regexp = "^[0-9]{11}$", message = "휴대폰 번호는 숫자만 입력 가능합니다.")
     private String phone;
     @NotBlank
+    @Pattern(regexp = "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$", message = "생일은 YYYY-MM-DD 형식이어야 하며, 만 20세 이상만 회원가입 가능합니다.")
     private String birthday;            // YYYY-MM-DD
     @NotBlank
+    @Size (min = 3, max = 30)
     private String addr1;
     @NotBlank
+    @Size (min = 1, max = 30)
     private String addr2;
     @NotBlank
-    @Pattern(regexp = "^[0-9]{6}$", message = "우편번호는 숫자만 입력 가능합니다.")
+    @Pattern(regexp = "^[0-9]{5,6}$", message = "우편번호는 숫자만 입력 가능합니다.")
     private String zipCode;             // 우편번호
     private String memType;             // 회원유형 t,a
     private LocalDateTime regDate;
     private LocalDateTime changeDate;
+
     private String status;              // 회원상태 Y 활성화 N 비활성화
     private LocalDateTime leaveDate;    // 탈퇴일
 
-    
+    public boolean isEligibleAge() {
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(birthday);
+        int age = today.getYear() - birthDate.getYear();
+        if (today.getMonthValue() < birthDate.getMonthValue() ||
+                (today.getMonthValue() == birthDate.getMonthValue() && today.getDayOfMonth() < birthDate.getDayOfMonth())) {
+            age--;
+        }
+        return age >= 20;  // 20세 이상이면 true
+    }
+
+//    private String regDateStr;
+//    @Builder.Default
+//    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//    public void setRegDate(LocalDateTime regDate) {
+//        this.regDate = regDate;
+//        regDateStr = formatter.format(regDate);
+//    }
+//
+//    private String changeDateStr;
+//    @Builder.Default
+//    private DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//    public void setChangeDate(LocalDateTime changeDate) {
+//        this.changeDate = changeDate;
+//        if(changeDate == null) {
+//            changeDateStr = "변경 X";
+//            return;
+//        }
+//        changeDateStr = formatter.format(changeDate);
+//    }
 }

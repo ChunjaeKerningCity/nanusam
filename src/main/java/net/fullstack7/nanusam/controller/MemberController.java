@@ -3,12 +3,15 @@ package net.fullstack7.nanusam.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.fullstack7.nanusam.dto.MemberDTO;
+import net.fullstack7.nanusam.dto.MemberModifyDTO;
 import net.fullstack7.nanusam.service.MemberService;
 import net.fullstack7.nanusam.util.JSFunc;
 import org.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,6 +20,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -25,143 +30,119 @@ import java.io.PrintWriter;
 public class MemberController {
     private final MemberService memberService;
 
-    @GetMapping("/login.do")
-    public String login(HttpSession session){
-        if(session.getAttribute("memberId") != null){
-            return "redirect:/";
-        }
-        return "login/login";
+    @GetMapping("/pwdCheck.do")
+    public String pwdCheck(HttpSession session) {
+        session.removeAttribute("isPwdChecked");
+        return "myPage/pwdCheck";
     }
-    @PostMapping("/login.do")
-    public String login(@RequestParam("memberId") String memberId,
-                        @RequestParam("pwd") String pwd,
-                        HttpSession session, Model model) {
-        MemberDTO memberDTO = memberService.login(memberId, pwd);
+
+    @PostMapping("/pwdCheck.do")
+    public String pwdCheck(@RequestParam String pwd, HttpSession session,  RedirectAttributes redirectAttributes) {
+        String memberId = (String) session.getAttribute("memberId");
+        boolean pwdCheck = memberService.pwdCheck(memberId, pwd);
+        if (pwdCheck) {
+            session.setAttribute("isPwdChecked", true);
+            return "redirect:/member/view.do";
+        } else {
+            redirectAttributes.addFlashAttribute("errors", "비밀번호가 일치하지 않습니다.");
+            return "redirect:/member/pwdCheck.do";
+        }
+    }
+
+    @GetMapping("/view.do")
+    public String viewGet(HttpSession session, Model model) {
+        Boolean isPwdChecked = (Boolean) session.getAttribute("isPwdChecked");
+        if (isPwdChecked == null || !isPwdChecked) {
+            model.addAttribute("errors", "비밀번호 확인이 필요합니다.");
+            return "forward:/member/pwdCheck.do";
+        }
+        session.removeAttribute("isPwdChecked");
+
+        String memberId = (String) session.getAttribute("memberId");
+        MemberDTO memberDTO = memberService.viewMember(memberId);
+//        log.info("회원정보확인"+ memberDTO);
         if (memberDTO != null) {
-            session.setAttribute("memberId", memberDTO.getMemberId());
-            session.setAttribute("memberName", memberDTO.getName());
-            return "redirect:/";
+            model.addAttribute("memberDTO", memberDTO);
         } else {
-            model.addAttribute("errors", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            return "login/login";
+            model.addAttribute("errors", "회원 정보를 불러올 수 없습니다.");
+            return "myPage/pwdCheck";
         }
-    }
-    @GetMapping("/logout.do")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/";
+        return "myPage/view";
     }
 
-    @GetMapping("/list.do")
-    public String list() {
-        return "member/list";
-    }
-    // 가입전 약관동의
-    @GetMapping("/registCheck.do")
-    public String registCheck(
-            HttpServletResponse res,
-            HttpSession session) throws IOException {
-        String loginCheck = (String) session.getAttribute("memberId");
-        if (loginCheck != null) {
-            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
-            String redirectUrl = "/";
-            res.setCharacterEncoding("UTF-8");
-            res.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('" + alertMessage + "');");
-            out.println("window.location.href = '" + redirectUrl + "';");
-            out.println("</script>");
-            out.flush();
-            return null;
+    @PostMapping("/modify.do")
+    public String modifyPost(@Valid MemberModifyDTO memberModifyDTO
+            , BindingResult bindingResult
+            , RedirectAttributes redirectAttributes
+            , HttpSession session
+            , Model model
+    ) {
+//        log.info("회원수정 컨트롤러 시작");
+        if (bindingResult.hasErrors()) {
+//            log.info("hasErrors");
+            session.setAttribute("isPwdChecked", true);
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("memberDTO", memberModifyDTO);
+//            log.info("memberDTO: " + memberModifyDTO);
+//            log.info("errors: " +bindingResult.getAllErrors());
+            return "redirect:/member/view.do";
         }
-        Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
-        if (termsAgree != null && termsAgree) {
-            return "login/regist";
-        }
-        return "login/registCheck";
-    }
 
-    @PostMapping("/registCheck.do")
-    public String registCheck(@RequestParam(value = "termsAgreement", defaultValue = "false") boolean termsAgreement, HttpSession session, Model model) {
-        if (termsAgreement) {
-            session.setAttribute("termsAgree", true);
-            return "login/regist";
-        } else {
-            model.addAttribute("errors", "약관동의 후 회원가입이 가능합니다");
-            return "login/registCheck";
+//        // 생일로부터 나이를 계산
+//        if (!memberModifyDTO.isEligibleAge()) {
+//            redirectAttributes.addFlashAttribute("errors", "만 20세 이상만 가입 가능합니다.");
+//            redirectAttributes.addFlashAttribute("memberDTO", memberModifyDTO);
+//            return "redirect:/member/view.do";
+//        }
+        String sessionMemberId = (String) session.getAttribute("memberId");
+        if (!memberModifyDTO.getMemberId().equals(sessionMemberId)) {
+            session.setAttribute("isPwdChecked", true);
+            redirectAttributes.addFlashAttribute("errors", "잘못된 접근입니다.");  // 알림 설정
+            return "redirect:/member/view.do";
         }
-    }
 
-    @GetMapping("/regist.do")
-    public String registGet(HttpSession session,
-                            HttpServletResponse res,
-                            Model model) throws IOException {
-        Boolean termsAgree = (Boolean) session.getAttribute("termsAgree");
-        String loginCheck = (String) session.getAttribute("memberId");
-        if(loginCheck != null){
-            res.setCharacterEncoding("UTF-8");
-            String alertMessage = "이미 로그인된 상태입니다. 회원가입 페이지에 접근할 수 없습니다.";
-            String redirectUrl = "/";
-            res.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = res.getWriter();
-            out.println("<script type='text/javascript'>");
-            out.println("alert('" + alertMessage + "');");
-            out.println("window.location.href = '" + redirectUrl + "';");
-            out.println("</script>");
-            out.flush();
-            return null;
+        int result = memberService.modifyMember(memberModifyDTO);
+        if (result > 0) {
+//            log.info("회원수정성공"+memberModifyDTO);
+            session.setAttribute("isPwdChecked", true);
+            model.addAttribute("memberDTO", memberModifyDTO);
+            return "redirect:/member/view.do";
+        }else {
+//            log.info("회원수정실패"+memberModifyDTO);
+            redirectAttributes.addFlashAttribute("errors", "회원정보수정실패");
         }
-        if (termsAgree == null || !termsAgree) {
-            model.addAttribute("errors", "약관에 동의한 후 회원가입이 가능합니다.");
-            return "forward:/member/registCheck.do";
-        }
-        return "login/regist";
+        return "redirect:/member/view.do";
     }
-
-    // 아이디 중복체크
-    @PostMapping("/memberIdCheck.do")
+    
+    // D전환 여부
+    @GetMapping("/checkGoodsStatusY.do")
     @ResponseBody
-    public String checkMemberId(@RequestParam String memberId) {
-        boolean available = memberService.memberIdCheck(memberId);
+    public String checkGoodsStatusY(HttpSession session) {
+        log.info("판매중상품갯수확인");
+        String memberId = (String) session.getAttribute("memberId");
+        boolean hasGoods = !memberService.goodsStatusY(memberId);
         JSONObject jsonResponse = new JSONObject();
-        jsonResponse.put("available", available);
+        jsonResponse.put("hasGoods", hasGoods);
         return jsonResponse.toString();
     }
 
-    @PostMapping("/regist.do")
-    public String registPost(@Valid MemberDTO memberDTO
-                             , BindingResult bindingResult
-                             , RedirectAttributes redirectAttributes
-                             , Model model) {
-        if(bindingResult.hasErrors()){
-            log.info("hasErrors");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            redirectAttributes.addFlashAttribute("memberDTO", memberDTO);
-            return "redirect:/member/regist.do";
+    //탈퇴
+    @PostMapping("/delete.do")
+    public String delete(@RequestParam String memberId, RedirectAttributes redirectAttributes, HttpSession session) {
+        
+        log.info("탈퇴컨트롤러시작");
+        if (memberService.dontDelete(memberId)) {
+            log.info("dontDelete실패");
+            redirectAttributes.addFlashAttribute("errors", "탈퇴가 불가합니다. 현재 예약 중이거나 배송 중인 상품이 있습니다.");
+            return "redirect:/member/view.do";
+
         }
-        int result = memberService.registMember(memberDTO);
-        if (result > 0) {
-            return "redirect:/member/login.do";
-        } else {
-            model.addAttribute("errors", "회원가입에 실패했습니다.");
-            return "login/regist";
-        }
+//        log.info("dontDelete성공");
+        memberService.goDelete(memberId);
+        redirectAttributes.addFlashAttribute("errors", "탈퇴가 완료되었습니다.");
+        session.invalidate();
+
+        return "redirect:/";
     }
-    @GetMapping("/view.do")
-    public String viewGet(){
-        return "member/view";
-    }
-    @GetMapping("/modify.do")
-    public String modifyGet(){
-        return "member/modify";
-    }
-    @PostMapping("/modify.do")
-    public String modifyPost(){
-        return "member/modify";
-    }
-    @GetMapping("delete.do")
-    public String deleteGet(){
-        return "member/delete";
-    }
+
 }

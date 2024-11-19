@@ -1,17 +1,18 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <div class="searchArea">
-  <form class="searchContainer" action="/일반검색" method="post">
-    <select
-        class="searchSelect"
-        onchange="changeAction(this.form, this)"
-    >
-      <option value="/일반검색" selected>중고거래</option>
-      <option value="/it">IT</option>
+  <form class="searchContainer" action="/goods/list.do" method="get">
+    <select name="searchCategory" id="searchCategory"
+        class="searchSelect">
+      <option value="">전체</option>
+      <c:forEach items="${categories}" var="category">
+        <option value="${category.code}" ${pageinfo.searchCategory eq category.code ? 'selected' : ''}>${category.value}</option>
+      </c:forEach>
     </select>
     <input
         type="text"
         class="searchInput"
-        placeholder="검색어를 입력해주세요"
+        name="searchKeyword" id="searchKeyword"
+        placeholder="검색어를 입력해주세요" value="${pageinfo.searchKeyword}"
     />
     <button type="submit" class="searchButton">
       <img src="/resources/public/searchIcon.png" alt="" width="25px" />

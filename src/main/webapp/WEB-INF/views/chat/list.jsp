@@ -28,7 +28,7 @@
 
         /* Table styles */
         table {
-            width: 500px;
+            width: 700px;
             margin: 0 auto;
             border-collapse: collapse;
             background-color: #ffffff;
@@ -72,15 +72,28 @@
             border-radius: 12px;
             margin-left: 8px;
         }
-
+        td{
+            font-size : 18px;
+        }
         /* Timestamp styling */
         td:last-child {
             text-align: right;
-            font-size: 12px;
+            font-size: 16px;
             color: #888;
         }
         .messageCont{
-            width : 75%;
+            width : 60%;
+        }
+        .goods_img img {
+            width: 80px; /* 이미지 너비 조정 */
+            height: auto; /* 비율에 맞게 높이 자동 조정 */
+            border-radius: 5px; /* 이미지를 둥글게 처리 (선택사항) */
+        }
+
+        .chat_goods {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px; /* 상품명 아래 여백 추가 */
         }
     </style>
 </head>
@@ -88,17 +101,21 @@
     <h1>채팅 리스트</h1>
     <table>
         <tr>
+            <th class="goodsInfo">상품정보</th>
             <th class="messageCont">메시지</th>
             <th class="timeCont">보낸시간</th>
         </tr>
         <c:forEach items="${chatList}" var="chat">
             <c:set var="sender" value="${sessionScope.memberId ne chat.seller ? chat.seller : chat.customer}"/>
             <tr class="groupContainer">
-                <c:if test="${not empty chat.lastMessage.content}" var="lastMessage">
-                </c:if>
+                <c:if test="${not empty chat.lastMessage.content}" var="lastMessage"/>
 
+                <td>
+                    <div class="chat_goods">${chat.goodsName}</div>
+                    <div class="goods_img"><img src="/resources/image/${chat.mainImageName}" alt=""></div>
+                </td>
                 <td class="${(sender eq chat.lastMessage.senderId) and (chat.unreadCount gt 0) and lastMessage ? 'receiveNewMessage' : ''}" onclick="chatViewOpen('groupIdx=${chat.idx}')">
-                    <div>${sender}</div>
+                    <div>${sender eq chat.seller ? chat.sellerName : chat.customerName}</div>
                     <c:if test="${lastMessage}">
                         ${chat.lastMessage.content}
                         <c:if test="${chat.unreadCount gt 0}">

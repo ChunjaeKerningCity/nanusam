@@ -2,21 +2,22 @@ package net.fullstack7.nanusam.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.fullstack7.nanusam.domain.GoodsVO;
 import net.fullstack7.nanusam.dto.CartDTO;
 import net.fullstack7.nanusam.dto.PageRequestDTO;
 import net.fullstack7.nanusam.dto.PageResponseDTO;
+import net.fullstack7.nanusam.mapper.GoodsMapper;
 import net.fullstack7.nanusam.service.CartService;
+import net.fullstack7.nanusam.service.GoodsServiceImpl;
 import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Log4j2
 @Controller
@@ -24,67 +25,99 @@ import javax.validation.Valid;
 @RequestMapping("/cart")
 public class CartController {
     private final CartService cartService;
+    private final GoodsMapper goodsMapper;
 
     @GetMapping("/list.do")
     public String list(
             @Valid PageRequestDTO pageRequestDTO,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
+            @SessionAttribute(name="memberId", required = false)String memberId,
             Model model) {
-        log.info("===============================");
-        log.info("CartController >> list START");
+//        log.info("===============================");
+//        log.info("CartController >> list START");
 
         if (bindingResult.hasErrors()) {
-            log.info("CartController >> list ERROR");
+//            log.info("CartController >> list ERROR");
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
         }
-        PageResponseDTO pageResponseDTO = cartService.listByPage(pageRequestDTO);
+
+        if(memberId == null || memberId.isEmpty()) {
+//            log.info("CartController >> login ERROR");
+            return "redirect:/login/login.do";
+        }
+        pageRequestDTO.setMemberId(memberId);
+        int totalCount = cartService.totalCount(memberId);
+//        log.info("totalCount : "+ totalCount);
+
+        PageResponseDTO<CartDTO> pageResponseDTO = cartService.listByPage(pageRequestDTO);
         model.addAttribute("cartList", pageResponseDTO);
-
-        log.info("cartList : "+ pageResponseDTO);
-        log.info("CartController >> list END");
-        log.info("===========================");
-
+//        log.info("cartList : "+ pageResponseDTO);
+//        log.info("CartController >> list END");
+//        log.info("===========================");
         return "cart/list";
     }
 
-    @GetMapping("/add.do")
-    public String addGet(){
-        log.info("===========================");
-        log.info("add");
-        log.info("===========================");
-        return "cart/add";
-    }
-    @PostMapping("/add.do")
-    public String addPost(
-            @Valid CartDTO dto
-            , BindingResult bindingResult
-            , RedirectAttributes redirectAttributes
-    ){
-        log.info("============================");
-        log.info("addPost");
+//    @GetMapping("/add.do")
+//    public String addGet(){
+//        log.info("===========================");
+//        log.info("add");
+//        log.info("===========================");
+//        return "cart/add";
+//    }
+@GetMapping("/add.do")
+public String addPost(
+        @Valid CartDTO dto
+        , BindingResult bindingResult
+        , RedirectAttributes redirectAttributes
+        , @RequestParam("goodsIdx") int goodsIdx
+        , @RequestParam("memberId") String memberId
+){
+//        log.info("============================");
+//        log.info("addPost");
+    dto.setMemberId(memberId);
+    dto.setGoodsIdx(goodsIdx);
 
-        if(bindingResult.hasErrors()) {
-            log.info("addPost ERROR");
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
-            return "redirect:/cart/add.do";
-        }
+    if (bindingResult.hasErrors()) {
+        redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+//            log.info("addPost ERROR");
+        return "redirect:/goods/add.do";
+    }
+
+
+    GoodsVO goods = goodsMapper.view(dto.getGoodsIdx());
+    if (goods.getMemberId().equals(dto.getMemberId())) {
+//            log.info("직접 등록한 상품은 장바구니에 추가할 수 없습니다.");
+        redirectAttributes.addFlashAttribute("alertMessage", "직접 등록한 상품은 장바구니에 추가할 수 없습니다.");
+        return "redirect:/goods/list.do";
+    }
+
+    if (cartService.existCart(dto)) {
+        redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 해당 상품이 존재합니다.");
+//            log.info("Alert Message: " + redirectAttributes.getFlashAttributes().get("alertMessage"));
+        return "redirect:/goods/list.do";
+    } else {
         cartService.add(dto);
-        log.info("dto: "+dto);
-        log.info("===========================");
-
-        return "redirect:/cart/list.do";
+        redirectAttributes.addFlashAttribute("alertMessage", "장바구니에 담았습니다.");
+//            log.info("dto: " + dto);
+//            log.info("===========================");
     }
+    return "redirect:/goods/list.do";
+}
+
 
     @GetMapping("delete.do")
     public String deleteGet(
-            @RequestParam int idx, RedirectAttributes redirectAttributes
+            @RequestParam int idx,
+            RedirectAttributes redirectAttributes,
+            Model model
     ){
         cartService.delete(idx);
-        log.info("===========================");
-        log.info("delete");
-        log.info("idx : " + idx);
-        log.info("===========================");
+//        log.info("===========================");
+//        log.info("delete");
+//        log.info("idx : " + idx);
+//        log.info("===========================");
+        redirectAttributes.addFlashAttribute("alertMessage", "상품이 삭제되었습니다.");
         return "redirect:/cart/list.do";
     }
 }

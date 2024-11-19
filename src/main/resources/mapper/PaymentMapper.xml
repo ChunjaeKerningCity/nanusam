@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.fullstack7.nanusam.mapper.PaymentMapper">
+    <resultMap id="paymentWithGoodsResultMap" type="net.fullstack7.nanusam.dto.PaymentDTO">
+        <!-- PaymentDTO -->
+        <id property="idx" column="payment_idx"/>
+        <result property="seller" column="seller"/>
+        <result property="buyer" column="buyer"/>
+        <result property="goodsIdx" column="goods_idx"/>
+        <result property="payDate" column="payDate"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="addr1" column="addr1"/>
+        <result property="addr2" column="addr2"/>
+        <result property="zipCode" column="zipCode"/>
+        <result property="method" column="method"/>
+        <result property="paymentCompany" column="paymentCompany"/>
+        <result property="paymentNo" column="paymentNo"/>
+        <result property="deliveryStatus" column="deliveryStatus"/>
+        <result property="review" column="review"/>
+
+        <!-- GoodsDTO (조인된 데이터) -->
+        <association property="goodsInfo" column="goods_idx"
+                     javaType="net.fullstack7.nanusam.dto.GoodsDTO" resultMap="goodsResultMap"/>
+    </resultMap>
+
+    <resultMap id="goodsResultMap" type="net.fullstack7.nanusam.dto.GoodsDTO">
+        <id property="idx" column="goods_idx"/>
+        <result property="name" column="goods_name"/>
+        <result property="memberId" column="memberId"/>
+        <result property="price" column="price"/>
+        <result property="quality" column="quality"/>
+        <result property="status" column="status"/>
+        <result property="content" column="content"/>
+        <result property="regDate" column="regDate"/>
+        <result property="modifyDate" column="modifyDate"/>
+        <result property="readCnt" column="readCnt"/>
+        <result property="category" column="category"/>
+        <result property="reservationId" column="reservationId"/>
+        <result property="mainImageName" column="mainImageName"/>
+    </resultMap>
+
+    <select id="listWithGoodsByBuyer" resultMap="paymentWithGoodsResultMap">
+        SELECT
+            p.idx AS payment_idx,
+            p.seller,
+            p.buyer,
+            p.goodsIdx,
+            p.payDate,
+            p.name,
+            p.email,
+            p.phone,
+            p.addr1,
+            p.addr2,
+            p.zipCode,
+            p.method,
+            p.paymentCompany,
+            p.paymentNo,
+            p.deliveryStatus,
+            p.review,
+
+            -- GoodsDTO 관련 컬럼
+            g.idx AS goods_idx,
+            g.name AS goods_name,
+            g.memberId,
+            g.price,
+            g.quality,
+            g.status,
+            g.content,
+            g.regDate,
+            g.modifyDate,
+            g.readCnt,
+            g.category,
+            g.reservationId,
+            g.mainImageName
+        FROM tbl_payment p
+        inner join tbl_goods g ON p.goodsIdx = g.idx
+        WHERE p.idx > 0
+        <choose>
+            <when test="memberId != null and memberId != '' ">
+                and p.seller = #{memberId}
+            </when>
+            <when test="reservationId != null and reservationId != '' ">
+                and p.buyer = #{reservationId}
+            </when>
+        </choose>
+        <if test="searchCategory != null and searchCategory != ''">
+            and p.deliveryStatus=#{searchCategory}
+        </if>
+        order by payDate desc
+        limit #{page_skip_count}, #{page_size}
+    </select>
+
+    <select id="total_count" resultType="int">
+        select count(idx)
+        from tbl_payment
+        WHERE idx > 0
+        <choose>
+            <when test="memberId != null and memberId != '' ">
+                and seller = #{memberId}
+            </when>
+            <when test="reservationId != null and reservationId != '' ">
+                and buyer = #{reservationId}
+            </when>
+        </choose>
+        <if test="searchCategory != null and searchCategory != ''">
+            and deliveryStatus=#{searchCategory}
+        </if>
+    </select>
+
+    <select id="viewWithGoods" resultMap="paymentWithGoodsResultMap">
+        SELECT
+            p.idx AS payment_idx,
+            p.seller,
+            p.buyer,
+            p.goodsIdx,
+            p.payDate,
+            p.name,
+            p.email,
+            p.phone,
+            p.addr1,
+            p.addr2,
+            p.zipCode,
+            p.method,
+            p.paymentCompany,
+            p.paymentNo,
+            p.deliveryStatus,
+            p.review,
+
+            -- GoodsDTO 관련 컬럼
+            g.idx AS goods_idx,
+            g.name AS goods_name,
+            g.memberId,
+            g.price,
+            g.quality,
+            g.status,
+            g.content,
+            g.regDate,
+            g.modifyDate,
+            g.readCnt,
+            g.category,
+            g.reservationId,
+            g.mainImageName
+        FROM tbl_payment p
+        left outer join tbl_goods g ON p.goodsIdx = g.idx
+        WHERE p.idx = #{idx}
+    </select>
+    <insert id="regist" useGeneratedKeys="true" keyProperty="idx" keyColumn="idx">
+        insert into tbl_payment(seller, buyer, goodsIdx, name, email, phone, addr1, addr2, zipCode, method,
+                                paymentCompany, paymentNo)
+        values (#{seller}, #{buyer}, #{goodsIdx}, #{name}, #{email}, #{phone}, #{addr1}, #{addr2},
+                #{zipCode}, #{method}, #{paymentCompany}, #{paymentNo})
+    </insert>
+    <delete id="deleteByIdx">
+        delete from tbl_payment where idx=#{idx}
+    </delete>
+
+    <update id="modifyDeliveryStatus">
+        update tbl_payment set deliveryStatus = #{deliveryStatus} where idx=#{idx}
+        <if test="buyer != null and buyer != ''">
+            and buyer = #{buyer}
+        </if>
+        <if test="seller != null and seller != ''">
+            and seller = #{seller}
+        </if>
+    </update>
+    <update id="modifyReview">
+        UPDATE tbl_payment
+        SET review = 'Y'
+        WHERE idx=#{idx}
+    </update>
+</mapper>
